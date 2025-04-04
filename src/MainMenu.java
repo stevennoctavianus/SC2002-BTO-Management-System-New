@@ -26,7 +26,7 @@ public class MainMenu {
             if (user != null) {
                 UserSession.setCurrentUser(user);
                 
-                if (user instanceof Applicant) new ApplicantUI().showMenu();
+                if (user instanceof Applicant) new ApplicantUI((Applicant) user).showMenu();
                 else if (user instanceof Officer) new OfficerUI().showMenu();
                 else if (user instanceof Manager) new ManagerUI().showMenu();
             } else {

@@ -1,35 +1,51 @@
+import java.util.List;
+import java.util.Scanner;
+
 public class ApplicantController {
     private Applicant applicant;
+    private Scanner scanner = new Scanner(System.in);
 
-    public void viewProjectList(){
-
+    public ApplicantController(Applicant applicant) {
+        this.applicant = applicant;
     }
 
-    public void applyForProject(){
-
+    // 1) View Available BTO Projects
+    public void viewProjectList() {
+        
     }
 
-    public void viewApplication(){
-
+    // 2) Apply for a BTO Project
+    public void applyForProject() {
+        
     }
 
-    public void withdrawApplication(){
-
+    // 3) View Application Status
+    public void viewApplication() {
+        
     }
 
-    public void submitEnquiries(){
-
+    // 4) Withdraw Application
+    public void withdrawApplication() {
+        
     }
 
-    public void viewEnquiries(){
-
+    // 5) Submit an Enquiry
+    public void submitEnquiries() {
+        
     }
 
-    public void editEnquiries(){
-
+    // 6) View Enquiries
+    public void viewEnquiries() {
+        
     }
 
-    public void deleteEnquiries(){
+    // 7) Edit an Enquiry
+    public void editEnquiries() {
+        
+    }
+
+    // 8) Delete an Enquiry
+    public void deleteEnquiries() {
         
     }
 }

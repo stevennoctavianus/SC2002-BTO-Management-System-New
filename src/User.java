@@ -53,7 +53,7 @@ public abstract class User {
         this.age = age;
     }
 
-    public int getAge(int age){
+    public int getAge(){
         return this.age;
     }
 

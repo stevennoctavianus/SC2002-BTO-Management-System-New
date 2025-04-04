@@ -6,9 +6,9 @@ public class DataInitializer {
 
     public static void loadData() {
         // Initialize lists by loading from CSV
-        applicantList = new ApplicantList("applicants.csv");
-        officerList = new OfficerList("officers.csv");
-        managerList = new ManagerList("managers.csv");
+        applicantList = new ApplicantList("ApplicantList.csv");
+        officerList = new OfficerList("OfficerList.csv");
+        managerList = new ManagerList("ManagerList.csv");
     }
 
     // Getter methods to retrieve data

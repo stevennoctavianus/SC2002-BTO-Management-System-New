@@ -16,6 +16,7 @@ public class Applicant extends User {
         setAge(age);
         setMaritalStatus(maritalStatus);
         setPassword(password);
+        this.enquiries = new ArrayList<>();
     }
 
     public Project getAppliedProject() {

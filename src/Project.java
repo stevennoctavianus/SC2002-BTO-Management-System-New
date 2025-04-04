@@ -1,4 +1,5 @@
 import java.util.Date;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 public class Project {
@@ -148,5 +149,21 @@ public class Project {
     public void setVisibility(boolean visibility) {
         this.visibility = visibility;
     }
+
+    @Override
+    public String toString() {
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+    return "Project Name: " + projectName +
+           "\nNeighborhood: " + neighborhood +
+           "\nAvailable 2-Room Flats: " + availableTwoRoom +
+           "\nSelling Price (2-Room): $" + sellingPriceTwoRoom +
+           "\nAvailable 3-Room Flats: " + availableThreeRoom +
+           "\nSelling Price (3-Room): $" + sellingPriceThreeRoom +
+           "\nOpening Date: " + (openingDate != null ? sdf.format(openingDate) : "N/A") +
+           "\nClosing Date: " + (closingDate != null ? sdf.format(closingDate) : "N/A") +
+           "\nMax Officers: " + maxOfficer +
+           "\nVisibility: " + (visibility ? "Visible" : "Hidden") +
+           "\n-------------------------------------";
+}
     
 }

@@ -45,5 +45,15 @@ public class ProjectList {
         return this.projectList;
     }
 
+    public Project getProjectByName(String projectName) {
+        for (Project project : projectList) {
+            if (project.getProjectName().equalsIgnoreCase(projectName)) {
+                return project;
+            }
+        }
+        return null; // Return null if no project is found
+    }
+    
+
 
 }

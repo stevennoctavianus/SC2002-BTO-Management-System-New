@@ -1,6 +1,11 @@
 import java.util.Scanner;
 
 public class MainMenu {
+    private static ProjectList projectList = new ProjectList();
+    private static ApplicationList applicationList = new ApplicationList();
+    private static EnquiryList enquiryList = new EnquiryList();
+    private static WithdrawalList withdrawalList = new WithdrawalList();
+
     public static void main(String[] args) {
         DataInitializer.loadData(); // Load users from CSV
         Scanner scanner = new Scanner(System.in);
@@ -26,9 +31,13 @@ public class MainMenu {
             if (user != null) {
                 UserSession.setCurrentUser(user);
                 
-                if (user instanceof Applicant) new ApplicantUI((Applicant) user).showMenu();
-                else if (user instanceof Officer) new OfficerUI().showMenu();
-                else if (user instanceof Manager) new ManagerUI().showMenu();
+                if (user instanceof Applicant) {
+                    new ApplicantController((Applicant) user, projectList, applicationList, enquiryList, withdrawalList).showMenu();
+                } else if (user instanceof Officer) {
+                    new OfficerUI().showMenu();
+                } else if (user instanceof Manager) {
+                    new ManagerUI().showMenu();
+                }
             } else {
                 System.out.println("Invalid credentials. Please try again.");
             }

@@ -18,6 +18,9 @@ public class Application {
     public Application(Project project, Applicant applicant){
         this.project = project;
         this.applicant = applicant;
+        this.applicationStatus = ApplicationStatus.PENDING;
+        this.bookedFlat = false;
+        this.flatType = null;
     }
 
 

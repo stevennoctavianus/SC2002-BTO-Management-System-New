@@ -19,6 +19,10 @@ public class ApplicationList {
         }
     }
 
+    public ArrayList<Application> getApplicationList(){
+        return applicationList;
+    }
+
     public Application getApplicationByApplicant(Applicant applicant) {
         for (Application application : applicationList) {
             if (application.getApplicant().equals(applicant)) {

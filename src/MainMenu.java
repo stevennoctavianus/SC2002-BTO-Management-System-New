@@ -5,6 +5,7 @@ public class MainMenu {
     private static ApplicationList applicationList = new ApplicationList();
     private static EnquiryList enquiryList = new EnquiryList();
     private static WithdrawalList withdrawalList = new WithdrawalList();
+    private static RegistrationList registrationList = new RegistrationList();
 
     public static void main(String[] args) {
         DataInitializer.loadData(); // Load users from CSV
@@ -38,7 +39,7 @@ public class MainMenu {
                 if (user instanceof Applicant) {
                     new ApplicantController((Applicant) user, projectList, applicationList, enquiryList, withdrawalList).showMenu();
                 } else if (user instanceof Officer) {
-                    new OfficerUI().showMenu();
+                    new OfficerController((Officer) user, projectList,applicationList, enquiryList, withdrawalList, registrationList).showMenu();
                 } else if (user instanceof Manager) {
                     new ManagerUI().showMenu();
                 }

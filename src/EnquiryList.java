@@ -1,8 +1,7 @@
 import java.util.ArrayList;
-import java.util.List;
 
 public class EnquiryList {
-    private List<Enquiry> enquiries;
+    private ArrayList<Enquiry> enquiries;
 
     public EnquiryList() {
         this.enquiries = new ArrayList<>();
@@ -12,11 +11,21 @@ public class EnquiryList {
         enquiries.add(enquiry);
     }
 
-    public List<Enquiry> getEnquiries() {
+    public ArrayList<Enquiry> getEnquiries() {
         return enquiries;
     }
 
     public void removeEnquiry(Enquiry enquiry) {
         enquiries.remove(enquiry);
+    }
+
+    public ArrayList<Enquiry> getEnquiriesByProject(Project project) {
+        ArrayList<Enquiry> result = new ArrayList<>();
+        for (Enquiry enquiry : enquiries) {
+            if (enquiry.getProject().equals(project)) {
+                result.add(enquiry);
+            }
+        }
+        return result;
     }
 }

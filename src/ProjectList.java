@@ -19,6 +19,7 @@ public class ProjectList {
     private void loadProjectsFromCSV(String filePath) {
         List<String[]> data = CSVReader.readCSV(filePath);
         SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+        Date today = new Date();
 
         for (String[] row : data) {
             if (row.length < 12) {
@@ -42,29 +43,37 @@ public class ProjectList {
                 String managerName = row[10];
                 int maxOfficer = Integer.parseInt(row[11]);
 
-                // Find the manager from ManagerList
+                // Find manager
                 Manager manager = findManagerByName(managerName);
                 if (manager == null) {
                     System.out.println("Manager not found: " + managerName);
-                    continue; // Skip this project if manager is missing
+                    continue;
                 }
 
                 Project project = new Project(
-                    projectName, neighborhood, 
-                    availableTwoRoom, sellingPriceTwoRoom, 
-                    availableThreeRoom, sellingPriceThreeRoom, 
-                    openingDate, closingDate, maxOfficer
-                );
+                        projectName, neighborhood,
+                        availableTwoRoom, sellingPriceTwoRoom,
+                        availableThreeRoom, sellingPriceThreeRoom,
+                        openingDate, closingDate, maxOfficer);
 
                 project.setManager(manager);
+                manager.addManagedProject(project);
 
-                // Handle Officers
+                if (!today.before(openingDate) && !today.after(closingDate)) {
+                    manager.setActiveProject(project);
+                }
+
+                // Handle officers
                 if (row.length > 12) {
                     String[] officerNames = row[12].split(",");
                     for (String officerName : officerNames) {
                         Officer officer = findOfficerByName(officerName.trim());
                         if (officer != null) {
                             project.addOfficers(officer);
+                            officer.setAssignedProject(
+                                (!today.before(openingDate) && !today.after(closingDate)) ? project : null
+                            );
+                            officer.getManagedProjects().add(project);
                         } else {
                             System.out.println("Officer not found: " + officerName);
                         }
@@ -97,7 +106,7 @@ public class ProjectList {
         return null;
     }
 
-    public List<Project> getProject() {
+    public List<Project> getProjectList() {
         return projectList;
     }
 

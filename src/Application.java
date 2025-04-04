@@ -5,8 +5,8 @@ public class Application {
         THREEROOM
     }
     public enum ApplicationStatus{
-        SUCCESSFULL,
-        UNSUCESSFULL,
+        SUCCESSFUL,
+        UNSUCCESSFUL,
         PENDING,
         BOOKED
     }

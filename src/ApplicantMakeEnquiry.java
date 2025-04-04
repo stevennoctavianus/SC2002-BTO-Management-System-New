@@ -18,7 +18,7 @@ public class ApplicantMakeEnquiry {
     public void makeEnquiry(){
         int index = 1;
         System.out.println("What project you want to enquire?");
-        for (Project project : projectList.getProject()){
+        for (Project project : projectList.getProjectList()){
             System.out.println(index + ")" + project.getProjectName());
             index++;
         }
@@ -27,7 +27,7 @@ public class ApplicantMakeEnquiry {
         int choice = sc.nextInt();
         sc.nextLine();
 
-        Project project = projectList.getProject().get(choice-1);
+        Project project = projectList.getProjectList().get(choice-1);
 
         System.out.println("Enter your message: ");
         String message = sc.nextLine();

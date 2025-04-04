@@ -3,7 +3,7 @@ import java.util.Scanner;
 class ApplicantViewProjects{
     private Applicant applicant;
     private ProjectList projectList;
-    private ApplicationList applicationList;
+    protected ApplicationList applicationList;
     private Scanner sc;
 
     public ApplicantViewProjects(Applicant applicant, ProjectList projectList, ApplicationList applicationList){
@@ -15,13 +15,13 @@ class ApplicantViewProjects{
 
     public void viewProjectList(){
         if(applicant.getMaritalStatus() == User.MaritalStatus.SINGLE){
-            for (Project project: projectList.getProject()){
+            for (Project project: projectList.getProjectList()){
                 if(project.getAvailableTwoRoom() > 0 && project.getVisibility() == true){
                     System.out.println(project);
                 }
             }
         } else{
-            for(Project project: projectList.getProject()){
+            for(Project project: projectList.getProjectList()){
                 if(project.getVisibility() == true){
                     System.out.println(project);
                 }

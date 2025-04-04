@@ -151,6 +151,15 @@ public class Project {
         this.visibility = visibility;
     }
 
+    public boolean hasApplicant(Applicant applicant) {
+        for (Application application : applications) {
+            if (application.getApplicant().equals(applicant)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     @Override
     public String toString() {
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");

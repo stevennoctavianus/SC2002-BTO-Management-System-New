@@ -14,6 +14,7 @@ public class Manager extends User {
         setAge(age);
         setMaritalStatus(maritalStatus);
         setPassword(password);
+        this.managedProjects = new ArrayList<>();
     }
 
     public Project getActiveProject(){

@@ -5,12 +5,14 @@ public class OfficerRegistration {
     private Officer officer;
     private ProjectList projectList;
     private RegistrationList registrationList;
+    private ApplicationList applicationList;
     private Scanner scanner;
 
-    public OfficerRegistration(Officer officer, ProjectList projectList, RegistrationList registrationList) {
+    public OfficerRegistration(Officer officer, ProjectList projectList, RegistrationList registrationList, ApplicationList applicationList) {
         this.officer = officer;
         this.projectList = projectList;
         this.registrationList = registrationList;
+        this.applicationList = applicationList;
         this.scanner = new Scanner(System.in);
     }
 
@@ -25,8 +27,10 @@ public class OfficerRegistration {
         ArrayList<Project> availableProjects = new ArrayList<>();
         for (Project project : projectList.getProjectList()) {
             boolean hasSlot = project.getMaxOfficer() > project.getOfficers().size();
-            boolean hasNotApplied = !project.hasApplicant(officer);
-
+            
+            // Check if officer already applied as applicant (via application list)
+            boolean hasNotApplied = applicationList.getApplicationByApplicant(officer) == null;
+            
             if (hasSlot && hasNotApplied) {
                 availableProjects.add(project);
             }

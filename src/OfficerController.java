@@ -39,7 +39,7 @@ public class OfficerController {
         this.withdrawalHandler = new ApplicantMakeWithdrawal(officer, withdrawalList, applicationList);
 
         // Officer role-specific functionality
-        this.registrationHandler = new OfficerRegistration(officer, projectList, registrationList);
+        this.registrationHandler = new OfficerRegistration(officer, projectList, registrationList, applicationList);
         this.manageEnquiriesHandler = new OfficerManageEnquiries(officer, enquiryList);
         this.manageProjectHandler = new OfficerManageProject(officer, projectList);
         this.manageApplicationHandler = new OfficerManageApplication(officer, applicationList);

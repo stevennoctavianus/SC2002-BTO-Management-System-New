@@ -26,6 +26,11 @@ public class OfficerViewProjects extends ApplicantViewProjects {
             Registration reg = registrationList.getRegistrationByOfficerAndProject(officer, project);
             if (reg != null) continue;
 
+            // Skip if officer is assigned to this project
+            if (officer.getAssignedProject() != null && officer.getAssignedProject().equals(project)) {
+                continue;
+            }
+
             // If SINGLE, show only with available 2-Rooms
             if (officer.getMaritalStatus() == User.MaritalStatus.SINGLE) {
                 if (project.getAvailableTwoRoom() > 0) {
@@ -40,34 +45,39 @@ public class OfficerViewProjects extends ApplicantViewProjects {
     @Override
     public void applyForProject() {
         Scanner sc = new Scanner(System.in);
-
+    
         System.out.print("Enter Project Name to apply: ");
         String projectName = sc.nextLine();
         Project project = projectList.getProjectByName(projectName);
-
+    
         if (project == null) {
             System.out.println("Project not found.");
             return;
         }
-
-        // Check if officer is registered for this project
-        Registration reg = registrationList.getRegistrationByOfficerAndProject(officer, project);
-        if (reg != null) {
-            System.out.println("You cannot apply as an Applicant for a project you've registered as an Officer.");
+    
+        // Officer is already assigned to manage this project
+        if (officer.getAssignedProject() != null && officer.getAssignedProject().equals(project)) {
+            System.out.println("You are already managing this project as an Officer. Cannot apply as an applicant.");
             return;
         }
-
-        // Check if already applied
+    
+        // Officer has registration record for this project
+        Registration reg = registrationList.getRegistrationByOfficerAndProject(officer, project);
+        if (reg != null) {
+            System.out.println("You have already registered for this project as an Officer. Cannot apply.");
+            return;
+        }
+    
+        // Already has an application
         Application existingApp = super.applicationList.getApplicationByApplicant(officer);
         if (existingApp != null) {
             System.out.println("You already have an application.");
             return;
         }
-
+    
         // Proceed with application
         Application newApplication = new Application(project, officer);
         super.applicationList.addApplication(newApplication);
         System.out.println("Application submitted successfully!");
-        
     }
 }

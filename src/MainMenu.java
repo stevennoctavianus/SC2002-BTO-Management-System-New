@@ -36,13 +36,13 @@ public class MainMenu {
             if (user != null) {
                 UserSession.setCurrentUser(user);
                 
-                if (user instanceof Applicant) {
+                if (user instanceof Officer) {
+                    new OfficerController((Officer) user, projectList, applicationList, enquiryList, withdrawalList, registrationList).showMenu();
+                } else if (user instanceof Applicant) {
                     new ApplicantController((Applicant) user, projectList, applicationList, enquiryList, withdrawalList).showMenu();
-                } else if (user instanceof Officer) {
-                    new OfficerController((Officer) user, projectList,applicationList, enquiryList, withdrawalList, registrationList).showMenu();
                 } else if (user instanceof Manager) {
                     new ManagerUI().showMenu();
-                }
+                }                
             } else {
                 System.out.println("Invalid credentials. Please try again.");
             }

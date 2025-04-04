@@ -39,7 +39,7 @@ class ApplicantViewProjects{
             return;
         }
 
-        if (applicationList.getApplicationbyApplicant(applicant) != null){
+        if (applicationList.getApplicationByApplicant(applicant) != null){
             System.out.println("You already have an application.");
         }
 

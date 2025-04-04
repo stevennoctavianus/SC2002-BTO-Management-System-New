@@ -2,10 +2,12 @@ public class Enquiry {
     private Applicant applicant;
     private Project project;
     private String message;
+    private String reply;
     private EnquiryStatus status;
 
     public enum EnquiryStatus {
-        PENDING, RESPONDED, CLOSED;
+        PENDING, 
+        RESPONDED;
     }
     
 
@@ -28,6 +30,14 @@ public class Enquiry {
         return message;
     }
 
+    public String getReply(){
+        return reply;
+    }
+
+    public void setReply(String reply){
+        this.reply = reply;
+    }
+
     public void setMessage(String message) {
         this.message = message;
     }
@@ -45,6 +55,7 @@ public class Enquiry {
         return "Enquiry [Applicant=" + applicant.getName() + 
                ", Project=" + project.getProjectName() + 
                ", Message=" + message + 
+               ", Reply=" + reply + 
                ", Status=" + status + "]";
     }
 }

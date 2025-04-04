@@ -10,35 +10,13 @@ public class EnquiryList {
 
     public void addEnquiry(Enquiry enquiry) {
         enquiries.add(enquiry);
-        System.out.println("Enquiry submitted.");
     }
 
-    public void viewEnquiriesByApplicant(Applicant applicant) {
-        System.out.println("\n===== My Enquiries =====");
-        for (Enquiry enquiry : enquiries) {
-            if (enquiry.getApplicant().equals(applicant)) {
-                System.out.println(enquiry);
-            }
-        }
+    public List<Enquiry> getEnquiries() {
+        return enquiries;
     }
 
-    public void editEnquiry(int enquiryId, String newMessage) {
-        if (enquiryId < 0 || enquiryId >= enquiries.size()) {
-            System.out.println("Invalid enquiry ID.");
-            return;
-        }
-        Enquiry enquiry = enquiries.get(enquiryId);
-        enquiry.setMessage(newMessage);
-        System.out.println("Enquiry updated.");
+    public void removeEnquiry(Enquiry enquiry) {
+        enquiries.remove(enquiry);
     }
-
-    public void deleteEnquiry(int enquiryId) {
-        if (enquiryId < 0 || enquiryId >= enquiries.size()) {
-            System.out.println("Invalid enquiry ID.");
-            return;
-        }
-        enquiries.remove(enquiryId);
-        System.out.println("Enquiry deleted.");
-    }
-
 }

@@ -8,7 +8,7 @@ public class ApplicantViewApplication {
     }
 
     public void viewApplicationStatus(){
-        Application application = applicationList.getApplicationbyApplicant(applicant);
+        Application application = applicationList.getApplicationByApplicant(applicant);
         if (application != null){
             System.out.println("Status: " + application.getApplicationStatus());
         } else{

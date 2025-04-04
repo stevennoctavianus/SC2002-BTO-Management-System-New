@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class ApplicantMakeEnquiry {
@@ -37,10 +39,86 @@ public class ApplicantMakeEnquiry {
     }
 
     public void viewEnquiry(){
-        enquiryList.viewEnquiriesByApplicant(applicant);
+        System.out.println("\n===== My Enquiries =====");
+        boolean found = false;
+        int index = 1;
+
+        for (Enquiry enquiry : enquiryList.getEnquiries()) {
+            if (enquiry.getApplicant().equals(applicant)) {
+                System.out.println(index + ") " + enquiry);
+                found = true;
+                index++;
+            }
+        }
+        
+        if(found == false){
+            System.out.println("No enquiries found.");
+        }
     }
 
     public void editEnquiry(){
-        System.out.println("Enter enq");
+        List<Enquiry> applicantEnquiries = new ArrayList<>();
+        int index = 1;
+
+        System.out.println("\n===== Select Enquiry to Edit =====");
+        for (Enquiry enquiry : enquiryList.getEnquiries()) {
+            if (enquiry.getApplicant().equals(applicant) && enquiry.getStatus() == Enquiry.EnquiryStatus.PENDING) {
+                System.out.println(index + ") " + enquiry);
+                applicantEnquiries.add(enquiry);
+                index++;
+            }
+        }
+
+        if (applicantEnquiries.isEmpty()) {
+            System.out.println("No pending enquiries to edit.");
+            return;
+        }
+
+        System.out.print("Enter enquiry number to edit: ");
+        int choice = sc.nextInt();
+        sc.nextLine(); // Consume newline
+
+        if (choice < 1 || choice > applicantEnquiries.size()) {
+            System.out.println("Invalid choice.");
+            return;
+        }
+
+        System.out.print("Enter new message: ");
+        String message = sc.nextLine();
+        applicantEnquiries.get(choice - 1).setMessage(message);
+
+        System.out.println("Enquiry updated.");
     }
+
+    public void deleteEnquiry() {
+        List<Enquiry> applicantEnquiries = new ArrayList<>();
+        int index = 1;
+
+        System.out.println("\n===== Select Enquiry to Delete =====");
+        for (Enquiry enquiry : enquiryList.getEnquiries()) {
+            if (enquiry.getApplicant().equals(applicant) && enquiry.getStatus() == Enquiry.EnquiryStatus.PENDING) {
+                System.out.println(index + ") " + enquiry);
+                applicantEnquiries.add(enquiry);
+                index++;
+            }
+        }
+
+        if (applicantEnquiries.isEmpty()) {
+            System.out.println("No pending enquiries to delete.");
+            return;
+        }
+
+        System.out.print("Enter enquiry number to delete: ");
+        int choice = sc.nextInt();
+
+        if (choice < 1 || choice > applicantEnquiries.size()) {
+            System.out.println("Invalid choice.");
+            return;
+        }
+
+        enquiryList.removeEnquiry(applicantEnquiries.get(choice - 1));
+        System.out.println("Enquiry deleted.");
+    }
+
+
 }

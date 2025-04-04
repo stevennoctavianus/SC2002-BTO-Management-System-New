@@ -62,7 +62,7 @@ public class ApplicantController {
                     enquiryHandler.makeEnquiry();
                     break;
                 case 6:
-                    enquiryHandler.viewEnquiries();
+                    enquiryHandler.viewEnquiry();
                     break;
                 case 7:
                     enquiryHandler.editEnquiry();

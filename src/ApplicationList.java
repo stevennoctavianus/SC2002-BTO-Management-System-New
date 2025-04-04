@@ -11,7 +11,15 @@ public class ApplicationList {
         this.applicationList.add(application);
     }
 
-    public Application getApplicationbyApplicant(Applicant applicant) {
+    public void removeApplication(Application application) {
+        if (applicationList.remove(application)) {
+            System.out.println("Application removed successfully.");
+        } else {
+            System.out.println("Application not found.");
+        }
+    }
+
+    public Application getApplicationByApplicant(Applicant applicant) {
         for (Application application : applicationList) {
             if (application.getApplicant().equals(applicant)) {
                 return application; 

@@ -1,13 +1,17 @@
 import java.util.Scanner;
 
 public class MainMenu {
-    private static ProjectList projectList = new ProjectList();
+    private static ProjectList projectList;
     private static ApplicationList applicationList = new ApplicationList();
     private static EnquiryList enquiryList = new EnquiryList();
     private static WithdrawalList withdrawalList = new WithdrawalList();
 
     public static void main(String[] args) {
         DataInitializer.loadData(); // Load users from CSV
+        ManagerList managerList = DataInitializer.getManagerList();
+        OfficerList officerList = DataInitializer.getOfficerList();
+        
+        projectList = new ProjectList("ProjectList.csv", managerList, officerList);
         Scanner scanner = new Scanner(System.in);
         
         while (true) {

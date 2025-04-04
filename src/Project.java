@@ -35,6 +35,7 @@ public class Project {
         this.maxOfficer = maxOfficer;
         this.officers = new ArrayList<>();
         this.applications = new ArrayList<>();
+        this.visibility = true;
     }
 
     //Getter setter

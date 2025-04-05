@@ -22,27 +22,27 @@ public class Applicant extends User {
     public Project getAppliedProject() {
         return appliedProject;
     }
-    
+
     public void setAppliedProject(Project appliedProject) {
         this.appliedProject = appliedProject;
     }
-    
+
     public Application getApplication() {
         return application;
     }
-    
+
     public void setApplication(Application application) {
         this.application = application;
     }
-    
+
     public ArrayList<Enquiry> getEnquiries() {
         return enquiries;
     }
-    
+
     public void setEnquiries(ArrayList<Enquiry> enquiries) {
         this.enquiries = enquiries;
     }
-    
+
     // Optional: Method to add a single enquiry to the list
     public void addEnquiry(Enquiry enquiry) {
         if (this.enquiries == null) {

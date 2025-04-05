@@ -2,6 +2,8 @@ package interact;
 import container.*;
 import entity.*;
 import controller.*;
+
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class MainMenu {
@@ -15,40 +17,57 @@ public class MainMenu {
         DataInitializer.loadData(); // Load users from CSV
         ManagerList managerList = DataInitializer.getManagerList();
         OfficerList officerList = DataInitializer.getOfficerList();
-        
-        projectList = new ProjectList("ProjectList.csv", managerList, officerList);
+
+        projectList = new ProjectList("../data/ProjectList.csv", managerList, officerList);
         Scanner scanner = new Scanner(System.in);
-        
+
         while (true) {
             System.out.println("Welcome to the BTO Management System");
             System.out.println("1) Applicant Login");
             System.out.println("2) Officer Login");
             System.out.println("3) Manager Login");
             System.out.println("4) Exit");
+            int choice;
+            String nric, password;
             System.out.print("Enter choice: ");
-            int choice = scanner.nextInt();
-            scanner.nextLine();
-            
-            if (choice == 4) break;
-            
+            try{
+                choice = scanner.nextInt();
+                if (choice == 4) break;
+                scanner.nextLine();
+            }
+            catch(InputMismatchException e){
+                System.out.println("Please input an integer!");
+                continue;
+            }
+            // Input and validate NRIC:
             System.out.print("Enter NRIC: ");
-            String nric = scanner.nextLine();
+            nric = scanner.nextLine().trim();
+            if(!AuthenticationService.validNRIC(nric)){ 
+                System.out.println("Invalid NRIC\n");
+                continue;
+            }
+
+            // Input password:
             System.out.print("Enter Password: ");
-            String password = scanner.nextLine();
-            
-            User user = AuthenticationService.authenticate(nric, password);
+            password = scanner.nextLine().trim();
+
+            // Check account's availability:
+            User user = AuthenticationService.authenticate(nric, password,choice);
             if (user != null) {
                 UserSession.setCurrentUser(user);
-                
+
                 if (user instanceof Officer) {
                     new OfficerController((Officer) user, projectList, applicationList, enquiryList, withdrawalList, registrationList).showMenu();
-                } else if (user instanceof Applicant) {
+                }
+                else if (user instanceof Applicant) {
                     new ApplicantController((Applicant) user, projectList, applicationList, enquiryList, withdrawalList).showMenu();
-                } else if (user instanceof Manager) {
+                }
+                else if (user instanceof Manager) {
                     new ManagerUI().showMenu();
-                }                
-            } else {
-                System.out.println("Invalid credentials. Please try again.");
+                }
+            }
+            else {
+                System.out.println("Invalid credentials. Please try again.\n");
             }
         }
         scanner.close();

@@ -15,7 +15,7 @@ public abstract class User {
     public User(){
 
     }
-    
+
     //Methods
     public void changePassword(String password){
         this.setPassword(password);
@@ -58,7 +58,6 @@ public abstract class User {
     public int getAge(){
         return this.age;
     }
-
     public void setMaritalStatus(String input) {
         try {
             this.maritalStatus = MaritalStatus.valueOf(input.trim().toUpperCase());

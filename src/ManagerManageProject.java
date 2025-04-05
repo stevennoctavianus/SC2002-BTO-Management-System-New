@@ -45,6 +45,7 @@ public class ManagerManageProject {
     
         System.out.print("Enter the selling price of 3-Room Flats: ");
         int sellingPriceThreeRoom = scanner.nextInt();
+        scanner.nextLine();
     
         Date openDate;
         Date closeDate;

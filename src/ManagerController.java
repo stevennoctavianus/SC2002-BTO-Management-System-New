@@ -67,7 +67,14 @@ public class ManagerController {
                 case 7: applicationManager.viewApplication(manager.getActiveProject()); break;
                 case 8: applicationManager.manageApplication(manager.getActiveProject()); break;
                 case 9: registrationManager.viewRegistration(); break;
-                case 10: registrationManager.manageRegistration(manager.getActiveProject()); break;
+                case 10:
+                Project activeProject = manager.getActiveProject();
+                if (activeProject == null) {
+                    System.out.println("You are not currently handling any active project.");
+                } else {
+                    registrationManager.manageRegistration(activeProject);
+                }
+                break;
                 case 11: withdrawalManager.manageWithdrawal(manager.getActiveProject()); break;
                 case 12: reportGenerator.generateReport(); break;
                 case 13: enquiryManager.viewEnquiry(); break;

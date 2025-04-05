@@ -1,5 +1,7 @@
+package container;
 import java.util.*;
-
+import utils.CSVReader;
+import entity.*;
 public class ApplicantList {
     private ArrayList<Applicant> applicantList;
 

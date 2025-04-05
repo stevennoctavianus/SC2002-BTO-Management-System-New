@@ -1,3 +1,5 @@
+package controller;
+import entity.*;
 import java.util.List;
 
 public class OfficerGenerateReceipt {

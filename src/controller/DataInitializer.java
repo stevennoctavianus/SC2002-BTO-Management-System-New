@@ -1,3 +1,5 @@
+package controller;
+import container.*;
 public class DataInitializer {
     // Declare at the class level (accessible in all methods)
     private static ApplicantList applicantList;

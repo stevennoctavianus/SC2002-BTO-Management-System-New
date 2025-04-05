@@ -1,3 +1,7 @@
+package interact;
+import container.*;
+import entity.*;
+import controller.*;
 import java.util.Scanner;
 
 public class MainMenu {

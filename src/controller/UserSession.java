@@ -1,3 +1,5 @@
+package controller;
+import entity.*;
 public class UserSession {
     private static User currentUser;
 

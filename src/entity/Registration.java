@@ -1,3 +1,4 @@
+package entity;
 public class Registration {
     public enum RegistrationStatus {
         PENDING, APPROVED, REJECTED
@@ -31,8 +32,8 @@ public class Registration {
 
     @Override
     public String toString() {
-        return "Officer: " + officer.getName() + 
-               ", Project: " + project.getProjectName() + 
+        return "Officer: " + officer.getName() +
+               ", Project: " + project.getProjectName() +
                ", Status: " + status;
     }
 }

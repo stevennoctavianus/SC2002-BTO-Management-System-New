@@ -1,3 +1,5 @@
+package entity;
+
 public class Enquiry {
     private Applicant applicant;
     private Project project;

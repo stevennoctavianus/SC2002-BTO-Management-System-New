@@ -1,3 +1,6 @@
+package controller;
+import container.*;
+import entity.*;
 public class AuthenticationService {
     public static User authenticate(String nric, String password) {
         // Get lists from DataInitializer (avoid static call on non-static methods)

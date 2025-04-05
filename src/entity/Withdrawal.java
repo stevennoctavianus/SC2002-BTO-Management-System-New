@@ -1,3 +1,5 @@
+package entity;
+
 public class Withdrawal {
     private Application application;
     private WithdrawalStatus status;

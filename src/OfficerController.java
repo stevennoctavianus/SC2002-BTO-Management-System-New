@@ -156,7 +156,7 @@ public class OfficerController {
                 case 4: manageApplicationHandler.viewApplications(); break;
                 case 5: manageApplicationHandler.updateApplicationStatus(); break;
                 case 6: receiptHandler.generateReceipt(); break;
-                case 10: return;
+                case 7: return;
                 default: System.out.println("Invalid choice.");
             }
         } while (true);

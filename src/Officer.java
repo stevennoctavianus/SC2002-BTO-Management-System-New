@@ -4,7 +4,6 @@ public class Officer extends Applicant {
     private Project assignedProject;
     private ArrayList<Registration> registrations;
     private ArrayList<Project> managedProjects;
-    private boolean eligibleForRegistration;
 
     public Officer() {
         this.registrations = new ArrayList<>();
@@ -78,14 +77,6 @@ public class Officer extends Applicant {
             }
         }
         return pending;
-    }
-
-    public boolean isEligibleForRegistration() {
-        return eligibleForRegistration;
-    }
-
-    public void setEligibleForRegistration(boolean eligibleForRegistration) {
-        this.eligibleForRegistration = eligibleForRegistration;
     }
 
     @Override

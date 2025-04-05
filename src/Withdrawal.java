@@ -19,7 +19,7 @@ public class Withdrawal {
         return status;
     }
 
-    public void setStatus(WithdrawalStatus status) {
+    public void setWithdrawalStatus(WithdrawalStatus status) {
         this.status = status;
     }
 

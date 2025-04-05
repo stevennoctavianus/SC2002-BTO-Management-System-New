@@ -79,6 +79,8 @@ public class OfficerManageApplication {
             int current = assignedProject.getAvailableTwoRoom();
             if (current > 0) {
                 assignedProject.setAvailableTwoRoom(current - 1);
+                selectedApplication.setBookedFlat(true);
+                System.out.println("Success");
             } else {
                 System.out.println("No more 2-room flats available.");
                 return;
@@ -87,6 +89,7 @@ public class OfficerManageApplication {
             int current = assignedProject.getAvailableThreeRoom();
             if (current > 0) {
                 assignedProject.setAvailableThreeRoom(current - 1);
+                selectedApplication.setBookedFlat(true);
             } else {
                 System.out.println("No more 3-room flats available.");
                 return;

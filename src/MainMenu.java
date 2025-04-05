@@ -41,7 +41,7 @@ public class MainMenu {
                 } else if (user instanceof Applicant) {
                     new ApplicantController((Applicant) user, projectList, applicationList, enquiryList, withdrawalList).showMenu();
                 } else if (user instanceof Manager) {
-                    new ManagerUI().showMenu();
+                    new ManagerController((Manager) user, projectList, applicationList, registrationList, withdrawalList, enquiryList).showMenu();
                 }                
             } else {
                 System.out.println("Invalid credentials. Please try again.");

@@ -1,6 +1,7 @@
 package interact;
 import container.*;
 import entity.*;
+import utils.ClearScreen;
 import controller.*;
 
 import java.util.InputMismatchException;
@@ -32,7 +33,11 @@ public class MainMenu {
             System.out.print("Enter choice: ");
             try{
                 choice = scanner.nextInt();
-                if (choice == 4) break;
+                if (choice == 4){
+                    ClearScreen.clear();
+                    System.out.println("Bye Bye!");
+                    break;
+                }
                 scanner.nextLine();
             }
             catch(InputMismatchException e){

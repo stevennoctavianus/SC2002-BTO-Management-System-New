@@ -1,4 +1,4 @@
-package controller;
+package controller.officer;
 import container.*;
 import entity.*;
 public class OfficerManageProject {

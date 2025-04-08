@@ -1,9 +1,9 @@
-package controller;
+package controller.applicant;
 import container.*;
 import entity.*;
 import java.util.Scanner;
 
-class ApplicantViewProjects{
+public class ApplicantViewProjects{
     private Applicant applicant;
     private ProjectList projectList;
     protected ApplicationList applicationList;

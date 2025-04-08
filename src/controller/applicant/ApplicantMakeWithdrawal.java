@@ -1,4 +1,4 @@
-package controller;
+package controller.applicant;
 import container.*;
 import entity.*;
 import java.util.Scanner;

@@ -22,4 +22,16 @@ public class WithdrawalList {
             }
         }
     }
+
+    public ArrayList<Withdrawal> getPendingWithdrawalsByProject(Project project) {
+        ArrayList<Withdrawal> pending = new ArrayList<>();
+        for (Withdrawal withdrawal : withdrawals) {
+            Application app = withdrawal.getApplication();
+            if (app.getProject().equals(project) &&
+                withdrawal.getStatus() == Withdrawal.WithdrawalStatus.PENDING) {
+                pending.add(withdrawal);
+            }
+        }
+        return pending;
+    }
 }

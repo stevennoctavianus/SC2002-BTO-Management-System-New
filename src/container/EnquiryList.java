@@ -30,4 +30,14 @@ public class EnquiryList {
         }
         return result;
     }
+
+    public ArrayList<Enquiry> getPendingEnquiriesByProject(Project project) {
+        ArrayList<Enquiry> pendingEnquiries = new ArrayList<>();
+        for (Enquiry enquiry : enquiries) {
+            if (enquiry.getProject().equals(project) && enquiry.getStatus() == Enquiry.EnquiryStatus.PENDING) {
+                pendingEnquiries.add(enquiry);
+            }
+        }
+        return pendingEnquiries;
+    }
 }

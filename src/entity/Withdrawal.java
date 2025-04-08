@@ -21,14 +21,14 @@ public class Withdrawal {
         return status;
     }
 
-    public void setStatus(WithdrawalStatus status) {
+    public void setWithdrawalStatus(WithdrawalStatus status) {
         this.status = status;
     }
 
     @Override
     public String toString() {
-        return "Withdrawal [Application=" + application.getApplicant().getName() + 
-               ", Project=" + application.getProject().getProjectName() + 
+        return "Withdrawal [Application=" + application.getApplicant().getName() +
+               ", Project=" + application.getProject().getProjectName() +
                ", Status=" + status + "]";
     }
 }

@@ -113,6 +113,10 @@ public class ProjectList {
         return projectList;
     }
 
+    public void addProject(Project project){
+        projectList.add(project);
+    }
+
     public Project getProjectByName(String projectName) {
         for (Project project : projectList) {
             if (project.getProjectName().equalsIgnoreCase(projectName)) {
@@ -120,5 +124,13 @@ public class ProjectList {
             }
         }
         return null;
+    }
+
+    public void removeProject(Project project) {
+        if (projectList.remove(project)) {
+            System.out.println("Project '" + project.getProjectName() + "' removed successfully.");
+        } else {
+            System.out.println("Project not found in the list.");
+        }
     }
 }

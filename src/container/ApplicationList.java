@@ -33,4 +33,50 @@ public class ApplicationList {
         }
         return null; // No existing application
     }
+
+    public ArrayList<Application> getApplicationsByProject(Project project) {
+        ArrayList<Application> projectApplication = new ArrayList<>();
+        for (Application application : applicationList) {
+            if (application.getProject().equals(project)) {
+                projectApplication.add(application);
+            }
+        }
+        return projectApplication; // No existing application
+    }
+
+    public ArrayList<Application> getPendingApplicationsByProject(Project project) {
+        ArrayList<Application> pendingApplications = new ArrayList<>();
+        for (Application application : applicationList) {
+            if (application.getProject().equals(project) &&
+                application.getApplicationStatus() == Application.ApplicationStatus.PENDING) {
+                pendingApplications.add(application);
+            }
+        }
+        return pendingApplications;
+    }
+    
+
+    public void removeApplicationsByProject(Project project) {
+        for (Application application : new ArrayList<>(applicationList)) {
+            if (application.getProject().equals(project)) {
+                // Clear applicant reference
+                Applicant applicant = application.getApplicant();
+                if (applicant != null) {
+                    applicant.setCurrentApplication(null); // Only if such a setter exists
+                }
+                this.removeApplication(application);
+            }
+        }
+    }
+
+    public ArrayList<Application> getSuccessfulApplications() {
+        ArrayList<Application> successful = new ArrayList<>();
+        for (Application application : applicationList) {
+            if (application.getApplicationStatus() == Application.ApplicationStatus.SUCCESSFUL) {
+                successful.add(application);
+            }
+        }
+        return successful;
+    }
+
 }

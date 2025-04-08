@@ -63,7 +63,7 @@ public class MainMenu {
                     new ApplicantController((Applicant) user, projectList, applicationList, enquiryList, withdrawalList).showMenu();
                 }
                 else if (user instanceof Manager) {
-                    new ManagerUI().showMenu();
+                    new ManagerController((Manager) user, projectList, applicationList, registrationList, withdrawalList, enquiryList).showMenu();
                 }
             }
             else {

@@ -2,20 +2,23 @@ package entity;
 import java.util.ArrayList;
 
 public class Applicant extends User {
-    private Project appliedProject;
-    private Application application;
+    private Project appliedProject; // optional if still needed
+    private Application currentApplication;
+    private ArrayList<Application> applications;
     private ArrayList<Enquiry> enquiries;
 
-    public Applicant(){
+    public Applicant() {
+        this.applications = new ArrayList<>();
         this.enquiries = new ArrayList<>();
     }
 
-    public Applicant(String name, String nric, int age, String maritalStatus, String password){
+    public Applicant(String name, String nric, int age, String maritalStatus, String password) {
         setName(name);
         setNric(nric);
         setAge(age);
         setMaritalStatus(maritalStatus);
         setPassword(password);
+        this.applications = new ArrayList<>();
         this.enquiries = new ArrayList<>();
     }
 
@@ -27,12 +30,28 @@ public class Applicant extends User {
         this.appliedProject = appliedProject;
     }
 
-    public Application getApplication() {
-        return application;
+    public Application getCurrentApplication(){
+        return this.currentApplication;
     }
 
-    public void setApplication(Application application) {
-        this.application = application;
+    public void setCurrentApplication(Application currentApplication){
+        this.currentApplication = currentApplication;
+    }
+
+    public ArrayList<Application> getApplications() {
+        return applications;
+    }
+
+    public void setApplications(ArrayList<Application> applications) {
+        this.applications = applications;
+    }
+
+    public void addApplication(Application application) {
+        this.applications.add(application);
+    }
+
+    public void removeApplication(Application application) {
+        this.applications.remove(application);
     }
 
     public ArrayList<Enquiry> getEnquiries() {
@@ -43,7 +62,6 @@ public class Applicant extends User {
         this.enquiries = enquiries;
     }
 
-    // Optional: Method to add a single enquiry to the list
     public void addEnquiry(Enquiry enquiry) {
         if (this.enquiries == null) {
             this.enquiries = new ArrayList<>();

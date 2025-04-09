@@ -2,6 +2,7 @@ package interact;
 import container.*;
 import entity.*;
 import utils.ClearScreen;
+import utils.DataSyncUtil;
 import controller.*;
 
 import java.util.InputMismatchException;
@@ -18,8 +19,25 @@ public class MainMenu {
         DataInitializer.loadData(); // Load users from CSV
         ManagerList managerList = DataInitializer.getManagerList();
         OfficerList officerList = DataInitializer.getOfficerList();
+        ApplicantList applicantList = DataInitializer.getApplicantList();
 
         projectList = new ProjectList("../data/ProjectList.csv", managerList, officerList);
+        
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            DataSyncUtil syncUtil = new DataSyncUtil(
+                DataInitializer.getApplicantList(),
+                projectList,
+                DataInitializer.getManagerList(),
+                DataInitializer.getOfficerList(),
+                applicationList,
+                registrationList,
+                withdrawalList,
+                enquiryList
+            );
+            syncUtil.saveAll();
+            System.out.println("✅ All data saved before program termination.");
+        }));
+        
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
@@ -76,5 +94,7 @@ public class MainMenu {
             }
         }
         scanner.close();
+
+
     }
 }

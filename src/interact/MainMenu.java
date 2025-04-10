@@ -42,6 +42,7 @@ public class MainMenu {
             }
             catch(InputMismatchException e){
                 System.out.println("Please input an integer!");
+                scanner.nextLine();
                 continue;
             }
             // Input and validate NRIC:

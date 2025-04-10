@@ -1,6 +1,8 @@
 package container;
 import entity.*;
 import utils.CSVReader;
+import utils.CSVWriter;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,4 +34,22 @@ public class ManagerList {
     public void addManager(Manager manager){
         this.managerList.add(manager);
     }
+
+    public void saveToCSV() {
+    List<String[]> data = new ArrayList<>();
+    data.add(new String[]{"name", "nric", "age", "maritalStatus", "password"});
+
+    for (Manager m : this.managerList) {
+        data.add(new String[]{
+            m.getName(),
+            m.getNric(),
+            String.valueOf(m.getAge()),
+            m.getMaritalStatus().name(),
+            m.getPassword()
+        });
+    }
+
+    CSVWriter.writeCSV("data/ManagerList.csv", data);
+}
+
 }

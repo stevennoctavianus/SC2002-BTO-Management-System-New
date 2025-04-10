@@ -1,6 +1,9 @@
 package container;
 import entity.*;
+import utils.CSVWriter;
+
 import java.util.ArrayList;
+import java.util.List;
 
 public class EnquiryList {
     private ArrayList<Enquiry> enquiries;
@@ -40,4 +43,21 @@ public class EnquiryList {
         }
         return pendingEnquiries;
     }
+
+    public void saveToCSV() {
+    List<String[]> data = new ArrayList<>();
+    data.add(new String[]{"applicantNric", "projectName", "message", "status"});
+
+    for (Enquiry e : this.enquiries) {
+        data.add(new String[]{
+            e.getApplicant().getNric(),
+            e.getProject().getProjectName(),
+            e.getMessage(),
+            e.getStatus().name()
+        });
+    }
+
+    CSVWriter.writeCSV("data/EnquiryList.csv", data);
+}
+
 }

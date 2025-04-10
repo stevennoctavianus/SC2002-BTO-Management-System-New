@@ -1,6 +1,8 @@
 package container;
 import entity.*;
 import utils.CSVReader;
+import utils.CSVWriter;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -133,4 +135,34 @@ public class ProjectList {
             System.out.println("Project not found in the list.");
         }
     }
+
+    public void saveToCSV() {
+    SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+    List<String[]> data = new ArrayList<>();
+    data.add(new String[]{
+        "projectName", "neighborhood",
+        "availableTwoRoom", "priceTwoRoom",
+        "availableThreeRoom", "priceThreeRoom",
+        "openDate", "closeDate",
+        "managerName", "maxOfficers"
+    });
+
+    for (Project p : projectList) {
+        data.add(new String[]{
+            p.getProjectName(),
+            p.getNeighborhood(),
+            String.valueOf(p.getAvailableTwoRoom()),
+            String.valueOf(p.getSellingPriceTwoRoom()),
+            String.valueOf(p.getAvailableThreeRoom()),
+            String.valueOf(p.getSellingPriceThreeRoom()),
+            sdf.format(p.getOpeningDate()),
+            sdf.format(p.getClosingDate()),
+            p.getManager().getName(),
+            String.valueOf(p.getMaxOfficer())
+        });
+    }
+
+    CSVWriter.writeCSV("data/ProjectList.csv", data);
+}
+
 }

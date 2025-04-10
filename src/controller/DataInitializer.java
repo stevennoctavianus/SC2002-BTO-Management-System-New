@@ -25,4 +25,21 @@ public class DataInitializer {
     public static ManagerList getManagerList() {
         return managerList;
     }
+
+    public static void saveData(
+        ProjectList projectList,
+        ApplicationList applicationList,
+        RegistrationList registrationList,
+        WithdrawalList withdrawalList,
+        EnquiryList enquiryList
+        ) {
+            if (applicantList != null) applicantList.saveToCSV();
+            if (officerList != null) officerList.saveToCSV();
+            if (managerList != null) managerList.saveToCSV();
+            if (projectList != null) projectList.saveToCSV();
+            if (applicationList != null) applicationList.saveToCSV();
+            if (registrationList != null) registrationList.saveToCSV();
+            if (withdrawalList != null) withdrawalList.saveToCSV();
+            if (enquiryList != null) enquiryList.saveToCSV();
+        }
 }

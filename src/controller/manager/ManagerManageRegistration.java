@@ -31,10 +31,10 @@ public class ManagerManageRegistration {
     public void manageRegistration(Project project) {
         ArrayList<Registration> pendingRegistrations = registrationList.getPendingRegistrationsByProject(project);
 
-        //if (pendingRegistrations.isEmpty()) {
-        //    System.out.println("No pending registrations for this project.");
-        //    return;
-        //}
+        if (pendingRegistrations.isEmpty()) {
+            System.out.println("No pending registrations for this project.");
+            return;
+        }
 
         System.out.println("Pending Registrations for Project: " + project.getProjectName());
         for (int i = 0; i < pendingRegistrations.size(); i++) {

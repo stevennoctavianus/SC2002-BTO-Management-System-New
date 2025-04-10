@@ -1,7 +1,10 @@
 package controller;
 import controller.applicant.*;
+import controller.applicant.template.*;
 import container.*;
 import entity.*;
+import utils.ClearScreen;
+
 import java.util.Scanner;
 
 public class ApplicantController {
@@ -12,10 +15,10 @@ public class ApplicantController {
     private WithdrawalList withdrawalList;
 
     private Scanner scanner;
-    private ApplicantMakeEnquiry enquiryHandler;
-    private ApplicantViewProjects projectHandler;
-    private ApplicantViewApplication applicationHandler;
-    private ApplicantMakeWithdrawal withdrawalHandler;
+    private IApplicantMakeEnquiry enquiryHandler;
+    private IApplicantViewProjects projectHandler;
+    private IApplicantViewApplication applicationHandler;
+    private IApplicantMakeWithdrawal withdrawalHandler;
 
     public ApplicantController(Applicant applicant, ProjectList projectList, ApplicationList applicationList, EnquiryList enquiryList, WithdrawalList withdrawalList) {
         this.applicant = applicant;
@@ -45,36 +48,45 @@ public class ApplicantController {
             System.out.println("8) Delete an Enquiry");
             System.out.println("9) Logout");
             System.out.print("Enter your choice: ");
-            
+
             choice = scanner.nextInt();
             scanner.nextLine(); // Consume newline
-            
+
             switch (choice) {
                 case 1:
+                    ClearScreen.clear();
                     projectHandler.viewProjectList();
                     break;
                 case 2:
+                    ClearScreen.clear();
                     projectHandler.applyForProject();
                     break;
                 case 3:
+                    ClearScreen.clear();
                     applicationHandler.viewApplicationStatus();
                     break;
                 case 4:
+                    ClearScreen.clear();
                     withdrawalHandler.withdrawApplication();
                     break;
                 case 5:
+                    ClearScreen.clear();
                     enquiryHandler.makeEnquiry();
                     break;
                 case 6:
+                    ClearScreen.clear();
                     enquiryHandler.viewEnquiry();
                     break;
                 case 7:
+                    ClearScreen.clear();
                     enquiryHandler.editEnquiry();
                     break;
                 case 8:
+                    ClearScreen.clear();
                     enquiryHandler.deleteEnquiry();
                     break;
                 case 9:
+                    ClearScreen.clear();
                     System.out.println("Logging out...");
                     break;
                 default:

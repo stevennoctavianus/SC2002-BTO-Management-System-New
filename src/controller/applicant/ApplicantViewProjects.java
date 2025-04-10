@@ -1,9 +1,10 @@
 package controller.applicant;
 import container.*;
+import controller.applicant.template.IApplicantViewProjects;
 import entity.*;
 import java.util.Scanner;
 
-public class ApplicantViewProjects{
+public class ApplicantViewProjects implements IApplicantViewProjects{
     private Applicant applicant;
     private ProjectList projectList;
     protected ApplicationList applicationList;
@@ -23,7 +24,8 @@ public class ApplicantViewProjects{
                     System.out.println(project);
                 }
             }
-        } else{
+        }
+        else{
             for(Project project: projectList.getProjectList()){
                 if(project.getVisibility() == true){
                     System.out.println(project);

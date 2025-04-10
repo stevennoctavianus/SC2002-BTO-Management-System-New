@@ -2,8 +2,8 @@ package controller.applicant;
 import container.*;
 import entity.*;
 import java.util.Scanner;
-
-public class ApplicantMakeWithdrawal {
+import controller.applicant.template.IApplicantMakeWithdrawal;
+public class ApplicantMakeWithdrawal implements IApplicantMakeWithdrawal{
     private Applicant applicant;
     private WithdrawalList withdrawalList;
     private ApplicationList applicationList;

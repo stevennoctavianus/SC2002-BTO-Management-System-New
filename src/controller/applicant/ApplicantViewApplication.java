@@ -2,8 +2,8 @@ package controller.applicant;
 import container.*;
 import entity.*;
 import java.util.Scanner;
-
-public class ApplicantViewApplication {
+import controller.applicant.template.IApplicantViewApplication;
+public class ApplicantViewApplication implements IApplicantViewApplication{
     private Applicant applicant;
     private ApplicationList applicationList;
     private Scanner sc;
@@ -48,7 +48,8 @@ public class ApplicantViewApplication {
                     }
                 }
             }
-        } else{
+        }
+        else{
             System.out.println("No Application found.");
         }
 

@@ -4,8 +4,8 @@ import entity.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-
-public class ApplicantMakeEnquiry {
+import controller.applicant.template.IApplicantMakeEnquiry;;
+public class ApplicantMakeEnquiry implements IApplicantMakeEnquiry{
     private Applicant applicant;
     private ProjectList projectList;
     private EnquiryList enquiryList;

@@ -5,8 +5,8 @@ import entity.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-
-public class OfficerMakeEnquiry extends ApplicantMakeEnquiry {
+import controller.officer.template.IOfficerMakeEnquiry;
+public class OfficerMakeEnquiry extends ApplicantMakeEnquiry implements IOfficerMakeEnquiry{
     private Officer officer;
     private ProjectList projectList;
     private EnquiryList enquiryList;
@@ -100,7 +100,6 @@ public class OfficerMakeEnquiry extends ApplicantMakeEnquiry {
             if (enquiry.getApplicant().equals(officer) &&
                 enquiry.getStatus() == Enquiry.EnquiryStatus.PENDING &&
                 !officer.isManagingProject(enquiry.getProject())) {
-        
                 System.out.println(index + ") " + enquiry);
                 editableEnquiries.add(enquiry);
                 index++;

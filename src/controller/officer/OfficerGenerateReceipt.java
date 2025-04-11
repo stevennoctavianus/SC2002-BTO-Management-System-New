@@ -1,8 +1,8 @@
 package controller.officer;
 import entity.*;
 import java.util.List;
-import controller.officer.template.IOfficierGenerateReceipt;
-public class OfficerGenerateReceipt implements IOfficierGenerateReceipt{
+import controller.officer.template.IOfficerGenerateReceipt;
+public class OfficerGenerateReceipt implements IOfficerGenerateReceipt{
     private Officer officer;
 
     public OfficerGenerateReceipt(Officer officer) {

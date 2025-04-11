@@ -4,7 +4,8 @@ import controller.applicant.*;
 import container.*;
 import entity.*;
 import java.util.Scanner;
-
+import controller.officer.template.*;
+import controller.applicant.template.*;
 public class OfficerController {
     private Officer officer;
     private ProjectList projectList;
@@ -15,16 +16,16 @@ public class OfficerController {
 
     private Scanner scanner;
 
-    private OfficerViewProjects projectHandler;
-    private OfficerMakeEnquiry enquiryHandler;
-    private ApplicantViewApplication applicationHandler;
-    private ApplicantMakeWithdrawal withdrawalHandler;
+    private IOfficerViewProjects projectHandler;
+    private IOfficerMakeEnquiry enquiryHandler;
+    private IApplicantViewApplication applicationHandler;
+    private IApplicantMakeWithdrawal withdrawalHandler;
 
-    private OfficerRegistration registrationHandler;
-    private OfficerManageEnquiries manageEnquiriesHandler;
-    private OfficerManageProject manageProjectHandler;
-    private OfficerManageApplication manageApplicationHandler;
-    private OfficerGenerateReceipt receiptHandler;
+    private IOfficerRegistration registrationHandler;
+    private IOfficerManageEnquiries manageEnquiriesHandler;
+    private IOfficerManageProject manageProjectHandler;
+    private IOfficerManageApplication manageApplicationHandler;
+    private IOfficerGenerateReceipt receiptHandler;
 
     public OfficerController(Officer officer, ProjectList projectList,
                              ApplicationList applicationList, EnquiryList enquiryList,

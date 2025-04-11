@@ -3,7 +3,7 @@ import controller.manager.*;
 import java.util.Scanner;
 import entity.*;
 import container.*;
-
+import controller.manager.template.*;
 public class ManagerController {
     private Manager manager;
     private ProjectList projectList;
@@ -12,12 +12,12 @@ public class ManagerController {
     private WithdrawalList withdrawalList;
     private EnquiryList enquiryList;
 
-    private ManagerManageProject projectManager;
-    private ManagerManageApplication applicationManager;
-    private ManagerManageRegistration registrationManager;
-    private ManagerManageWithdrawal withdrawalManager;
-    private ManagerGenerateReport reportGenerator;
-    private ManagerManageEnquiries enquiryManager;
+    private IManagerManageProject projectManager;
+    private IManagerManageApplication applicationManager;
+    private IManagerManageRegistration registrationManager;
+    private IManagerManageWithdrawal withdrawalManager;
+    private IManagerGenerateReport reportGenerator;
+    private IManagerManageEnquiries enquiryManager;
 
     public ManagerController(Manager manager, ProjectList projectList, ApplicationList applicationList,
                              RegistrationList registrationList, WithdrawalList withdrawalList, EnquiryList enquiryList) {

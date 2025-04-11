@@ -3,7 +3,8 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import entity.*;
 import container.*;
-public class ManagerManageEnquiries {
+import controller.manager.template.IManagerManageEnquiries;
+public class ManagerManageEnquiries implements IManagerManageEnquiries{
     private EnquiryList enquiryList;
     private Scanner scanner;
 

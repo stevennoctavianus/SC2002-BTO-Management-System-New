@@ -3,7 +3,8 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import entity.*;
 import container.*;
-public class ManagerManageApplication {
+import controller.manager.template.IManagerManageApplication;
+public class ManagerManageApplication implements IManagerManageApplication{
     private ApplicationList applicationList;
     private Scanner scanner;
 
@@ -64,7 +65,7 @@ public class ManagerManageApplication {
         } else{
             availability = project.getAvailableTwoRoom();
         }
-        
+
         if (availability > 0) {
             System.out.println("1. Accept");
             System.out.println("2. Reject");

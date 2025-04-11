@@ -3,7 +3,8 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import container.*;
 import entity.*;
-public class ManagerGenerateReport {
+import controller.manager.template.IManagerGenerateReport;
+public class ManagerGenerateReport implements IManagerGenerateReport{
     private ApplicationList applicationList;
     private Scanner scanner;
 
@@ -91,7 +92,7 @@ public class ManagerGenerateReport {
             }
         } catch (IllegalArgumentException e) {
             System.out.println("Invalid marital status.");
-        }                
+        }
         printReport(filtered);
     }
 

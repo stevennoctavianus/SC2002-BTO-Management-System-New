@@ -7,8 +7,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Scanner;
-
-public class ManagerManageProject {
+import controller.manager.template.IManagerManageProject;
+public class ManagerManageProject implements IManagerManageProject{
     private Manager manager;
     private ProjectList projectList;
     private ApplicationList applicationList;

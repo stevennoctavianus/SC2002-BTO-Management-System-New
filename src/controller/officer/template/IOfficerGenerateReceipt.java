@@ -1,5 +1,5 @@
 package controller.officer.template;
 
-public interface IOfficierGenerateReceipt {
+public interface IOfficerGenerateReceipt {
     public void generateReceipt();
 }

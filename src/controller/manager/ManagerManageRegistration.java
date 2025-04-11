@@ -3,8 +3,8 @@ import entity.*;
 import container.*;
 import java.util.ArrayList;
 import java.util.Scanner;
-
-public class ManagerManageRegistration {
+import controller.manager.template.IManagerManageRegistration;
+public class ManagerManageRegistration implements IManagerManageRegistration{
     private RegistrationList registrationList;
     private Scanner scanner;
 

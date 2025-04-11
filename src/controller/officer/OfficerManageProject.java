@@ -1,7 +1,8 @@
 package controller.officer;
 import container.*;
 import entity.*;
-public class OfficerManageProject {
+import controller.officer.template.IOfficerManageProject;
+public class OfficerManageProject implements IOfficerManageProject{
     private Officer officer;
     private ProjectList projectList;
 

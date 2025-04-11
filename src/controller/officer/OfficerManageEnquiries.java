@@ -3,8 +3,8 @@ import container.*;
 import entity.*;
 import java.util.Scanner;
 import java.util.ArrayList;
-
-public class OfficerManageEnquiries {
+import controller.officer.template.IOfficerManageEnquiries;
+public class OfficerManageEnquiries implements IOfficerManageEnquiries{
     private Officer officer;
     private EnquiryList enquiryList;
     private Scanner scanner;

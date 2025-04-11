@@ -4,8 +4,8 @@ import container.*;
 import entity.*;
 import java.util.List;
 import java.util.Scanner;
-
-public class OfficerViewProjects extends ApplicantViewProjects {
+import controller.officer.template.IOfficerViewProjects;
+public class OfficerViewProjects extends ApplicantViewProjects implements IOfficerViewProjects{
     private Officer officer;
     private ProjectList projectList;
     private RegistrationList registrationList;

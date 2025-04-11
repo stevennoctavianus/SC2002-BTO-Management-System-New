@@ -3,8 +3,8 @@ import container.*;
 import entity.*;
 import java.util.ArrayList;
 import java.util.Scanner;
-
-public class ManagerManageWithdrawal {
+import controller.manager.template.IManagerManageWithdrawal;
+public class ManagerManageWithdrawal implements IManagerManageWithdrawal{
     private WithdrawalList withdrawalList;
     private ApplicationList applicationList;
     private Scanner scanner;

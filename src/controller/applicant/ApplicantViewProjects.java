@@ -18,7 +18,10 @@ public class ApplicantViewProjects implements IApplicantViewProjects{
     }
 
     public void viewProjectList(){
-        if(applicant.getMaritalStatus() == User.MaritalStatus.SINGLE){
+        // Show all the visible projects:
+        // Move the condition of user's group to applyProject() method
+
+        if(applicant.getMaritalStatus() == User.MaritalStatus.SINGLE && applicant.getAge() >= 35){
             for (Project project: projectList.getProjectList()){
                 if(project.getAvailableTwoRoom() > 0 && project.getVisibility() == true){
                     System.out.println(project);
@@ -43,14 +46,18 @@ public class ApplicantViewProjects implements IApplicantViewProjects{
             System.out.println("Project not found.");
             return;
         }
-
         if (applicationList.getApplicationByApplicant(applicant) != null){
             System.out.println("You already have an application.");
+            // Add new return:
+            return;
         }
+        // Check user's group:
+        // If the applicant is single and above 35 years old and there is no available 2-room flat type of the project -> return
 
+        // *********************************************/
         Application newApplication = new Application(project, applicant);
         applicationList.addApplication(newApplication);
-        System.out.println("Success!");
+        System.out.println("Success Application!");
 
     }
 

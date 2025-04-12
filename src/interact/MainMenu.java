@@ -1,6 +1,7 @@
 package interact;
 import container.*;
 import entity.*;
+import utils.BackButton;
 import utils.ClearScreen;
 import controller.*;
 import controller.applicant.ApplicantController;
@@ -24,14 +25,14 @@ public class MainMenu {
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
-            System.out.println("╔════════════════════════════════════════╗");
-            System.out.println("║      Welcome to the BTO Management     ║");
-            System.out.println("╠════════════════════════════════════════╣");
-            System.out.println("║  1) Applicant Login                    ║");
-            System.out.println("║  2) Officer Login                      ║");
-            System.out.println("║  3) Manager Login                      ║");
-            System.out.println("║  4) Exit                               ║");
-            System.out.println("╚════════════════════════════════════════╝");
+            System.out.println("+----------------------------------------+");
+            System.out.println("|      Welcome to the BTO Management     |");
+            System.out.println("+----------------------------------------+");
+            System.out.println("|  1) Applicant Login                    |");
+            System.out.println("|  2) Officer Login                      |");
+            System.out.println("|  3) Manager Login                      |");
+            System.out.println("|  4) Exit                               |");
+            System.out.println("+----------------------------------------+");
             int choice;
             String nric, password;
             System.out.print("Enter choice: ");
@@ -53,7 +54,9 @@ public class MainMenu {
             System.out.print("Enter NRIC: ");
             nric = scanner.nextLine().trim();
             if(!AuthenticationService.validNRIC(nric)){ 
+                ClearScreen.clear();
                 System.out.println("Invalid NRIC\n");
+                BackButton.goBack();
                 continue;
             }
 
@@ -65,7 +68,7 @@ public class MainMenu {
             User user = AuthenticationService.authenticate(nric, password,choice);
             if (user != null) {
                 UserSession.setCurrentUser(user);
-
+                ClearScreen.clear();
                 if (user instanceof Officer) {
                     new OfficerController((Officer) user, projectList, applicationList, enquiryList, withdrawalList, registrationList).showMenu();
                 }

@@ -26,19 +26,20 @@ public class ApplicantMakeEnquiry implements IApplicantMakeEnquiry{
             index++;
         }
 
-        System.out.println("Enter the project numbner: ");
+        System.out.print("Enter the project numbner: ");
         int choice = sc.nextInt();
         sc.nextLine();
 
         Project project = projectList.getProjectList().get(choice-1);
 
-        System.out.println("Enter your message: ");
+        System.out.print("Enter your message: ");
         String message = sc.nextLine();
 
         Enquiry enquiry = new Enquiry(applicant, project, message);
         enquiryList.addEnquiry(enquiry);
 
-        System.out.println("Success");
+        System.out.println("\nSuccess Enquiry!");
+        // BackButton.goBack();
     }
 
     public void viewEnquiry(){
@@ -53,10 +54,11 @@ public class ApplicantMakeEnquiry implements IApplicantMakeEnquiry{
                 index++;
             }
         }
-        
         if(found == false){
             System.out.println("No enquiries found.");
         }
+
+        // BackButton.goBack();
     }
 
     public void editEnquiry(){
@@ -74,6 +76,7 @@ public class ApplicantMakeEnquiry implements IApplicantMakeEnquiry{
 
         if (applicantEnquiries.isEmpty()) {
             System.out.println("No pending enquiries to edit.");
+            // BackButton.goBack();
             return;
         }
 
@@ -83,6 +86,7 @@ public class ApplicantMakeEnquiry implements IApplicantMakeEnquiry{
 
         if (choice < 1 || choice > applicantEnquiries.size()) {
             System.out.println("Invalid choice.");
+            // BackButton.goBack();
             return;
         }
 
@@ -91,6 +95,7 @@ public class ApplicantMakeEnquiry implements IApplicantMakeEnquiry{
         applicantEnquiries.get(choice - 1).setMessage(message);
 
         System.out.println("Enquiry updated.");
+        // BackButton.goBack();
     }
 
     public void deleteEnquiry() {
@@ -108,6 +113,7 @@ public class ApplicantMakeEnquiry implements IApplicantMakeEnquiry{
 
         if (applicantEnquiries.isEmpty()) {
             System.out.println("No pending enquiries to delete.");
+            // BackButton.goBack();
             return;
         }
 
@@ -116,11 +122,13 @@ public class ApplicantMakeEnquiry implements IApplicantMakeEnquiry{
 
         if (choice < 1 || choice > applicantEnquiries.size()) {
             System.out.println("Invalid choice.");
+            // BackButton.goBack();
             return;
         }
 
         enquiryList.removeEnquiry(applicantEnquiries.get(choice - 1));
         System.out.println("Enquiry deleted.");
+        // BackButton.goBack();
     }
 
 

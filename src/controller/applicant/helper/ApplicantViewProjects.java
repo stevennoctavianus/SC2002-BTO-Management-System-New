@@ -3,7 +3,6 @@ import container.*;
 import controller.applicant.template.IApplicantViewProjects;
 import entity.*;
 import java.util.Scanner;
-import utils.BackButton;
 public class ApplicantViewProjects implements IApplicantViewProjects{
     private Applicant applicant;
     private ProjectList projectList;
@@ -21,26 +20,38 @@ public class ApplicantViewProjects implements IApplicantViewProjects{
         // Show all the visible projects:
         // Move the condition of user's group to applyProject() method
 
-        if(applicant.getMaritalStatus() == User.MaritalStatus.SINGLE && applicant.getAge() >= 35){
-            for (Project project: projectList.getProjectList()){
-                if(project.getAvailableTwoRoom() > 0 && project.getVisibility() == true){
-                    System.out.println(project);
-                }
+        // if(applicant.getMaritalStatus() == User.MaritalStatus.SINGLE && applicant.getAge() >= 35){
+        //     for (Project project: projectList.getProjectList()){
+        //         if(project.getAvailableTwoRoom() > 0 && project.getVisibility() == true){
+        //             System.out.println(project);
+        //         }
+        //     }
+        // }
+        // else{
+        //     for(Project project: projectList.getProjectList()){
+        //         if(project.getVisibility() == true){
+        //             System.out.println(project);
+        //         }
+        //     }
+        // }
+        for(Project project: projectList.getProjectList()){
+            if(project.getVisibility() == true){
+                System.out.println(project);
             }
         }
-        else{
-            for(Project project: projectList.getProjectList()){
-                if(project.getVisibility() == true){
-                    System.out.println(project);
-                }
-            }
-        }
-        // Go back to Menu:
-        BackButton.goBack();
     }
 
     public void applyForProject(){
-        System.out.println("Enter Project Name to apply: ");
+        // Briefly Show All Projects' name:
+        // *********************************************/
+        System.out.println("Projects you can apply: ");
+        for(Project project: projectList.getProjectList()){
+            if(project.getVisibility() == true){
+                System.out.println("+)" + project.getProjectName());
+            }
+        }
+        // *********************************************/
+        System.out.print("Enter Project Name to apply: ");
         String projectName = sc.nextLine();
         Project project = projectList.getProjectByName(projectName);
 
@@ -56,14 +67,17 @@ public class ApplicantViewProjects implements IApplicantViewProjects{
         // Check user's group:
         // If the applicant is single and above 35 years old and there is no available 2-room flat type of the project -> return
         // *********************************************/
-
+        if(applicant.getMaritalStatus() == User.MaritalStatus.SINGLE && applicant.getAge() >= 35 && project.getAvailableTwoRoom() == 0){
+            System.out.println("There is no available flat for your age group!");
+            return;
+        }
 
         // *********************************************/
         Application newApplication = new Application(project, applicant);
         applicationList.addApplication(newApplication);
         System.out.println("Success Application!");
         // Go back to menu:
-        BackButton.goBack();
+        // BackButton.goBack();
     }
 
 }

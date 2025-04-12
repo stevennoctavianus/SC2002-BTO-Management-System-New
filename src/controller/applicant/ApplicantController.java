@@ -3,6 +3,7 @@ import controller.applicant.helper.*;
 import controller.applicant.template.*;
 import container.*;
 import entity.*;
+import utils.BackButton;
 import utils.ClearScreen;
 
 import java.util.Scanner;
@@ -37,21 +38,21 @@ public class ApplicantController {
     public void showMenu() {
         int choice;
         do {
-            System.out.println("╔════════════════════════════════════════════════╗");
-            System.out.println("║               Applicant Dashboard              ║");
-            System.out.println("╠════════════════════════════════════════════════╣");
-            System.out.println("║  1) View BTO Project List                      ║");
-            System.out.println("║  2) Apply for a BTO Project                    ║");
-            System.out.println("║  3) View My Application                        ║");
-            System.out.println("║  4) Withdraw Application                       ║");
-            System.out.println("║  5) Submit an Enquiry                          ║");
-            System.out.println("║  6) View My Enquiries                          ║");
-            System.out.println("║  7) Edit an Enquiry                            ║");
-            System.out.println("║  8) Delete an Enquiry                          ║");
-            // Add change password feature here:
-            System.out.println("║  9) Change Password                            ║");
-            System.out.println("║ 10) Logout                                     ║");
-            System.out.println("╚════════════════════════════════════════════════╝");
+            System.out.println("+------------------------------------------------+");
+            System.out.println("|               Applicant Dashboard              |");
+            System.out.println("+------------------------------------------------+");
+            System.out.println("|  1) View BTO Project List                      |");
+            System.out.println("|  2) Apply for a BTO Project                    |");
+            System.out.println("|  3) View My Application                        |");
+            System.out.println("|  4) Withdraw Application                       |");
+            System.out.println("|  5) Submit an Enquiry                          |");
+            System.out.println("|  6) View My Enquiries                          |");
+            System.out.println("|  7) Edit an Enquiry                            |");
+            System.out.println("|  8) Delete an Enquiry                          |");
+            // Add change password here:
+            System.out.println("|  9) Change Password                            |");
+            System.out.println("| 10) Logout                                     |");
+            System.out.println("+------------------------------------------------+");
             System.out.print("Enter your choice: ");
 
             choice = scanner.nextInt();
@@ -97,6 +98,9 @@ public class ApplicantController {
                 default:
                     System.out.println("Invalid choice! Please enter a valid option.");
             }
-        } while (choice != 10);
+            if(choice == 10) ClearScreen.clear();
+            else BackButton.goBack();
+        }
+        while (choice != 10);
     }
 }

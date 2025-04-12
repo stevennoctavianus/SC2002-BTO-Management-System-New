@@ -55,15 +55,16 @@ public class OfficerController {
     public void showMenu() {
         int choice;
         do {
-            System.out.println("╔════════════════════════════════════════════════╗");
-            System.out.println("║              Officer Dashboard                 ║");
-            System.out.println("╠════════════════════════════════════════════════╣");
-            System.out.println("║  1) Apply for BTO Project (as Applicant)       ║");
-            System.out.println("║  2) Register for Project (as Officer)          ║");
-            System.out.println("║  3) Manage Officer's Job                       ║");
-            System.out.println("║  4) Change Password                            ║");
-            System.out.println("║  5) Logout                                     ║");
-            System.out.println("╚════════════════════════════════════════════════╝");
+            System.out.println("+--------------------------------------------------+");
+            System.out.println("|              Officer Dashboard                   |");
+            System.out.println("+--------------------------------------------------+");
+            System.out.println("|  1) Apply for BTO Project (as Applicant)         |");
+            System.out.println("|  2) Register for Project (as Officer)            |");
+            System.out.println("|  3) Manage Officer's Job                         |");
+            System.out.println("|  4) Change Password                              |");
+            System.out.println("|  5) Logout                                       |");
+            System.out.println("+--------------------------------------------------+");
+            System.out.print("Enter choice: ");
             choice = scanner.nextInt();
             scanner.nextLine();
 
@@ -94,19 +95,19 @@ public class OfficerController {
     private void showApplicantMenu() {
         int choice;
         do {
-            System.out.println("╔════════════════════════════════════════════════╗");
-            System.out.println("║           Applicant Mode (Officer View)        ║");
-            System.out.println("╠════════════════════════════════════════════════╣");
-            System.out.println("║  1) View BTO Project List                      ║");
-            System.out.println("║  2) Apply for a BTO Project                    ║");
-            System.out.println("║  3) View My Application                        ║");
-            System.out.println("║  4) Withdraw Application                       ║");
-            System.out.println("║  5) Submit an Enquiry                          ║");
-            System.out.println("║  6) View My Enquiries                          ║");
-            System.out.println("║  7) Edit an Enquiry                            ║");
-            System.out.println("║  8) Delete an Enquiry                          ║");
-            System.out.println("║  9) Back                                       ║");
-            System.out.println("╚════════════════════════════════════════════════╝");
+            System.out.println("+--------------------------------------------------+");
+            System.out.println("|           Applicant Mode (Officer View)         |");
+            System.out.println("+--------------------------------------------------+");
+            System.out.println("|  1) View BTO Project List                       |");
+            System.out.println("|  2) Apply for a BTO Project                     |");
+            System.out.println("|  3) View My Application                         |");
+            System.out.println("|  4) Withdraw Application                        |");
+            System.out.println("|  5) Submit an Enquiry                           |");
+            System.out.println("|  6) View My Enquiries                           |");
+            System.out.println("|  7) Edit an Enquiry                             |");
+            System.out.println("|  8) Delete an Enquiry                           |");
+            System.out.println("|  9) Back                                        |");
+            System.out.println("+--------------------------------------------------+");
             System.out.print("Enter choice: ");
             choice = scanner.nextInt();
             scanner.nextLine();
@@ -129,13 +130,13 @@ public class OfficerController {
     private void showOfficerRegistrationMenu() {
         int choice;
         do {
-            System.out.println("╔════════════════════════════════════════════════╗");
-            System.out.println("║              Officer Registration              ║");
-            System.out.println("╠════════════════════════════════════════════════╣");
-            System.out.println("║  1) Register as Officer                        ║");
-            System.out.println("║  2) View Registration Status                   ║");
-            System.out.println("║  3) Back                                       ║");
-            System.out.println("╚════════════════════════════════════════════════╝");
+            System.out.println("+--------------------------------------------------+");
+            System.out.println("|              Officer Registration               |");
+            System.out.println("+--------------------------------------------------+");
+            System.out.println("|  1) Register as Officer                         |");
+            System.out.println("|  2) View Registration Status                    |");
+            System.out.println("|  3) Back                                         |");
+            System.out.println("+--------------------------------------------------+");
             System.out.print("Enter choice: ");
             choice = scanner.nextInt();
             scanner.nextLine();
@@ -157,17 +158,17 @@ public class OfficerController {
 
         int choice;
         do {
-            System.out.println("╔════════════════════════════════════════════════╗");
-            System.out.println("║           Officer Project Management           ║");
-            System.out.println("╠════════════════════════════════════════════════╣");
-            System.out.println("║  1) View Enquiries                             ║");
-            System.out.println("║  2) Reply Enquiry                              ║");
-            System.out.println("║  3) View Project Details                       ║");
-            System.out.println("║  4) View Applications                          ║");
-            System.out.println("║  5) Update Applicant Profile                   ║");
-            System.out.println("║  6) Generate Receipt                           ║");
-            System.out.println("║  7) Back                                       ║");
-            System.out.println("╚════════════════════════════════════════════════╝");
+            System.out.println("+--------------------------------------------------+");
+            System.out.println("|           Officer Project Management            |");
+            System.out.println("+--------------------------------------------------+");
+            System.out.println("|  1) View Enquiries                              |");
+            System.out.println("|  2) Reply Enquiry                               |");
+            System.out.println("|  3) View Project Details                        |");
+            System.out.println("|  4) View Applications                           |");
+            System.out.println("|  5) Update Applicant Profile                    |");
+            System.out.println("|  6) Generate Receipt                            |");
+            System.out.println("|  7) Back                                        |");
+            System.out.println("+--------------------------------------------------+");
             System.out.print("Enter choice: ");
             choice = scanner.nextInt();
             scanner.nextLine();

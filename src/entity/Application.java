@@ -30,42 +30,42 @@ public class Application {
     public boolean getBookedFlat() {
         return bookedFlat;
     }
-    
+
     public void setBookedFlat(boolean bookedFlat) {
         this.bookedFlat = bookedFlat;
     }
-    
+
     public ApplicationStatus getApplicationStatus() {
         return applicationStatus;
     }
-    
+
     public void setApplicationStatus(ApplicationStatus applicationStatus) {
         this.applicationStatus = applicationStatus;
     }
-    
+
     public FlatType getFlatType() {
         return flatType;
     }
-    
+
     public void setFlatType(FlatType flatType) {
         this.flatType = flatType;
     }
-    
+
     public Project getProject() {
         return project;
     }
-    
+
     public void setProject(Project project) {
         this.project = project;
     }
-    
+
     public Applicant getApplicant() {
         return applicant;
     }
-    
+
     public void setApplicant(Applicant applicant) {
         this.applicant = applicant;
     }
-    
+
 
 }

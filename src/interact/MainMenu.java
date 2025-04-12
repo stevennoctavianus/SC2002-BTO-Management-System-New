@@ -23,7 +23,7 @@ public class MainMenu {
 
         projectList = new ProjectList("../data/ProjectList.csv", managerList, officerList);
         Scanner scanner = new Scanner(System.in);
-
+        ClearScreen.clear();
         while (true) {
             System.out.println("+----------------------------------------+");
             System.out.println("|      Welcome to the BTO Management     |");
@@ -46,6 +46,7 @@ public class MainMenu {
                 scanner.nextLine();
             }
             catch(InputMismatchException e){
+                ClearScreen.clear();
                 System.out.println("Please input an integer!");
                 scanner.nextLine();
                 continue;

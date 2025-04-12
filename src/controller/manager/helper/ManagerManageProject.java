@@ -1,5 +1,6 @@
 package controller.manager.helper;
 import entity.*;
+import utils.ClearScreen;
 import container.*;
 
 import java.text.ParseException;
@@ -111,7 +112,7 @@ public class ManagerManageProject implements IManagerManageProject{
             System.out.print("Enter choice: ");
             int choice = scanner.nextInt();
             scanner.nextLine();
-
+            ClearScreen.clear();
             switch (choice) {
                 case 1:
                     System.out.print("New Neighborhood: ");

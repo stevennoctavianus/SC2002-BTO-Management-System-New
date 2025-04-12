@@ -19,12 +19,9 @@ public class OfficerViewProjects extends ApplicantViewProjects implements IOffic
 
     @Override
     public void viewProjectList() {
-        List<Project> allProjects = projectList.getProjectList();
 
         System.out.println("Available BTO Projects:");
-
-        for (Project project : allProjects) {
-            if (!project.getVisibility()) continue;
+        for (Project project : projectList.getProjectList()) {
 
             // Skip projects this officer is registered for (even if not yet approved)
             Registration reg = registrationList.getRegistrationByOfficerAndProject(officer, project);
@@ -35,12 +32,17 @@ public class OfficerViewProjects extends ApplicantViewProjects implements IOffic
                 continue;
             }
 
-            // If SINGLE, show only with available 2-Rooms
-            if (officer.getMaritalStatus() == User.MaritalStatus.SINGLE) {
-                if (project.getAvailableTwoRoom() > 0) {
-                    System.out.println(project);
-                }
-            } else {
+            // If SINGLE, show only with available 2-Rooms -> show all projects except which are registered and monitored
+            // Age group consideration should be in applyProject()
+
+            // if (officer.getMaritalStatus() == User.MaritalStatus.SINGLE) {
+            //     if (project.getAvailableTwoRoom() > 0) {
+            //         System.out.println(project);
+            //     }
+            // } else {
+            //     System.out.println(project);
+            // }
+            if(project.getVisibility() == true){
                 System.out.println(project);
             }
         }
@@ -49,7 +51,14 @@ public class OfficerViewProjects extends ApplicantViewProjects implements IOffic
     @Override
     public void applyForProject() {
         Scanner sc = new Scanner(System.in);
-
+        // Briefly show the name of available projects:
+        System.out.println("Projects you can apply:");
+        for (Project project : projectList.getProjectList()) {
+            Registration reg = registrationList.getRegistrationByOfficerAndProject(officer, project);
+            if (reg != null) continue;
+            if (officer.getAssignedProject() != null && officer.getAssignedProject().equals(project)) continue;
+            if(project.getVisibility() == true) System.out.println("+)" + project.getProjectName());
+        }
         System.out.print("Enter Project Name to apply: ");
         String projectName = sc.nextLine();
         Project project = projectList.getProjectByName(projectName);
@@ -78,6 +87,14 @@ public class OfficerViewProjects extends ApplicantViewProjects implements IOffic
             System.out.println("You already have an application.");
             return;
         }
+
+
+        // Manage Age group:
+        if(officer.getMaritalStatus() == User.MaritalStatus.SINGLE && officer.getAge() >= 35 && project.getAvailableTwoRoom() == 0){
+            System.out.println("There is no available flat for your age group!");
+            return;
+        }
+
 
         // Proceed with application
         Application newApplication = new Application(project, officer);

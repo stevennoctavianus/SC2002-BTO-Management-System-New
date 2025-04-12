@@ -3,6 +3,9 @@ import controller.officer.helper.*;
 import controller.applicant.helper.*;
 import container.*;
 import entity.*;
+import utils.BackButton;
+import utils.ClearScreen;
+
 import java.util.Scanner;
 import controller.officer.template.*;
 import controller.applicant.template.*;
@@ -67,7 +70,7 @@ public class OfficerController {
             System.out.print("Enter choice: ");
             choice = scanner.nextInt();
             scanner.nextLine();
-
+            ClearScreen.clear();
             switch (choice) {
                 case 1:
                     showApplicantMenu();
@@ -85,10 +88,13 @@ public class OfficerController {
                     break;
                 case 5:
                     System.out.println("Logging out...");
+                    BackButton.goBack();
                     break;
                 default:
                     System.out.println("Invalid choice!");
+                    BackButton.goBack();
             }
+
         } while (choice != 5);
     }
 
@@ -111,7 +117,7 @@ public class OfficerController {
             System.out.print("Enter choice: ");
             choice = scanner.nextInt();
             scanner.nextLine();
-
+            ClearScreen.clear();
             switch (choice) {
                 case 1: projectHandler.viewProjectList(); break;
                 case 2: projectHandler.applyForProject(); break;
@@ -121,9 +127,14 @@ public class OfficerController {
                 case 6: enquiryHandler.viewEnquiry(); break;
                 case 7: enquiryHandler.editEnquiry(); break;
                 case 8: enquiryHandler.deleteEnquiry(); break;
-                case 9: return;
-                default: System.out.println("Invalid choice.");
+                case 9:
+                    ClearScreen.clear();
+                    return;
+                default:
+                    ClearScreen.clear();
+                    System.out.println("Invalid choice.");
             }
+            BackButton.goBack();
         } while (true);
     }
 
@@ -140,13 +151,18 @@ public class OfficerController {
             System.out.print("Enter choice: ");
             choice = scanner.nextInt();
             scanner.nextLine();
-
+            ClearScreen.clear();
             switch (choice) {
                 case 1: registrationHandler.registerForProject(); break;
                 case 2: registrationHandler.viewRegistrationStatus(); break;
-                case 3: return;
-                default: System.out.println("Invalid choice.");
+                case 3:
+                    ClearScreen.clear();
+                    return;
+                default:
+                    ClearScreen.clear();
+                    System.out.println("Invalid choice.");
             }
+            BackButton.goBack();
         } while (true);
     }
 
@@ -172,7 +188,7 @@ public class OfficerController {
             System.out.print("Enter choice: ");
             choice = scanner.nextInt();
             scanner.nextLine();
-
+            ClearScreen.clear();
             switch (choice) {
                 case 1: manageEnquiriesHandler.viewEnquiries(); break;
                 case 2: manageEnquiriesHandler.replyToEnquiry(); break;
@@ -180,9 +196,14 @@ public class OfficerController {
                 case 4: manageApplicationHandler.viewApplications(); break;
                 case 5: manageApplicationHandler.updateApplicationStatus(); break;
                 case 6: receiptHandler.generateReceipt(); break;
-                case 7: return;
-                default: System.out.println("Invalid choice.");
+                case 7:
+                    ClearScreen.clear();
+                    return;
+                default:
+                    ClearScreen.clear();
+                    System.out.println("Invalid choice.");
             }
+            BackButton.goBack();
         } while (true);
     }
 }

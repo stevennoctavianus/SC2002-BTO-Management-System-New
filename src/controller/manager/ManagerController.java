@@ -2,6 +2,7 @@ package controller.manager;
 import controller.manager.helper.*;
 import java.util.Scanner;
 import entity.*;
+import utils.BackButton;
 import utils.ClearScreen;
 import container.*;
 import controller.manager.template.*;
@@ -62,7 +63,6 @@ public class ManagerController {
             System.out.println("| 17) Logout                                         |");
             System.out.println("+----------------------------------------------------+");
             System.out.print("Enter your choice: ");
-
             int choice = scanner.nextInt();
             scanner.nextLine();
             ClearScreen.clear();
@@ -98,6 +98,7 @@ public class ManagerController {
                 default:
                     System.out.println("Invalid choice. Try again.");
             }
+            BackButton.goBack();
         }
     }
 }

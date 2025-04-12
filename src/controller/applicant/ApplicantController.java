@@ -98,8 +98,7 @@ public class ApplicantController {
                 default:
                     System.out.println("Invalid choice! Please enter a valid option.");
             }
-            if(choice == 10) ClearScreen.clear();
-            else BackButton.goBack();
+            BackButton.goBack();
         }
         while (choice != 10);
     }

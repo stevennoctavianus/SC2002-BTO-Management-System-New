@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import container.*;
 import entity.*;
+import utils.ClearScreen;
 import controller.manager.template.IManagerGenerateReport;
 public class ManagerGenerateReport implements IManagerGenerateReport{
     private ApplicationList applicationList;
@@ -23,9 +24,8 @@ public class ManagerGenerateReport implements IManagerGenerateReport{
         System.out.println("|  4) Filter by Project Name                     |");
         System.out.println("+-------------------------------------------------+");
         System.out.print("Select an option: ");
-
         String option = scanner.nextLine();
-
+        ClearScreen.clear();
         switch (option) {
             case "1":
                 printReport(applicationList.getSuccessfulApplications());
@@ -42,7 +42,6 @@ public class ManagerGenerateReport implements IManagerGenerateReport{
             default:
                 System.out.println("Invalid option.");
         }
-        
     }
 
     private void printReport(ArrayList<Application> applications) {

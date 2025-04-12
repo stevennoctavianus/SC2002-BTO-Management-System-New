@@ -14,11 +14,14 @@ public class ManagerGenerateReport implements IManagerGenerateReport{
     }
 
     public void generateReport() {
-        System.out.println("\n===== Generate Booking Report =====");
-        System.out.println("1. View All Bookings");
-        System.out.println("2. Filter by Flat Type");
-        System.out.println("3. Filter by Marital Status");
-        System.out.println("4. Filter by Project Name");
+        System.out.println("╔════════════════════════════════════════════════╗");
+        System.out.println("║          Generate Booking Report               ║");
+        System.out.println("╠════════════════════════════════════════════════╣");
+        System.out.println("║  1) View All Bookings                          ║");
+        System.out.println("║  2) Filter by Flat Type                        ║");
+        System.out.println("║  3) Filter by Marital Status                   ║");
+        System.out.println("║  4) Filter by Project Name                     ║");
+        System.out.println("╚════════════════════════════════════════════════╝");
         System.out.print("Select an option: ");
 
         String option = scanner.nextLine();

@@ -24,11 +24,14 @@ public class MainMenu {
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
-            System.out.println("Welcome to the BTO Management System");
-            System.out.println("1) Applicant Login");
-            System.out.println("2) Officer Login");
-            System.out.println("3) Manager Login");
-            System.out.println("4) Exit");
+            System.out.println("╔════════════════════════════════════════╗");
+            System.out.println("║      Welcome to the BTO Management     ║");
+            System.out.println("╠════════════════════════════════════════╣");
+            System.out.println("║  1) Applicant Login                    ║");
+            System.out.println("║  2) Officer Login                      ║");
+            System.out.println("║  3) Manager Login                      ║");
+            System.out.println("║  4) Exit                               ║");
+            System.out.println("╚════════════════════════════════════════╝");
             int choice;
             String nric, password;
             System.out.print("Enter choice: ");

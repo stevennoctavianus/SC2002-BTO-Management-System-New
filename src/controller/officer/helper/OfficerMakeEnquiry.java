@@ -1,11 +1,11 @@
-package controller.officer;
-import controller.applicant.*;
+package controller.officer.helper;
 import container.*;
 import entity.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import controller.officer.template.IOfficerMakeEnquiry;
+import controller.applicant.helper.ApplicantMakeEnquiry;
 public class OfficerMakeEnquiry extends ApplicantMakeEnquiry implements IOfficerMakeEnquiry{
     private Officer officer;
     private ProjectList projectList;

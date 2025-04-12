@@ -1,4 +1,4 @@
-package controller.applicant;
+package controller.applicant.helper;
 import container.*;
 import entity.*;
 import java.util.ArrayList;

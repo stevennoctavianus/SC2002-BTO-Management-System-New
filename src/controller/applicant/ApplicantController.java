@@ -1,5 +1,5 @@
-package controller;
-import controller.applicant.*;
+package controller.applicant;
+import controller.applicant.helper.*;
 import controller.applicant.template.*;
 import container.*;
 import entity.*;
@@ -46,47 +46,52 @@ public class ApplicantController {
             System.out.println("6) View My Enquiries");
             System.out.println("7) Edit an Enquiry");
             System.out.println("8) Delete an Enquiry");
-            System.out.println("9) Logout");
+
+            // Add Change Password Features:
+
+            System.out.println("9) Change Password");
+            /******************************************/
+            System.out.println("10) Logout");
             System.out.print("Enter your choice: ");
 
             choice = scanner.nextInt();
             scanner.nextLine(); // Consume newline
-
+            ClearScreen.clear();
             switch (choice) {
                 case 1:
-                    ClearScreen.clear();
                     projectHandler.viewProjectList();
                     break;
                 case 2:
-                    ClearScreen.clear();
                     projectHandler.applyForProject();
                     break;
                 case 3:
-                    ClearScreen.clear();
                     applicationHandler.viewApplicationStatus();
                     break;
                 case 4:
-                    ClearScreen.clear();
                     withdrawalHandler.withdrawApplication();
                     break;
                 case 5:
-                    ClearScreen.clear();
                     enquiryHandler.makeEnquiry();
                     break;
                 case 6:
-                    ClearScreen.clear();
                     enquiryHandler.viewEnquiry();
                     break;
                 case 7:
-                    ClearScreen.clear();
                     enquiryHandler.editEnquiry();
                     break;
                 case 8:
-                    ClearScreen.clear();
                     enquiryHandler.deleteEnquiry();
                     break;
+
+
+                // Should have a class called PasswordService -> avoid violate Single-Responsibility Principle
                 case 9:
+                    String newPassword = scanner.nextLine();
+                    applicant.setPassword(newPassword);
+                    System.out.println("Change Password Successfully!");
                     ClearScreen.clear();
+                    break;
+                case 10:
                     System.out.println("Logging out...");
                     break;
                 default:

@@ -1,8 +1,9 @@
-package controller.applicant;
+package controller.applicant.helper;
 import container.*;
 import entity.*;
 import java.util.Scanner;
 import controller.applicant.template.IApplicantViewApplication;
+import utils.BackButton;
 public class ApplicantViewApplication implements IApplicantViewApplication{
     private Applicant applicant;
     private ApplicationList applicationList;
@@ -20,28 +21,32 @@ public class ApplicantViewApplication implements IApplicantViewApplication{
             System.out.println("Status: " + application.getApplicationStatus());
             if(application.getApplicationStatus() == Application.ApplicationStatus.SUCCESSFUL){
                 System.out.println("Please book a flat!");
-                if(applicant.getMaritalStatus() == User.MaritalStatus.SINGLE){
+                if(applicant.getMaritalStatus() == User.MaritalStatus.SINGLE && applicant.getAge() >= 35){
                     System.out.println("You are only eligible for 2-flat room. Flat Booked, please wait for confirmation!");
                     application.setBookedFlat(true);
                     application.setFlatType(Application.FlatType.TWOROOM);
-                } else{
+                }
+                else{
                     if (application.getProject().getAvailableThreeRoom() != 0 && application.getProject().getAvailableTwoRoom() != 0){
-                        System.out.println("You can book 2 room Flat or 3 room Flat. Type 2 for 2-room Flat, 3 for 3-room Flat");
+                        System.out.println("You can book 2 room Flat or 3 room Flat. Enter 2 for 2-room Flat, 3 for 3-room Flat");
                         int option = sc.nextInt();
                         if (option == 2){
                             System.out.println("Success. Please wait for confirmation!");
                             application.setBookedFlat(true);
                             application.setFlatType(Application.FlatType.TWOROOM);
-                        } else if (option == 3){
+                        }
+                        else if (option == 3){
                             System.out.println("Success");
                             application.setBookedFlat(true);
                             application.setFlatType(Application.FlatType.THREEROOM);
                         }
-                    } else if (application.getProject().getAvailableThreeRoom() == 0){
+                    }
+                    else if (application.getProject().getAvailableThreeRoom() == 0){
                         System.out.println("Only 2 room Flat left. Flat Booked, please wait for confirmation!");
                         application.setBookedFlat(true);
                         application.setFlatType(Application.FlatType.TWOROOM);
-                    } else if (application.getProject().getAvailableTwoRoom() == 0){
+                    }
+                    else if (application.getProject().getAvailableTwoRoom() == 0){
                         System.out.println("Only 3 room Flat left. Flat Booked, please wait for confirmation!");
                         application.setBookedFlat(true);
                         application.setFlatType(Application.FlatType.THREEROOM);

@@ -1,10 +1,10 @@
-package controller.officer;
-import controller.applicant.*;
+package controller.officer.helper;
 import container.*;
 import entity.*;
 import java.util.List;
 import java.util.Scanner;
 import controller.officer.template.IOfficerViewProjects;
+import controller.applicant.helper.ApplicantViewProjects;
 public class OfficerViewProjects extends ApplicantViewProjects implements IOfficerViewProjects{
     private Officer officer;
     private ProjectList projectList;

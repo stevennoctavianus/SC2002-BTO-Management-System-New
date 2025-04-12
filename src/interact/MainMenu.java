@@ -3,7 +3,9 @@ import container.*;
 import entity.*;
 import utils.ClearScreen;
 import controller.*;
-
+import controller.applicant.ApplicantController;
+import controller.officer.OfficerController;
+import controller.manager.ManagerController;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -13,7 +15,6 @@ public class MainMenu {
     private static EnquiryList enquiryList = new EnquiryList();
     private static WithdrawalList withdrawalList = new WithdrawalList();
     private static RegistrationList registrationList = new RegistrationList();
-
     public static void main(String[] args) {
         DataInitializer.loadData(); // Load users from CSV
         ManagerList managerList = DataInitializer.getManagerList();

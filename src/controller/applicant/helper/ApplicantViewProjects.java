@@ -1,9 +1,9 @@
-package controller.applicant;
+package controller.applicant.helper;
 import container.*;
 import controller.applicant.template.IApplicantViewProjects;
 import entity.*;
 import java.util.Scanner;
-
+import utils.BackButton;
 public class ApplicantViewProjects implements IApplicantViewProjects{
     private Applicant applicant;
     private ProjectList projectList;
@@ -35,6 +35,8 @@ public class ApplicantViewProjects implements IApplicantViewProjects{
                 }
             }
         }
+        // Go back to Menu:
+        BackButton.goBack();
     }
 
     public void applyForProject(){
@@ -53,12 +55,15 @@ public class ApplicantViewProjects implements IApplicantViewProjects{
         }
         // Check user's group:
         // If the applicant is single and above 35 years old and there is no available 2-room flat type of the project -> return
+        // *********************************************/
+
 
         // *********************************************/
         Application newApplication = new Application(project, applicant);
         applicationList.addApplication(newApplication);
         System.out.println("Success Application!");
-
+        // Go back to menu:
+        BackButton.goBack();
     }
 
 }

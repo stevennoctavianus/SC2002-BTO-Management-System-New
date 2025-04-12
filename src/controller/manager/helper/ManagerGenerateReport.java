@@ -1,4 +1,4 @@
-package controller.manager;
+package controller.manager.helper;
 import java.util.ArrayList;
 import java.util.Scanner;
 import container.*;

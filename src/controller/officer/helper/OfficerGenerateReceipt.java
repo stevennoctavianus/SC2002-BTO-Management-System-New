@@ -1,4 +1,4 @@
-package controller.officer;
+package controller.officer.helper;
 import entity.*;
 import java.util.List;
 import controller.officer.template.IOfficerGenerateReceipt;

@@ -28,7 +28,7 @@ public class ApplicationList {
     public Application getApplicationByApplicant(Applicant applicant) {
         for (Application application : applicationList) {
             if (application.getApplicant().equals(applicant)) {
-                return application; 
+                return application;
             }
         }
         return null; // No existing application
@@ -54,7 +54,7 @@ public class ApplicationList {
         }
         return pendingApplications;
     }
-    
+
 
     public void removeApplicationsByProject(Project project) {
         for (Application application : new ArrayList<>(applicationList)) {

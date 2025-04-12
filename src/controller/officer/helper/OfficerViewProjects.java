@@ -1,7 +1,6 @@
 package controller.officer.helper;
 import container.*;
 import entity.*;
-import java.util.List;
 import java.util.Scanner;
 import controller.officer.template.IOfficerViewProjects;
 import controller.applicant.helper.ApplicantViewProjects;
@@ -31,19 +30,13 @@ public class OfficerViewProjects extends ApplicantViewProjects implements IOffic
             if (officer.getAssignedProject() != null && officer.getAssignedProject().equals(project)) {
                 continue;
             }
-
-            // If SINGLE, show only with available 2-Rooms -> show all projects except which are registered and monitored
-            // Age group consideration should be in applyProject()
-
-            // if (officer.getMaritalStatus() == User.MaritalStatus.SINGLE) {
-            //     if (project.getAvailableTwoRoom() > 0) {
-            //         System.out.println(project);
-            //     }
-            // } else {
-            //     System.out.println(project);
-            // }
-            if(project.getVisibility() == true){
+            if(officer.getMaritalStatus() == User.MaritalStatus.SINGLE && officer.getAge() >= 35 && project.getAvailableTwoRoom() > 0){
                 System.out.println(project);
+            }
+            else{
+                if(project.getVisibility() == true && (project.getAvailableThreeRoom() > 0 || project.getAvailableTwoRoom() > 0)){
+                    System.out.println(project);
+                }
             }
         }
     }
@@ -57,8 +50,14 @@ public class OfficerViewProjects extends ApplicantViewProjects implements IOffic
             Registration reg = registrationList.getRegistrationByOfficerAndProject(officer, project);
             if (reg != null) continue;
             if (officer.getAssignedProject() != null && officer.getAssignedProject().equals(project)) continue;
-            if(project.getVisibility() == true) System.out.println("+)" + project.getProjectName());
+            if(officer.getMaritalStatus() == User.MaritalStatus.SINGLE && officer.getAge() >= 35 && project.getAvailableTwoRoom() > 0) System.out.println(project.getProjectName());
+            else{
+                if(project.getVisibility() == true && (project.getAvailableThreeRoom() > 0 || project.getAvailableTwoRoom() > 0)){
+                    System.out.println(project.getProjectName());
+                }
+            }
         }
+        /****************************************/
         System.out.print("Enter Project Name to apply: ");
         String projectName = sc.nextLine();
         Project project = projectList.getProjectByName(projectName);
@@ -90,15 +89,42 @@ public class OfficerViewProjects extends ApplicantViewProjects implements IOffic
 
 
         // Manage Age group:
-        if(officer.getMaritalStatus() == User.MaritalStatus.SINGLE && officer.getAge() >= 35 && project.getAvailableTwoRoom() == 0){
-            System.out.println("There is no available flat for your age group!");
-            return;
+        Application.FlatType selectedFlatType;
+        //
+        if(officer.getMaritalStatus() == User.MaritalStatus.SINGLE && officer.getAge() >= 35){
+            if(project.getAvailableTwoRoom() == 0){
+                System.out.println("There is no available flat for your group!");
+                return;
+            }
+            else{
+                selectedFlatType = Application.FlatType.TWOROOM;
+            }
+        }
+        else{
+            System.out.println("Select flat type to apply for:");
+            System.out.println("Enter 1 -> 2-room flat");
+            System.out.println("Enter 2 -> 3-room flat");
+            System.out.print("Enter choice (1 or 2): ");
+            int choice = sc.nextInt();
+            if (choice  == 1) {
+                selectedFlatType = Application.FlatType.TWOROOM;
+            }
+            else if (choice == 2) {
+                selectedFlatType = Application.FlatType.THREEROOM;
+            }
+            else {
+                System.out.println("Invalid choice. Application cancelled.");
+                return;
+            }
         }
 
 
         // Proceed with application
         Application newApplication = new Application(project, officer);
+        newApplication.setFlatType(selectedFlatType);
         super.applicationList.addApplication(newApplication);
+        officer.addApplication(newApplication);
+        officer.setCurrentApplication(newApplication);
         System.out.println("Application submitted successfully!");
     }
 }

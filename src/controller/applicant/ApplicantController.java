@@ -5,7 +5,7 @@ import container.*;
 import entity.*;
 import utils.BackButton;
 import utils.ClearScreen;
-
+import controller.PasswordService;
 import java.util.Scanner;
 
 public class ApplicantController {
@@ -87,10 +87,7 @@ public class ApplicantController {
 
                 // Should have a class called PasswordService -> avoid violate Single-Responsibility Principle
                 case 9:
-                    String newPassword = scanner.nextLine();
-                    applicant.setPassword(newPassword);
-                    System.out.println("Change Password Successfully!");
-                    ClearScreen.clear();
+                    PasswordService.changePassWord(applicant);
                     break;
                 case 10:
                     System.out.println("Logging out...");

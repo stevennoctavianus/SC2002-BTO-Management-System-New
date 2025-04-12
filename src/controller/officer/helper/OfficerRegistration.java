@@ -30,10 +30,10 @@ public class OfficerRegistration implements IOfficerRegistration{
         ArrayList<Project> availableProjects = new ArrayList<>();
         for (Project project : projectList.getProjectList()) {
             boolean hasSlot = project.getMaxOfficer() > project.getOfficers().size();
-            
+
             // Check if officer already applied as applicant (via application list)
             boolean hasNotApplied = applicationList.getApplicationByApplicant(officer) == null;
-            
+
             if (hasSlot && hasNotApplied) {
                 availableProjects.add(project);
             }

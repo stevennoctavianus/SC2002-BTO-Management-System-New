@@ -1,11 +1,12 @@
 package controller.officer;
 import controller.officer.helper.*;
+import controller.PasswordService;
 import controller.applicant.helper.*;
 import container.*;
 import entity.*;
 import utils.BackButton;
 import utils.ClearScreen;
-
+import controller.PasswordService;
 import java.util.Scanner;
 import controller.officer.template.*;
 import controller.applicant.template.*;
@@ -85,6 +86,8 @@ public class OfficerController {
 
                 case 4:
                     /* Logic here */
+                    PasswordService.changePassWord(officer);
+                    BackButton.goBack();
                     break;
                 case 5:
                     System.out.println("Logging out...");

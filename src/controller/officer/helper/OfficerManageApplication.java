@@ -80,20 +80,32 @@ public class OfficerManageApplication implements IOfficerManageApplication{
         Application.FlatType type = selectedApplication.getFlatType();
         if (type == Application.FlatType.TWOROOM) {
             int current = assignedProject.getAvailableTwoRoom();
-            if (current > 0) {
-                assignedProject.setAvailableTwoRoom(current - 1);
-            } else {
-                System.out.println("No more 2-room flats available.");
-                return;
-            }
-        } else if (type == Application.FlatType.THREEROOM) {
+            // if (current > 0) {
+            //     assignedProject.setAvailableTwoRoom(current - 1);
+            //     selectedApplication.setBookedFlat(true);
+            //     System.out.println("Success");
+            // }
+            // else {
+            //     System.out.println("No more 2-room flats available.");
+            //     return;
+            // }
+            assignedProject.setAvailableTwoRoom(current - 1);
+            selectedApplication.setBookedFlat(true);
+            System.out.println("Success!");
+        }
+        else if (type == Application.FlatType.THREEROOM) {
             int current = assignedProject.getAvailableThreeRoom();
-            if (current > 0) {
-                assignedProject.setAvailableThreeRoom(current - 1);
-            } else {
-                System.out.println("No more 3-room flats available.");
-                return;
-            }
+            // if (current > 0) {
+            //     assignedProject.setAvailableThreeRoom(current - 1);
+            //     selectedApplication.setBookedFlat(true);
+            // }
+            // else {
+            //     System.out.println("No more 3-room flats available.");
+            //     return;
+            // }
+            assignedProject.setAvailableThreeRoom(current - 1);
+            selectedApplication.setBookedFlat(true);
+            System.out.println("Success!");
         }
 
         // Update application status

@@ -1,4 +1,5 @@
 package controller.manager;
+import controller.PasswordService;
 import controller.manager.helper.*;
 import java.util.Scanner;
 import entity.*;
@@ -91,6 +92,7 @@ public class ManagerController {
                 case 15: enquiryManager.replyHandledProjectEnquiry(manager.getActiveProject()); break;
                 case 16:
                     /* Logic for Password change here */
+                    PasswordService.changePassWord(manager);
                     break;
                 case 17:
                     System.out.println("Logging out...");

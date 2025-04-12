@@ -67,5 +67,11 @@ public class Application {
         this.applicant = applicant;
     }
 
-
+    @Override
+    public String toString() {
+        return "Applicant: " + applicant.getName() +
+            ", NRIC: " + applicant.getNric() +
+            ", Flat Type: " + flatType +
+            ", Status: " + applicationStatus;
+    }
 }

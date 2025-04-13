@@ -1,6 +1,7 @@
 package container;
 import entity.*;
 import utils.CSVReader;
+import utils.CSVWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -133,9 +134,6 @@ public class ProjectList {
             System.out.println("Project not found in the list.");
         }
     }
-<<<<<<< Updated upstream
-=======
-
     public void saveToCSV() {
         SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
         List<String[]> data = new ArrayList<>();
@@ -179,16 +177,4 @@ public class ProjectList {
     
         CSVWriter.writeCSV("../data/ProjectList.csv", data);
     }
-    
-
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
 }

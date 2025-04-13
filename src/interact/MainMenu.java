@@ -3,20 +3,7 @@ import container.*;
 import entity.*;
 import utils.BackButton;
 import utils.ClearScreen;
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-=======
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
 import utils.DataSyncUtil;
-//import utils.DataSyncUtil;
->>>>>>> Stashed changes
 import controller.*;
 import controller.applicant.ApplicantController;
 import controller.officer.OfficerController;
@@ -52,23 +39,7 @@ public class MainMenu {
             System.out.print("Enter choice: ");
             try{
                 choice = scanner.nextInt();
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-                if (choice == 4){
-=======
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
                 if (choice == 4) {
-
-                    for (Project p : projectList.getProjectList()) {
-                        System.out.println("DEBUG: Project " + p.getProjectName() + " officers: " + p.getOfficers());
-                    }
 
                     DataSyncUtil syncUtil = new DataSyncUtil(
                         DataInitializer.getApplicantList(),
@@ -81,17 +52,6 @@ public class MainMenu {
                         enquiryList
                     );
                     syncUtil.saveAll(); 
-
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
                     ClearScreen.clear();
                     System.out.println("Bye Bye!");
                     break;

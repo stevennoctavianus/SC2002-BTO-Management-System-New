@@ -1,6 +1,7 @@
 package container;
 import entity.*;
 import utils.CSVReader;
+import utils.CSVWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,8 +33,6 @@ public class ManagerList {
     public void addManager(Manager manager){
         this.managerList.add(manager);
     }
-<<<<<<< Updated upstream
-=======
 
     public void saveToCSV() {
     List<String[]> data = new ArrayList<>();
@@ -51,6 +50,6 @@ public class ManagerList {
 
     CSVWriter.writeCSV("../data/ManagerList.csv", data);
 }
-
->>>>>>> Stashed changes
 }
+
+

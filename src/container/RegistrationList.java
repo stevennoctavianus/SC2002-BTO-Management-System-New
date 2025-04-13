@@ -1,6 +1,8 @@
 package container;
 import entity.*;
+import utils.CSVWriter;
 import java.util.ArrayList;
+import java.util.*;
 
 public class RegistrationList {
     private ArrayList<Registration> registrationList;
@@ -52,9 +54,6 @@ public class RegistrationList {
         return pendingList;
     }
 
-<<<<<<< Updated upstream
-    
-=======
     public void saveToCSV() {
     List<String[]> data = new ArrayList<>();
     data.add(new String[]{"officerNric", "projectName", "status"});
@@ -69,6 +68,4 @@ public class RegistrationList {
 
     CSVWriter.writeCSV("../data/RegistrationList.csv", data);
 }
-
->>>>>>> Stashed changes
 }

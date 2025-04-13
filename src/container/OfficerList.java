@@ -49,7 +49,7 @@ public class OfficerList {
         });
     }
 
-    CSVWriter.writeCSV("data/OfficerList.csv", data);
+    CSVWriter.writeCSV("../data/OfficerList.csv", data);
 }
 
 }

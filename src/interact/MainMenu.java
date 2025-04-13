@@ -5,7 +5,10 @@ import utils.BackButton;
 import utils.ClearScreen;
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 =======
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
 import utils.DataSyncUtil;
@@ -48,8 +51,11 @@ public class MainMenu {
                 choice = scanner.nextInt();
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
                 if (choice == 4){
 =======
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
                 if (choice == 4) {
@@ -71,6 +77,9 @@ public class MainMenu {
                     syncUtil.saveAll(); 
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes

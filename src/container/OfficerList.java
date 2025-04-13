@@ -33,4 +33,24 @@ public class OfficerList {
         this.officerList.add(officer);
     }
     
+<<<<<<< Updated upstream
+=======
+    public void saveToCSV() {
+    List<String[]> data = new ArrayList<>();
+    data.add(new String[]{"name", "nric", "age", "maritalStatus", "password"});
+
+    for (Officer o : this.officerList) {
+        data.add(new String[]{
+            o.getName(),
+            o.getNric(),
+            String.valueOf(o.getAge()),
+            o.getMaritalStatus().name(),
+            o.getPassword()
+        });
+    }
+
+    CSVWriter.writeCSV("../data/OfficerList.csv", data);
+}
+
+>>>>>>> Stashed changes
 }

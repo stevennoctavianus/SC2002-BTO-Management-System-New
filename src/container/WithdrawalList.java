@@ -34,4 +34,23 @@ public class WithdrawalList {
         }
         return pending;
     }
+<<<<<<< Updated upstream
+=======
+
+    public void saveToCSV() {
+    List<String[]> data = new ArrayList<>();
+    data.add(new String[]{"applicantNric", "projectName", "status"});
+
+    for (Withdrawal w : this.withdrawals) {
+        data.add(new String[]{
+            w.getApplication().getApplicant().getNric(),
+            w.getApplication().getProject().getProjectName(),
+            w.getStatus().name()
+        });
+    }
+
+    CSVWriter.writeCSV("../data/WithdrawalList.csv", data);
+}
+
+>>>>>>> Stashed changes
 }

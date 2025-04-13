@@ -40,4 +40,24 @@ public class EnquiryList {
         }
         return pendingEnquiries;
     }
+<<<<<<< Updated upstream
+=======
+
+    public void saveToCSV() {
+    List<String[]> data = new ArrayList<>();
+    data.add(new String[]{"applicantNric", "projectName", "message", "status"});
+
+    for (Enquiry e : this.enquiries) {
+        data.add(new String[]{
+            e.getApplicant().getNric(),
+            e.getProject().getProjectName(),
+            e.getMessage(),
+            e.getStatus().name()
+        });
+    }
+
+    CSVWriter.writeCSV("../data/EnquiryList.csv", data);
+}
+
+>>>>>>> Stashed changes
 }

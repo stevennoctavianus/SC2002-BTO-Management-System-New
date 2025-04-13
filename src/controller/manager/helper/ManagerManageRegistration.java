@@ -66,6 +66,7 @@ public class ManagerManageRegistration implements IManagerManageRegistration{
             if (action.equals("1")) {
                 selectedReg.setStatus(Registration.RegistrationStatus.APPROVED);
                 project.addOfficers(selectedReg.getOfficer());
+                System.out.println("Updated officers for project " + project.getProjectName() + ": " + project.getOfficers());
                 selectedReg.getOfficer().setAssignedProject(project);
                 System.out.println("Officer registration approved.");
             } else if (action.equals("2")) {

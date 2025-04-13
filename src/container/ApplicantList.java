@@ -35,4 +35,24 @@ public class ApplicantList {
         this.applicantList.add(applicant);
     }
 
+<<<<<<< Updated upstream
+=======
+    public void saveToCSV() {
+    List<String[]> data = new ArrayList<>();
+    data.add(new String[]{"name", "nric", "age", "maritalStatus", "password"});
+
+    for (Applicant a : this.applicantList) {
+        data.add(new String[]{
+            a.getName(),
+            a.getNric(),
+            String.valueOf(a.getAge()),
+            a.getMaritalStatus().name(),
+            a.getPassword()
+        });
+    }
+
+    CSVWriter.writeCSV("../data/ApplicantList.csv", data);
+}
+
+>>>>>>> Stashed changes
 }

@@ -133,4 +133,53 @@ public class ProjectList {
             System.out.println("Project not found in the list.");
         }
     }
+<<<<<<< Updated upstream
+=======
+
+    public void saveToCSV() {
+        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+        List<String[]> data = new ArrayList<>();
+    
+        // EXACT column headers
+        data.add(new String[]{
+            "Project Name", "Neighborhood", "Type 1", "Number of units for Type 1",
+            "Selling price for Type 1", "Type 2", "Number of units for Type 2",
+            "Selling price for Type 2", "Application opening date", "Application closing date",
+            "Manager", "Officer Slot", "Officer"
+        });
+    
+        for (Project p : projectList) {
+    
+            
+            String officerNames = "";
+            if (!p.getOfficers().isEmpty()) {
+                officerNames = p.getOfficers()
+                                .stream()
+                                .map(Officer::getName) 
+                                .reduce((a, b) -> a + "," + b)
+                                .orElse("");
+            }
+    
+            data.add(new String[]{
+                p.getProjectName(),                 
+                p.getNeighborhood(),                
+                "2-Room",                           
+                String.valueOf(p.getAvailableTwoRoom()), 
+                String.valueOf(p.getSellingPriceTwoRoom()), 
+                "3-Room",                           
+                String.valueOf(p.getAvailableThreeRoom()), 
+                String.valueOf(p.getSellingPriceThreeRoom()), 
+                sdf.format(p.getOpeningDate()),     
+                sdf.format(p.getClosingDate()),     
+                p.getManager().getName(),           
+                String.valueOf(p.getMaxOfficer()),  
+                officerNames                        
+            });
+        }
+    
+        CSVWriter.writeCSV("../data/ProjectList.csv", data);
+    }
+    
+
+>>>>>>> Stashed changes
 }

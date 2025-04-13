@@ -52,5 +52,23 @@ public class RegistrationList {
         return pendingList;
     }
 
+<<<<<<< Updated upstream
     
+=======
+    public void saveToCSV() {
+    List<String[]> data = new ArrayList<>();
+    data.add(new String[]{"officerNric", "projectName", "status"});
+
+    for (Registration r : this.registrationList) {
+        data.add(new String[]{
+            r.getOfficer().getNric(),
+            r.getProject().getProjectName(),
+            r.getStatus().name()
+        });
+    }
+
+    CSVWriter.writeCSV("../data/RegistrationList.csv", data);
+}
+
+>>>>>>> Stashed changes
 }

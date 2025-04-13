@@ -79,4 +79,22 @@ public class ApplicationList {
         return successful;
     }
 
+<<<<<<< Updated upstream
+=======
+    public void saveToCSV() {
+    List<String[]> data = new ArrayList<>();
+    data.add(new String[]{"applicantNric", "projectName", "status"});
+
+    for (Application a : this.applicationList) {
+        data.add(new String[]{
+            a.getApplicant().getNric(),
+            a.getProject().getProjectName(),
+            a.getApplicationStatus().name()
+        });
+    }
+
+    CSVWriter.writeCSV("../data/ApplicationList.csv", data);
+}
+
+>>>>>>> Stashed changes
 }

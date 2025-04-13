@@ -4,7 +4,10 @@ import entity.*;
 import utils.BackButton;
 import utils.ClearScreen;
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 =======
+=======
+>>>>>>> Stashed changes
 import utils.DataSyncUtil;
 //import utils.DataSyncUtil;
 >>>>>>> Stashed changes
@@ -44,8 +47,11 @@ public class MainMenu {
             try{
                 choice = scanner.nextInt();
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
                 if (choice == 4){
 =======
+=======
+>>>>>>> Stashed changes
                 if (choice == 4) {
 
                     for (Project p : projectList.getProjectList()) {
@@ -64,6 +70,9 @@ public class MainMenu {
                     );
                     syncUtil.saveAll(); 
 
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
                     ClearScreen.clear();
                     System.out.println("Bye Bye!");

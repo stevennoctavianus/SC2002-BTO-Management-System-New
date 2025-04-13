@@ -81,7 +81,9 @@ public class MainMenu {
                 }
             }
             else {
+                ClearScreen.clear();
                 System.out.println("Invalid credentials. Please try again.\n");
+                BackButton.goBack();
             }
         }
         scanner.close();

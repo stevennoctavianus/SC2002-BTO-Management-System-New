@@ -92,13 +92,8 @@ public class OfficerViewProjects extends ApplicantViewProjects implements IOffic
         Application.FlatType selectedFlatType;
         //
         if(officer.getMaritalStatus() == User.MaritalStatus.SINGLE && officer.getAge() >= 35){
-            if(project.getAvailableTwoRoom() == 0){
-                System.out.println("There is no available flat for your group!");
-                return;
-            }
-            else{
-                selectedFlatType = Application.FlatType.TWOROOM;
-            }
+            System.out.println("You are only eligible to apply for 2-ROOM flat");
+            selectedFlatType = Application.FlatType.TWOROOM;
         }
         else{
             System.out.println("Select flat type to apply for:");
@@ -107,9 +102,17 @@ public class OfficerViewProjects extends ApplicantViewProjects implements IOffic
             System.out.print("Enter choice (1 or 2): ");
             int choice = sc.nextInt();
             if (choice  == 1) {
+                if(project.getAvailableTwoRoom() == 0){
+                    System.out.println("Sorry, there is not any 2-room flats");
+                    return;
+                }
                 selectedFlatType = Application.FlatType.TWOROOM;
             }
             else if (choice == 2) {
+                if(project.getAvailableThreeRoom() == 0){
+                    System.out.println("Sorry, there is not any 3-room flats");
+                    return;
+                }
                 selectedFlatType = Application.FlatType.THREEROOM;
             }
             else {

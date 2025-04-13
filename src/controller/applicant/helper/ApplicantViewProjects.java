@@ -69,14 +69,8 @@ public class ApplicantViewProjects implements IApplicantViewProjects{
         Application.FlatType selectedFlatType;
         //
         if(applicant.getMaritalStatus() == User.MaritalStatus.SINGLE && applicant.getAge() >= 35){
-            if(project.getAvailableTwoRoom() == 0){
-                System.out.println("There is no available flat for your group!");
-                return;
-            }
-            else{
-                System.out.println("You are only eligible to apply for 2-ROOM flat");
-                selectedFlatType = Application.FlatType.TWOROOM;
-            }
+            System.out.println("You are only eligible to apply for 2-ROOM flat");
+            selectedFlatType = Application.FlatType.TWOROOM;
         }
         else{
             System.out.println("Select flat type to apply for:");

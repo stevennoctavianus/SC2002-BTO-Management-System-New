@@ -1,9 +1,12 @@
 package interact;
 import container.*;
 import entity.*;
+import utils.BackButton;
 import utils.ClearScreen;
 import controller.*;
-
+import controller.applicant.ApplicantController;
+import controller.officer.OfficerController;
+import controller.manager.ManagerController;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -13,7 +16,6 @@ public class MainMenu {
     private static EnquiryList enquiryList = new EnquiryList();
     private static WithdrawalList withdrawalList = new WithdrawalList();
     private static RegistrationList registrationList = new RegistrationList();
-
     public static void main(String[] args) {
         DataInitializer.loadData(); // Load users from CSV
         ManagerList managerList = DataInitializer.getManagerList();
@@ -21,13 +23,16 @@ public class MainMenu {
 
         projectList = new ProjectList("../data/ProjectList.csv", managerList, officerList);
         Scanner scanner = new Scanner(System.in);
-
+        ClearScreen.clear();
         while (true) {
-            System.out.println("Welcome to the BTO Management System");
-            System.out.println("1) Applicant Login");
-            System.out.println("2) Officer Login");
-            System.out.println("3) Manager Login");
-            System.out.println("4) Exit");
+            System.out.println("+----------------------------------------+");
+            System.out.println("|      Welcome to the BTO Management     |");
+            System.out.println("+----------------------------------------+");
+            System.out.println("|  1) Applicant Login                    |");
+            System.out.println("|  2) Officer Login                      |");
+            System.out.println("|  3) Manager Login                      |");
+            System.out.println("|  4) Exit                               |");
+            System.out.println("+----------------------------------------+");
             int choice;
             String nric, password;
             System.out.print("Enter choice: ");
@@ -41,14 +46,18 @@ public class MainMenu {
                 scanner.nextLine();
             }
             catch(InputMismatchException e){
+                ClearScreen.clear();
                 System.out.println("Please input an integer!");
+                scanner.nextLine();
                 continue;
             }
             // Input and validate NRIC:
             System.out.print("Enter NRIC: ");
             nric = scanner.nextLine().trim();
             if(!AuthenticationService.validNRIC(nric)){ 
+                ClearScreen.clear();
                 System.out.println("Invalid NRIC\n");
+                BackButton.goBack();
                 continue;
             }
 
@@ -60,7 +69,7 @@ public class MainMenu {
             User user = AuthenticationService.authenticate(nric, password,choice);
             if (user != null) {
                 UserSession.setCurrentUser(user);
-
+                ClearScreen.clear();
                 if (user instanceof Officer) {
                     new OfficerController((Officer) user, projectList, applicationList, enquiryList, withdrawalList, registrationList).showMenu();
                 }
@@ -72,7 +81,9 @@ public class MainMenu {
                 }
             }
             else {
+                ClearScreen.clear();
                 System.out.println("Invalid credentials. Please try again.\n");
+                BackButton.goBack();
             }
         }
         scanner.close();

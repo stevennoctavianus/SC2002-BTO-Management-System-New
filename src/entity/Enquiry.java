@@ -8,10 +8,10 @@ public class Enquiry {
     private EnquiryStatus status;
 
     public enum EnquiryStatus {
-        PENDING, 
+        PENDING,
         RESPONDED;
     }
-    
+
 
     public Enquiry(Applicant applicant, Project project, String message) {
         this.applicant = applicant;
@@ -54,10 +54,10 @@ public class Enquiry {
 
     @Override
     public String toString() {
-        return "Enquiry [Applicant=" + applicant.getName() + 
-               ", Project=" + project.getProjectName() + 
-               ", Message=" + message + 
-               ", Reply=" + reply + 
+        return "Enquiry [Applicant=" + applicant.getName() +
+               ", Project=" + project.getProjectName() +
+               ", Message=" + message +
+               ", Reply=" + reply +
                ", Status=" + status + "]";
     }
 }

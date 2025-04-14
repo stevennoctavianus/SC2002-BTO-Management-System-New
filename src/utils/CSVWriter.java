@@ -1,5 +1,3 @@
-<<<<<<< Updated upstream
-=======
 package utils;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -19,14 +17,3 @@ public class CSVWriter {
     }
 }
 
-
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes

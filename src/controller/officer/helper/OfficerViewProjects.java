@@ -39,6 +39,9 @@ public class OfficerViewProjects extends ApplicantViewProjects implements IOffic
                 }
             }
         }
+
+        /*********************** */
+        // Show all projects even if the visibility is turned off
     }
 
     @Override

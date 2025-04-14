@@ -62,8 +62,9 @@ public class ManagerManageApplication implements IManagerManageApplication{
 
         if (flatType == Application.FlatType.TWOROOM){
             availability = project.getAvailableTwoRoom();
-        } else{
-            availability = project.getAvailableTwoRoom();
+        }
+        else{
+            availability = project.getAvailableThreeRoom();
         }
 
         if (availability > 0) {

@@ -106,6 +106,8 @@ public class OfficerManageApplication implements IOfficerManageApplication{
             assignedProject.setAvailableThreeRoom(current - 1);
             selectedApplication.setBookedFlat(true);
             System.out.println("Success!");
+
+            //* Call generateReciept() here */
         }
 
         // Update application status

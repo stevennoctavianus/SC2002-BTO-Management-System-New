@@ -1,12 +1,16 @@
 package controller.officer.helper;
 import entity.*;
 import java.util.List;
+
+import container.ApplicationList;
 import controller.officer.template.IOfficerGenerateReceipt;
 public class OfficerGenerateReceipt implements IOfficerGenerateReceipt{
     private Officer officer;
+    protected ApplicationList applicationList;
 
-    public OfficerGenerateReceipt(Officer officer) {
+    public OfficerGenerateReceipt(Officer officer, ApplicationList applicationList) {
         this.officer = officer;
+        this.applicationList = applicationList;
     }
 
     public void generateReceipt() {
@@ -17,7 +21,7 @@ public class OfficerGenerateReceipt implements IOfficerGenerateReceipt{
             return;
         }
 
-        List<Application> applications = assignedProject.getApplication();
+        List<Application> applications = applicationList.getApplicationsByProject(assignedProject);
         boolean hasReceipt = false;
 
         System.out.println("\n=== Flat Booking Receipt for Project: " + assignedProject.getProjectName() + " ===");

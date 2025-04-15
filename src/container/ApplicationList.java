@@ -82,17 +82,17 @@ public class ApplicationList {
     }
 
     public void saveToCSV() {
-    List<String[]> data = new ArrayList<>();
-    data.add(new String[]{"applicantNric", "projectName", "status"});
+        List<String[]> data = new ArrayList<>();
+        data.add(new String[]{"applicantNric", "projectName", "status"});
 
-    for (Application a : this.applicationList) {
-        data.add(new String[]{
-            a.getApplicant().getNric(),
-            a.getProject().getProjectName(),
-            a.getApplicationStatus().name()
-        });
-    }
+        for (Application a : this.applicationList) {
+            data.add(new String[]{
+                a.getApplicant().getNric(),
+                a.getProject().getProjectName(),
+                a.getApplicationStatus().name()
+            });
+        }
 
-    CSVWriter.writeCSV("../data/ApplicationList.csv", data);
+        CSVWriter.writeCSV("../data/ApplicationList.csv", data);
 }
 }

@@ -53,7 +53,7 @@ public class OfficerController {
         this.manageEnquiriesHandler = new OfficerManageEnquiries(officer, enquiryList);
         this.manageProjectHandler = new OfficerManageProject(officer, projectList);
         this.manageApplicationHandler = new OfficerManageApplication(officer, applicationList);
-        this.receiptHandler = new OfficerGenerateReceipt(officer);
+        this.receiptHandler = new OfficerGenerateReceipt(officer, applicationList);
     }
 
     public void showMenu() {

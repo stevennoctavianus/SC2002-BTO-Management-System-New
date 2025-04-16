@@ -1,7 +1,8 @@
 package container;
 import entity.*;
+import utils.CSVReader;
 import utils.CSVWriter;
-import java.util.ArrayList;
+
 import java.util.*;
 
 public class RegistrationList {
@@ -9,6 +10,20 @@ public class RegistrationList {
 
     public RegistrationList() {
         this.registrationList = new ArrayList<>();
+    }
+
+    public RegistrationList(String filepath){
+        this.registrationList = new ArrayList<>();
+        loadRegistrations(filepath);
+    }
+
+    private void loadRegistrations(String filePath) {
+    List<String[]> data = CSVReader.readCSV(filePath);
+    for(String[] row : data) {
+        String applicantNric = row[0];
+        String projectName = row[1];
+        String status = row[2]; 
+        }
     }
 
     public void addRegistration(Registration registration) {

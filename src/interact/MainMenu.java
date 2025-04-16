@@ -12,17 +12,16 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class MainMenu {
-    private static ProjectList projectList;
-    private static ApplicationList applicationList = new ApplicationList();
-    private static EnquiryList enquiryList = new EnquiryList();
-    private static WithdrawalList withdrawalList = new WithdrawalList();
-    private static RegistrationList registrationList = new RegistrationList();
     public static void main(String[] args) {
         DataInitializer.loadData(); // Load users from CSV
+        ApplicantList applicantList = DataInitializer.getApplicantList();
         ManagerList managerList = DataInitializer.getManagerList();
         OfficerList officerList = DataInitializer.getOfficerList();
-
-        projectList = new ProjectList("../data/ProjectList.csv", managerList, officerList);
+        ProjectList projectList = DataInitializer.getProjectList();
+        ApplicationList applicationList = DataInitializer.getApplicationList();
+        RegistrationList registrationList = DataInitializer.getRegistrationList();
+        WithdrawalList withdrawalList = DataInitializer.getWithdrawalList();
+        EnquiryList enquiryList = DataInitializer.getEnquiryList();
         Scanner scanner = new Scanner(System.in);
         ClearScreen.clear();
         while (true) {
@@ -42,10 +41,10 @@ public class MainMenu {
                 if (choice == 4) {
 
                     DataSyncUtil syncUtil = new DataSyncUtil(
-                        DataInitializer.getApplicantList(),
+                        applicantList,
                         projectList,
-                        DataInitializer.getManagerList(),
-                        DataInitializer.getOfficerList(),
+                        managerList,
+                        officerList,
                         applicationList,
                         registrationList,
                         withdrawalList,

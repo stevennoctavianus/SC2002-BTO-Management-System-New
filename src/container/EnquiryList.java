@@ -1,7 +1,8 @@
 package container;
 import entity.*;
+import utils.CSVReader;
 import utils.CSVWriter;
-import java.util.ArrayList;
+
 import java.util.*;
 
 public class EnquiryList {
@@ -9,6 +10,21 @@ public class EnquiryList {
 
     public EnquiryList() {
         this.enquiries = new ArrayList<>();
+    }
+
+    public EnquiryList(String filepath){
+        this.enquiries = new ArrayList<>();
+        loadEnquiries(filepath);
+    }
+
+    private void loadEnquiries(String filePath) {
+        List<String[]> data = CSVReader.readCSV(filePath);
+        for(String[] row : data) {
+            String applicantNric = row[0];
+            String projectName = row[1];
+            String message = row[2];
+            String status = row[3]; 
+        }
     }
 
     public void addEnquiry(Enquiry enquiry) {

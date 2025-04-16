@@ -5,12 +5,22 @@ public class DataInitializer {
     private static ApplicantList applicantList;
     private static OfficerList officerList;
     private static ManagerList managerList;
+    private static ProjectList projectList;
+    private static ApplicationList applicationList;
+    private static RegistrationList registrationList;
+    private static WithdrawalList withdrawals;
+    private static EnquiryList enquiries;
 
     public static void loadData() {
         // Initialize lists by loading from CSV
         applicantList = new ApplicantList("../data/ApplicantList.csv");
         officerList = new OfficerList("../data/OfficerList.csv");
         managerList = new ManagerList("../data/ManagerList.csv");
+        projectList = new ProjectList("../data/ProjectList.csv", managerList, officerList);
+        applicationList = new ApplicationList("../data/ApplicationList.csv"); 
+        registrationList = new RegistrationList("../data/RegistrationList.csv");
+        withdrawals = new WithdrawalList("../data/WithdrawalList.csv");
+        enquiries = new EnquiryList("../data/EnquiryList.csv");
     }
 
     // Getter methods to retrieve data
@@ -24,5 +34,25 @@ public class DataInitializer {
 
     public static ManagerList getManagerList() {
         return managerList;
+    }
+
+    public static ProjectList getProjectList() {
+        return projectList;
+    }
+
+    public static ApplicationList getApplicationList() {
+        return applicationList;
+    }
+
+    public static RegistrationList getRegistrationList() {
+        return registrationList;
+    }
+
+    public static WithdrawalList getWithdrawalList() {
+        return withdrawals;
+    }
+
+    public static EnquiryList getEnquiryList() {
+        return enquiries;
     }
 }

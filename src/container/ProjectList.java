@@ -17,10 +17,10 @@ public class ProjectList {
         this.projectList = new ArrayList<>();
         this.managerList = managerList;
         this.officerList = officerList;
-        loadProjectsFromCSV(filePath);
+        loadProjects(filePath);
     }
 
-    private void loadProjectsFromCSV(String filePath) {
+    private void loadProjects(String filePath) {
         List<String[]> data = CSVReader.readCSV(filePath);
         SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
         Date today = new Date();
@@ -34,20 +34,14 @@ public class ProjectList {
             try {
                 String projectName = row[0];
                 String neighborhood = row[1];
-
                 int availableTwoRoom = Integer.parseInt(row[3]);
                 int sellingPriceTwoRoom = Integer.parseInt(row[4]);
-
                 int availableThreeRoom = Integer.parseInt(row[6]);
                 int sellingPriceThreeRoom = Integer.parseInt(row[7]);
-
                 Date openingDate = dateFormat.parse(row[8]);
                 Date closingDate = dateFormat.parse(row[9]);
-
                 String managerName = row[10];
                 int maxOfficer = Integer.parseInt(row[11]);
-
-                // Find manager
                 Manager manager = findManagerByName(managerName);
                 if (manager == null) {
                     System.out.println("Manager not found: " + managerName);

@@ -1,5 +1,6 @@
 package container;
 import entity.*;
+import utils.CSVReader;
 import utils.CSVWriter;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,6 +10,20 @@ public class WithdrawalList {
 
     public WithdrawalList() {
         this.withdrawals = new ArrayList<>();
+    }
+
+    public WithdrawalList(String filepath){
+        this.withdrawals = new ArrayList<>();
+        loadWithdrawals(filepath);
+    }
+
+    private void loadWithdrawals(String filePath) {
+    List<String[]> data = CSVReader.readCSV(filePath);
+    for(String[] row : data) {
+        String applicantNric = row[0];
+        String projectName = row[1];
+        String status = row[2]; 
+        }
     }
 
     public void addWithdrawal(Withdrawal withdrawal) {

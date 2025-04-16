@@ -1,7 +1,8 @@
 package container;
 import entity.*;
+import utils.CSVReader;
 import utils.CSVWriter;
-import java.util.ArrayList;
+
 import java.util.*;
 
 public class ApplicationList {
@@ -9,6 +10,20 @@ public class ApplicationList {
 
     public ApplicationList(){
         this.applicationList = new ArrayList<>();
+    }
+
+    public ApplicationList(String filepath){
+        this.applicationList = new ArrayList<>();
+        loadApplications(filepath);
+    }
+
+    private void loadApplications(String filePath) {
+    List<String[]> data = CSVReader.readCSV(filePath);
+    for(String[] row : data) {
+        String applicantNric = row[0];
+        String projectName = row[1];
+        String status = row[2]; 
+        }
     }
 
     public void addApplication(Application application){

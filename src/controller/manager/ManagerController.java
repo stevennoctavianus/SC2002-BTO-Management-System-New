@@ -96,6 +96,7 @@ public class ManagerController {
                     break;
                 case 17:
                     System.out.println("Logging out...");
+                    BackButton.goBack();
                     return;
                 default:
                     System.out.println("Invalid choice. Try again.");

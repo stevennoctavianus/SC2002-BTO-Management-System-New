@@ -18,7 +18,8 @@ public class ApplicationList {
     public void removeApplication(Application application) {
         if (applicationList.remove(application)) {
             System.out.println("Application removed successfully.");
-        } else {
+        }
+        else {
             System.out.println("Application not found.");
         }
     }

@@ -172,6 +172,7 @@ public class OfficerController {
     private void showOfficerManagementMenu() {
         if (officer.getAssignedProject() == null) {
             System.out.println("You do not have an active project. Cannot manage officer responsibilities.");
+            BackButton.goBack();
             return;
         }
 

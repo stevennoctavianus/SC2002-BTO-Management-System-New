@@ -11,7 +11,6 @@ public class OfficerManageApplication implements IOfficerManageApplication{
     private Officer officer;
     private ApplicationList applicationList;
     private Scanner scanner;
-
     public OfficerManageApplication(Officer officer, ApplicationList applicationList) {
         this.officer = officer;
         this.applicationList = applicationList;
@@ -120,9 +119,13 @@ public class OfficerManageApplication implements IOfficerManageApplication{
             selectedApplication.setBookedFlat(true);
             System.out.println("Success!");
         }
-
-        // Update application status
+        // Update application status:
         selectedApplication.setApplicationStatus(Application.ApplicationStatus.BOOKED);
-        System.out.println("Application status updated to BOOKED and flat availability adjusted.");
+        // Use-a relationship:
+        OfficerGenerateReceipt receiptHandler = new OfficerGenerateReceipt(officer);
+        receiptHandler.generateReceipt();
+
+        // selectedApplication.setApplicationStatus(Application.ApplicationStatus.BOOKED);
+        // System.out.println("Application status updated to BOOKED and flat availability adjusted.");
     }
 }

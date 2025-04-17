@@ -47,20 +47,20 @@ public class ApplicantList {
     
 
     public void saveToCSV() {
-    List<String[]> data = new ArrayList<>();
-    data.add(new String[]{"name", "nric", "age", "maritalStatus", "password"});
+        List<String[]> data = new ArrayList<>();
+        data.add(new String[]{"name", "nric", "age", "maritalStatus", "password"});
 
-    for (Applicant a : this.applicantList) {
-        data.add(new String[]{
-            a.getName(),
-            a.getNric(),
-            String.valueOf(a.getAge()),
-            a.getMaritalStatus().name(),
-            a.getPassword()
-        });
+        for (Applicant a : this.applicantList) {
+            data.add(new String[]{
+                a.getName(),
+                a.getNric(),
+                String.valueOf(a.getAge()),
+                a.getMaritalStatus().name(),
+                a.getPassword()
+            });
+        }
+
+        CSVWriter.writeCSV("../data/ApplicantList.csv", data);
     }
-
-    CSVWriter.writeCSV("../data/ApplicantList.csv", data);
-}
 
 }

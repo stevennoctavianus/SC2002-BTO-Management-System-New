@@ -36,7 +36,7 @@ public class EnquiryList {
                 Enquiry enquiry = new Enquiry(applicant, project, message);
                 enquiry.setStatus(Enquiry.EnquiryStatus.valueOf(status)); 
                 enquiries.add(enquiry);
-        }
+            }
         }
     }
 
@@ -73,19 +73,19 @@ public class EnquiryList {
     }
 
     public void saveToCSV() {
-    List<String[]> data = new ArrayList<>();
-    data.add(new String[]{"applicantNric", "projectName", "message", "status"});
+        List<String[]> data = new ArrayList<>();
+        data.add(new String[]{"applicantNric", "projectName", "message", "status"});
 
-    for (Enquiry e : this.enquiries) {
-        data.add(new String[]{
-            e.getApplicant().getNric(),
-            e.getProject().getProjectName(),
-            e.getMessage(),
-            e.getStatus().name()
-        });
+        for (Enquiry e : this.enquiries) {
+            data.add(new String[]{
+                e.getApplicant().getNric(),
+                e.getProject().getProjectName(),
+                e.getMessage(),
+                e.getStatus().name()
+            });
+        }
+
+        CSVWriter.writeCSV("../data/EnquiryList.csv", data);
     }
-
-    CSVWriter.writeCSV("../data/EnquiryList.csv", data);
-}
 
 }

@@ -24,23 +24,23 @@ public class WithdrawalList {
     }
 
     private void loadWithdrawals(String filePath) {
-    List<String[]> data = CSVReader.readCSV(filePath);
-    for(String[] row : data) {
-        String applicantNric = row[0];
-        String projectName = row[1];
-        String status = row[2]; 
+        List<String[]> data = CSVReader.readCSV(filePath);
+        for(String[] row : data) {
+            String applicantNric = row[0];
+            String projectName = row[1];
+            String status = row[2]; 
 
-        Applicant applicant = applicantList.getApplicantByNric(applicantNric);
-        Project project = projectList.getProjectByName(projectName);
+            Applicant applicant = applicantList.getApplicantByNric(applicantNric);
+            Project project = projectList.getProjectByName(projectName);
 
-        if (applicant != null && project != null) {
-            Application application = applicationList.getApplicationByApplicant(applicant);
-            if (application != null && application.getProject().equals(project)) {
-                Withdrawal withdrawal = new Withdrawal(application);
-                withdrawal.setWithdrawalStatus(Withdrawal.WithdrawalStatus.valueOf(status));
-                withdrawals.add(withdrawal);
+            if (applicant != null && project != null) {
+                Application application = applicationList.getApplicationByApplicant(applicant);
+                if (application != null && application.getProject().equals(project)) {
+                    Withdrawal withdrawal = new Withdrawal(application);
+                    withdrawal.setWithdrawalStatus(Withdrawal.WithdrawalStatus.valueOf(status));
+                    withdrawals.add(withdrawal);
+                    }
                 }
-            }
         }
     }
 

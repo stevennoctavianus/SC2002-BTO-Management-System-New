@@ -96,19 +96,19 @@ public class ManagerManageProject implements IManagerManageProject{
         }
 
         while (true) {
-            System.out.println("+-------------------------------------------------+");
-            System.out.println("|            Select What to Edit                 |");
-            System.out.println("+-------------------------------------------------+");
-            System.out.println("|  1) Neighborhood                               |");
-            System.out.println("|  2) 2-Room Units                               |");
-            System.out.println("|  3) Selling Price of 2-Room Units              |");
-            System.out.println("|  4) 3-Room Units                               |");
-            System.out.println("|  5) Selling Price of 3-Room Units              |");
-            System.out.println("|  6) Open Date                                  |");
-            System.out.println("|  7) Close Date                                 |");
-            System.out.println("|  8) Max Officer Slots                          |");
-            System.out.println("|  9) Exit                                       |");
-            System.out.println("+-------------------------------------------------+");
+            System.out.println("            +------------------------------------------------+");
+            System.out.println("            |            Select What to Edit                 |");
+            System.out.println("            +------------------------------------------------+");
+            System.out.println("            |  1) Neighborhood                               |");
+            System.out.println("            |  2) 2-Room Units                               |");
+            System.out.println("            |  3) Selling Price of 2-Room Units              |");
+            System.out.println("            |  4) 3-Room Units                               |");
+            System.out.println("            |  5) Selling Price of 3-Room Units              |");
+            System.out.println("            |  6) Open Date                                  |");
+            System.out.println("            |  7) Close Date                                 |");
+            System.out.println("            |  8) Max Officer Slots                          |");
+            System.out.println("            |  9) Exit                                       |");
+            System.out.println("            +------------------------------------------------+\n\n");
             System.out.print("Enter choice: ");
             int choice = scanner.nextInt();
             scanner.nextLine();

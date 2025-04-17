@@ -92,6 +92,7 @@ public class OfficerManageApplication implements IOfficerManageApplication{
             assignedProject.setAvailableTwoRoom(current - 1);
             selectedApplication.setBookedFlat(true);
             System.out.println("Success!");
+            
         }
         else if (type == Application.FlatType.THREEROOM) {
             int current = assignedProject.getAvailableThreeRoom();

@@ -7,24 +7,42 @@ import java.util.*;
 
 public class ApplicationList {
     private ArrayList<Application> applicationList;
+    
+    private ApplicantList applicantList;
+    private ProjectList projectList;
 
-    public ApplicationList(){
+    public ApplicationList(String filepath, ApplicantList applicantList, ProjectList projectList) {
         this.applicationList = new ArrayList<>();
-    }
-
-    public ApplicationList(String filepath){
-        this.applicationList = new ArrayList<>();
+        this.applicantList = applicantList;
+        this.projectList = projectList;
         loadApplications(filepath);
     }
 
     private void loadApplications(String filePath) {
-    List<String[]> data = CSVReader.readCSV(filePath);
-    for(String[] row : data) {
-        String applicantNric = row[0];
-        String projectName = row[1];
-        String status = row[2]; 
+        List<String[]> data = CSVReader.readCSV(filePath);
+        for (String[] row : data) {
+            if (row[0].equalsIgnoreCase("applicantNric")) continue; // skip header
+    
+            String nric = row[0];
+            String projectName = row[1];
+            String statusStr = row[2];
+    
+            Applicant applicant = applicantList.getApplicantByNric(nric);
+            Project project = projectList.getProjectByName(projectName);
+            Application.ApplicationStatus status = Application.ApplicationStatus.valueOf(statusStr);
+    
+            if (applicant != null && project != null) {
+                Application application = new Application(project, applicant);
+                application.setApplicationStatus(status);
+                this.applicationList.add(application);
+                applicant.setCurrentApplication(application); // optional
+                } 
+            else {
+                System.out.println("Could not find Applicant or Project for: " + nric + " / " + projectName);
+                }
+            }
         }
-    }
+
 
     public void addApplication(Application application){
         this.applicationList.add(application);

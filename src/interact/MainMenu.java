@@ -25,14 +25,20 @@ public class MainMenu {
         Scanner scanner = new Scanner(System.in);
         ClearScreen.clear();
         while (true) {
-            System.out.println("+----------------------------------------+");
-            System.out.println("|      Welcome to the BTO Management     |");
-            System.out.println("+----------------------------------------+");
-            System.out.println("|  1) Applicant Login                    |");
-            System.out.println("|  2) Officer Login                      |");
-            System.out.println("|  3) Manager Login                      |");
-            System.out.println("|  4) Exit                               |");
-            System.out.println("+----------------------------------------+");
+            System.out.println(" ____ _______ ____   __   __                                                          _");
+            System.out.println("|  _ \\__   __/ __ \\ |  \\   / |                                                       | |  ");
+            System.out.println("| |_) | | | | |  | | | \\  / | __ _ _ __    __ _   __ _  ___  _ __ ___    ___   _ __  | |_ ");
+            System.out.println("|  _ <  | | | |  | | | |\\/| |/ _` | '_ \\//__` | / _` |/ _ \\ '_ ` _ \\ / _ \\  '_ \\|  __|");
+            System.out.println("| |_) | | | | |__| | | |   | | (_| | | | | (_ |  | (_| |  __/| | | | |     __/ | | |  | |_ ");
+            System.out.println("|____/  |_|  \\____/ |_|   |_|\\__,|_| |_|\\__,_|\\__, |\\___|_| |_| |_|\\___  |_| |_|\\__|");
+            System.out.println("                                                    __/ |                               ");
+            System.out.println("                                                   |___/                               ");
+            System.out.println("                    +----------------------------------------+");
+            System.out.println("                    |  1) Applicant Login                    |");
+            System.out.println("                    |  2) Officer Login                      |");
+            System.out.println("                    |  3) Manager Login                      |");
+            System.out.println("                    |  4) Exit                               |");
+            System.out.println("                    +----------------------------------------+");
             int choice;
             String nric, password;
             System.out.print("Enter choice: ");

@@ -17,10 +17,10 @@ public class DataInitializer {
         officerList = new OfficerList("../data/OfficerList.csv");
         managerList = new ManagerList("../data/ManagerList.csv");
         projectList = new ProjectList("../data/ProjectList.csv", managerList, officerList);
-        applicationList = new ApplicationList("../data/ApplicationList.csv"); 
-        registrationList = new RegistrationList("../data/RegistrationList.csv");
-        withdrawals = new WithdrawalList("../data/WithdrawalList.csv");
-        enquiries = new EnquiryList("../data/EnquiryList.csv");
+        applicationList = new ApplicationList("../data/ApplicationList.csv", applicantList, projectList); 
+        registrationList = new RegistrationList("../data/RegistrationList.csv", officerList, projectList);
+        withdrawals = new WithdrawalList("../data/WithdrawalList.csv", applicationList, applicantList, projectList);
+        enquiries = new EnquiryList("../data/EnquiryList.csv", applicantList, projectList);
     }
 
     // Getter methods to retrieve data

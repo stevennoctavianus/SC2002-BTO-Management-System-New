@@ -99,7 +99,7 @@ public class OfficerController {
                     /* Logic here */
                     PasswordService.changePassWord(officer);
                     BackButton.goBack();
-                    break;
+                    return;
                 case 5:
                     System.out.println("Logging out...");
                     BackButton.goBack();

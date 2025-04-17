@@ -9,6 +9,6 @@ public class PasswordService {
         System.out.print("Enter new Password: ");
         String newPassWord = sc.nextLine();
         u.changePassword(newPassWord);
-        System.out.println("Change Password Successfully!");
+        System.out.println("Change Password Successfully! Please log in again");
     }
 }

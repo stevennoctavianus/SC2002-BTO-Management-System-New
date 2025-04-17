@@ -105,7 +105,8 @@ public class ManagerController {
                 case 16:
                     /* Logic for Password change here */
                     PasswordService.changePassWord(manager);
-                    break;
+                    BackButton.goBack();
+                    return;
                 case 17:
                     System.out.println("Logging out...");
                     BackButton.goBack();

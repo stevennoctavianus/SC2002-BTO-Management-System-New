@@ -98,7 +98,8 @@ public class ApplicantController {
                 // Should have a class called PasswordService -> avoid violate Single-Responsibility Principle
                 case 9:
                     PasswordService.changePassWord(applicant);
-                    break;
+                    BackButton.goBack();
+                    return;
                 case 10:
                     System.out.println("Logging out...");
                     break;

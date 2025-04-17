@@ -31,6 +31,15 @@ public class OfficerList {
         return this.officerList;
     }
 
+    public Officer getOfficerByNric(String nric) {
+        for (Officer officer : officerList) {
+            if (officer.getNric().equalsIgnoreCase(nric)) {
+                return officer;
+            }
+        }
+        return null; 
+    }
+
     public void addOfficer(Officer officer){
         this.officerList.add(officer);
     }

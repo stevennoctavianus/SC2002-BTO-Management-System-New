@@ -1,14 +1,43 @@
 package container;
 import entity.*;
+import utils.CSVReader;
 import utils.CSVWriter;
-import java.util.ArrayList;
+
 import java.util.*;
 
 public class RegistrationList {
     private ArrayList<Registration> registrationList;
 
+    private OfficerList officerList;
+    private ProjectList projectList;
+
     public RegistrationList() {
         this.registrationList = new ArrayList<>();
+    }
+
+    public RegistrationList(String filepath, OfficerList officerList, ProjectList projectList){
+        this.registrationList = new ArrayList<>();
+        this.officerList = officerList;
+        this.projectList = projectList;
+        loadRegistrations(filepath);
+    }
+
+    private void loadRegistrations(String filePath) {
+    List<String[]> data = CSVReader.readCSV(filePath);
+    for(String[] row : data) {
+        String officerNric = row[0];
+        String projectName = row[1];
+        String status = row[2]; 
+        
+        Officer officer = officerList.getOfficerByNric(officerNric);
+        Project project = projectList.getProjectByName(projectName);
+
+        if (officer != null && project != null) {
+            Registration registration = new Registration(officer, project);
+            registration.setStatus(Registration.RegistrationStatus.valueOf(status));
+            registrationList.add(registration);
+            }
+        }
     }
 
     public void addRegistration(Registration registration) {

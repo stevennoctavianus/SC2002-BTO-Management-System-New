@@ -3,6 +3,7 @@ import container.*;
 import controller.applicant.template.IApplicantViewProjects;
 import entity.*;
 
+import java.util.Date;
 import java.util.Scanner;
 public class ApplicantViewProjects implements IApplicantViewProjects{
     private Applicant applicant;
@@ -66,6 +67,12 @@ public class ApplicantViewProjects implements IApplicantViewProjects{
             System.out.println("You already have an active application.");
             return;
         }
+
+        if (project.getOpeningDate().after(new Date())){
+            System.out.println("The project is currently not open for application.");
+            return;
+        }
+    
         Application.FlatType selectedFlatType;
         //
         if(applicant.getMaritalStatus() == User.MaritalStatus.SINGLE && applicant.getAge() >= 35){

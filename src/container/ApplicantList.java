@@ -35,6 +35,17 @@ public class ApplicantList {
     public void addApplicant(Applicant applicant){
         this.applicantList.add(applicant);
     }
+
+    public Applicant getApplicantByNric(String nric) {
+        for (Applicant applicant : applicantList) {
+            if (applicant.getNric().equalsIgnoreCase(nric)) {
+                return applicant;
+            }
+        }
+        return null; 
+    }
+    
+
     public void saveToCSV() {
     List<String[]> data = new ArrayList<>();
     data.add(new String[]{"name", "nric", "age", "maritalStatus", "password"});

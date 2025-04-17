@@ -6,6 +6,8 @@ import entity.*;
 import utils.BackButton;
 import utils.ClearScreen;
 import controller.PasswordService;
+
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class ApplicantController {
@@ -36,7 +38,7 @@ public class ApplicantController {
     }
 
     public void showMenu() {
-        int choice;
+        int choice = 0;
         do {
             System.out.println("            +------------------------------------------------+");
             System.out.println("            |               Applicant Dashboard              |");
@@ -54,8 +56,16 @@ public class ApplicantController {
             System.out.println("            | 10) Logout                                     |");
             System.out.println("            +------------------------------------------------+\n\n");
             System.out.print("Enter your choice: ");
-
-            choice = scanner.nextInt();
+            try{
+                choice = scanner.nextInt();
+            }
+            catch(InputMismatchException e){
+                ClearScreen.clear();
+                System.out.println("Please input an integer!");
+                BackButton.goBack();
+                scanner.nextLine();
+                continue;
+            }
             scanner.nextLine(); // Consume newline
             ClearScreen.clear();
             switch (choice) {

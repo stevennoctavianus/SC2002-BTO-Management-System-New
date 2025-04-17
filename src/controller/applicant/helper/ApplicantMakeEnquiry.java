@@ -1,7 +1,11 @@
 package controller.applicant.helper;
 import container.*;
 import entity.*;
+import utils.BackButton;
+import utils.ClearScreen;
+
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 import controller.applicant.template.IApplicantMakeEnquiry;;
@@ -27,7 +31,16 @@ public class ApplicantMakeEnquiry implements IApplicantMakeEnquiry{
         }
 
         System.out.print("Enter the project numbner: ");
-        int choice = sc.nextInt();
+        int choice;
+        try{
+            choice = sc.nextInt();
+        }
+        catch(InputMismatchException e){
+            ClearScreen.clear();
+            System.out.println("Please input an integer!");
+            sc.nextLine();
+            return;
+        }
         sc.nextLine();
 
         Project project = projectList.getProjectList().get(choice-1);
@@ -81,8 +94,17 @@ public class ApplicantMakeEnquiry implements IApplicantMakeEnquiry{
         }
 
         System.out.print("Enter enquiry number to edit: ");
-        int choice = sc.nextInt();
-        sc.nextLine(); // Consume newline
+        int choice;
+        try{
+            choice = sc.nextInt();
+        }
+        catch(InputMismatchException e){
+            ClearScreen.clear();
+            System.out.println("Please input an integer!");
+            sc.nextLine();
+            return;
+        }
+        sc.nextLine();
 
         if (choice < 1 || choice > applicantEnquiries.size()) {
             System.out.println("Invalid choice.");
@@ -118,7 +140,17 @@ public class ApplicantMakeEnquiry implements IApplicantMakeEnquiry{
         }
 
         System.out.print("Enter enquiry number to delete: ");
-        int choice = sc.nextInt();
+        int choice;
+        try{
+            choice = sc.nextInt();
+        }
+        catch(InputMismatchException e){
+            ClearScreen.clear();
+            System.out.println("Please input an integer!");
+            sc.nextLine();
+            return;
+        }
+        sc.nextLine();
 
         if (choice < 1 || choice > applicantEnquiries.size()) {
             System.out.println("Invalid choice.");

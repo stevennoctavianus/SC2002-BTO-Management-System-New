@@ -1,8 +1,10 @@
 package controller.manager.helper;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 import container.*;
 import entity.*;
+import utils.BackButton;
 import utils.ClearScreen;
 import controller.manager.template.IManagerGenerateReport;
 public class ManagerGenerateReport implements IManagerGenerateReport{
@@ -24,23 +26,33 @@ public class ManagerGenerateReport implements IManagerGenerateReport{
         System.out.println("            |  4) Filter by Project Name                     |");
         System.out.println("            +------------------------------------------------+\n\n");
         System.out.print("Select an option: ");
-        String option = scanner.nextLine();
+        int option;
+        try{
+                option = scanner.nextInt();
+        }
+        catch(InputMismatchException e){
+            ClearScreen.clear();
+            System.out.println("Please input an integer!");
+            BackButton.goBack();
+            scanner.nextLine();
+            return;
+        }
         ClearScreen.clear();
         switch (option) {
-            case "1":
+            case 1:
                 printReport(applicationList.getSuccessfulApplications());
                 break;
-            case "2":
+            case 2:
                 filterByFlatType();
                 break;
-            case "3":
+            case 3:
                 filterByMaritalStatus();
                 break;
-            case "4":
+            case 4:
                 filterByProjectName();
                 break;
             default:
-                System.out.println("Invalid option.");
+                System.out.println("Invalid choice!Please enter a valid option");
         }
     }
 

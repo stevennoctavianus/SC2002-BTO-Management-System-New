@@ -7,6 +7,8 @@ import entity.*;
 import utils.BackButton;
 import utils.ClearScreen;
 import controller.PasswordService;
+
+import java.util.InputMismatchException;
 import java.util.Scanner;
 import controller.officer.template.*;
 import controller.applicant.template.*;
@@ -57,7 +59,7 @@ public class OfficerController {
     }
 
     public void showMenu() {
-        int choice;
+        int choice = 0;
         do {
             System.out.println("            +--------------------------------------------------+");
             System.out.println("            |              Officer Dashboard                   |");
@@ -69,7 +71,16 @@ public class OfficerController {
             System.out.println("            |  5) Logout                                       |");
             System.out.println("            +--------------------------------------------------+\n\n");
             System.out.print("Enter choice: ");
-            choice = scanner.nextInt();
+            try{
+                choice = scanner.nextInt();
+            }
+            catch(InputMismatchException e){
+                ClearScreen.clear();
+                System.out.println("Please input an integer!");
+                BackButton.goBack();
+                scanner.nextLine();
+                continue;
+            }
             scanner.nextLine();
             ClearScreen.clear();
             switch (choice) {
@@ -94,7 +105,7 @@ public class OfficerController {
                     BackButton.goBack();
                     break;
                 default:
-                    System.out.println("Invalid choice!");
+                    System.out.println("Invalid choice! Please choose a valid option");
                     BackButton.goBack();
             }
 
@@ -102,7 +113,7 @@ public class OfficerController {
     }
 
     private void showApplicantMenu() {
-        int choice;
+        int choice = 0;
         do {
             System.out.println("            +--------------------------------------------------+");
             System.out.println("            |           Applicant Mode (Officer View)         |");
@@ -118,7 +129,16 @@ public class OfficerController {
             System.out.println("            |  9) Back                                        |");
             System.out.println("            +-------------------------------------------------+\n\n");
             System.out.print("Enter choice: ");
-            choice = scanner.nextInt();
+            try{
+                choice = scanner.nextInt();
+            }
+            catch(InputMismatchException e){
+                ClearScreen.clear();
+                System.out.println("Please input an integer!");
+                BackButton.goBack();
+                scanner.nextLine();
+                continue;
+            }
             scanner.nextLine();
             ClearScreen.clear();
             switch (choice) {
@@ -135,14 +155,14 @@ public class OfficerController {
                     return;
                 default:
                     ClearScreen.clear();
-                    System.out.println("Invalid choice.");
+                    System.out.println("Invalid choice! Please choose a valid option");
             }
             BackButton.goBack();
         } while (true);
     }
 
     private void showOfficerRegistrationMenu() {
-        int choice;
+        int choice = 0;
         do {
             System.out.println("            +--------------------------------------------------+");
             System.out.println("            |              Officer Registration                |");
@@ -152,7 +172,16 @@ public class OfficerController {
             System.out.println("            |  3) Back                                         |");
             System.out.println("            +--------------------------------------------------+\n\n");
             System.out.print("Enter choice: ");
-            choice = scanner.nextInt();
+            try{
+                choice = scanner.nextInt();
+            }
+            catch(InputMismatchException e){
+                ClearScreen.clear();
+                System.out.println("Please input an integer!");
+                BackButton.goBack();
+                scanner.nextLine();
+                continue;
+            }
             scanner.nextLine();
             ClearScreen.clear();
             switch (choice) {
@@ -163,7 +192,7 @@ public class OfficerController {
                     return;
                 default:
                     ClearScreen.clear();
-                    System.out.println("Invalid choice.");
+                    System.out.println("Invalid choice! Please choose a valid option.");
             }
             BackButton.goBack();
         } while (true);
@@ -172,10 +201,11 @@ public class OfficerController {
     private void showOfficerManagementMenu() {
         if (officer.getAssignedProject() == null) {
             System.out.println("You do not have an active project. Cannot manage officer responsibilities.");
+            BackButton.goBack();
             return;
         }
 
-        int choice;
+        int choice = 0;
         do {
             System.out.println("            +--------------------------------------------------+");
             System.out.println("            |           Officer Project Management            |");
@@ -189,7 +219,16 @@ public class OfficerController {
             System.out.println("            |  7) Back                                        |");
             System.out.println("            +--------------------------------------------------+\n\n");
             System.out.print("Enter choice: ");
-            choice = scanner.nextInt();
+            try{
+                choice = scanner.nextInt();
+            }
+            catch(InputMismatchException e){
+                ClearScreen.clear();
+                System.out.println("Please input an integer!");
+                BackButton.goBack();
+                scanner.nextLine();
+                continue;
+            }
             scanner.nextLine();
             ClearScreen.clear();
             switch (choice) {
@@ -204,7 +243,7 @@ public class OfficerController {
                     return;
                 default:
                     ClearScreen.clear();
-                    System.out.println("Invalid choice.");
+                    System.out.println("Invalid choice! Please choose a valid option.");
             }
             BackButton.goBack();
         } while (true);

@@ -1,6 +1,9 @@
 package controller.officer.helper;
 import container.*;
 import entity.*;
+import utils.ClearScreen;
+import java.util.Date;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 import controller.officer.template.IOfficerViewProjects;
 import controller.applicant.helper.ApplicantViewProjects;
@@ -90,7 +93,11 @@ public class OfficerViewProjects extends ApplicantViewProjects implements IOffic
             return;
         }
 
-
+        // Can not apply for project which is not opened yet
+        if (project.getOpeningDate().after(new Date())){
+            System.out.println("The project is currently not open for application.");
+            return;
+        }
         // Manage Age group:
         Application.FlatType selectedFlatType;
         //
@@ -103,7 +110,17 @@ public class OfficerViewProjects extends ApplicantViewProjects implements IOffic
             System.out.println("Enter 1 -> 2-room flat");
             System.out.println("Enter 2 -> 3-room flat");
             System.out.print("Enter choice (1 or 2): ");
-            int choice = sc.nextInt();
+            int choice;
+            try{
+                choice = sc.nextInt();
+            }
+            catch(InputMismatchException e){
+                ClearScreen.clear();
+                System.out.println("Please input an integer!");
+                sc.nextLine();
+                return;
+            }
+            sc.nextLine();
             if (choice  == 1) {
                 if(project.getAvailableTwoRoom() == 0){
                     System.out.println("Sorry, there is not any 2-room flats");

@@ -66,6 +66,7 @@ public class MainMenu {
             catch(InputMismatchException e){
                 ClearScreen.clear();
                 System.out.println("Please input an integer!");
+                BackButton.goBack();
                 scanner.nextLine();
                 continue;
             }

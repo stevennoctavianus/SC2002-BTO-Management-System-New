@@ -2,8 +2,10 @@ package controller.applicant.helper;
 import container.*;
 import controller.applicant.template.IApplicantViewProjects;
 import entity.*;
+import utils.ClearScreen;
 
 import java.util.Date;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 public class ApplicantViewProjects implements IApplicantViewProjects{
     private Applicant applicant;
@@ -84,7 +86,17 @@ public class ApplicantViewProjects implements IApplicantViewProjects{
             System.out.println("Enter 1 -> 2-room flat");
             System.out.println("Enter 2 -> 3-room flat");
             System.out.print("Enter choice (1 or 2): ");
-            int choice = sc.nextInt();
+            int choice;
+            try{
+                choice = sc.nextInt();
+            }
+            catch(InputMismatchException e){
+                ClearScreen.clear();
+                System.out.println("Please input an integer!");
+                sc.nextLine();
+                return;
+            }
+            sc.nextLine();
             if (choice  == 1) {
                 if(project.getAvailableTwoRoom() == 0){
                     System.out.println("Sorry, there is not any 2-room flats");

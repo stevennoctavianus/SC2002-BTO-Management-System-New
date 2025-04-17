@@ -1,5 +1,6 @@
 package controller.manager.helper;
 import entity.*;
+import utils.BackButton;
 import utils.ClearScreen;
 import container.*;
 
@@ -7,6 +8,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 import controller.manager.template.IManagerManageProject;
 public class ManagerManageProject implements IManagerManageProject{
@@ -25,10 +27,78 @@ public class ManagerManageProject implements IManagerManageProject{
         this.scanner = new Scanner(System.in);
     }
 
+    // public void createProject() {
+    //     if (manager.getActiveProject() != null) {
+    //         System.out.println("You are already handling an active project: " + manager.getActiveProject().getProjectName());
+    //         System.out.println("You must finish managing the current project before creating a new one!");
+    //         return;
+    //     }
+    //         System.out.print("Enter Project Name: ");
+    //         String name = scanner.nextLine();
+
+    //         System.out.print("Enter Neighborhood: ");
+    //         String neighborhood = scanner.nextLine();
+    //     int twoRoom, sellingPriceThreeRoom, threeRoom, sellingPriceTwoRoom;
+    //     try{
+    //         System.out.print("Enter number of 2-Room Flats: ");
+    //         twoRoom = scanner.nextInt();
+
+    //         System.out.print("Enter the selling price of 2-Room Flats: ");
+    //         sellingPriceTwoRoom = scanner.nextInt();
+
+    //         System.out.print("Enter number of 3-Room Flats: ");
+    //         threeRoom = scanner.nextInt();
+    //         scanner.nextLine(); // consume newline
+
+    //         System.out.print("Enter the selling price of 3-Room Flats: ");
+    //         sellingPriceThreeRoom = scanner.nextInt();
+    //     }
+    //     catch(InputMismatchException e){
+    //         ClearScreen.clear();
+    //         System.out.println("Please input an integer!");
+    //         scanner.nextLine();
+    //         return;
+    //     }
+    //     scanner.nextLine();
+
+    //     Date openDate;
+    //     Date closeDate;
+
+    //     try {
+    //         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+    //         System.out.print("Enter Opening Date (yyyy-MM-dd): ");
+    //         openDate = sdf.parse(scanner.nextLine());
+
+    //         System.out.print("Enter Closing Date (yyyy-MM-dd): ");
+    //         closeDate = sdf.parse(scanner.nextLine());
+    //     }
+    //     catch (ParseException e) {
+    //         ClearScreen.clear();
+    //         System.out.println("Invalid date format. Please use yyyy-MM-dd.");
+    //         return;
+    //     }
+
+    //     System.out.print("Enter Max Officer Slot: ");
+    //     int maxOfficer = scanner.nextInt();
+    //     scanner.nextLine();
+
+    //     Project project = new Project(name, neighborhood, twoRoom, sellingPriceTwoRoom, threeRoom, sellingPriceThreeRoom, openDate, closeDate, maxOfficer);
+    //     project.setManager(manager);
+
+    //     // Assign manager's responsibility
+    //     manager.addManagedProject(project);
+    //     if (project.getVisibility()) {
+    //         manager.setActiveProject(project);
+    //     }
+
+    //     projectList.addProject(project);
+    //     System.out.println("Project created successfully.");
+    // }
     public void createProject() {
         if (manager.getActiveProject() != null) {
             System.out.println("You are already handling an active project: " + manager.getActiveProject().getProjectName());
-            System.out.println("You must finish managing the current project before creating a new one.");
+            System.out.println("You must finish managing the current project before creating a new one!");
             return;
         }
 
@@ -38,39 +108,96 @@ public class ManagerManageProject implements IManagerManageProject{
         System.out.print("Enter Neighborhood: ");
         String neighborhood = scanner.nextLine();
 
-        System.out.print("Enter number of 2-Room Flats: ");
-        int twoRoom = scanner.nextInt();
+        int twoRoom = 0, sellingPriceTwoRoom = 0, threeRoom = 0, sellingPriceThreeRoom = 0;
+        boolean validInput = false;
 
-        System.out.print("Enter the selling price of 2-Room Flats: ");
-        int sellingPriceTwoRoom = scanner.nextInt();
-
-        System.out.print("Enter number of 3-Room Flats: ");
-        int threeRoom = scanner.nextInt();
-        scanner.nextLine(); // consume newline
-
-        System.out.print("Enter the selling price of 3-Room Flats: ");
-        int sellingPriceThreeRoom = scanner.nextInt();
-        scanner.nextLine();
-
-        Date openDate;
-        Date closeDate;
-
-        try {
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-
-            System.out.print("Enter Opening Date (yyyy-MM-dd): ");
-            openDate = sdf.parse(scanner.nextLine());
-
-            System.out.print("Enter Closing Date (yyyy-MM-dd): ");
-            closeDate = sdf.parse(scanner.nextLine());
-        } catch (ParseException e) {
-            System.out.println("Invalid date format. Please use yyyy-MM-dd.");
-            return;
+        // Handle integer inputs with retry
+        while (!validInput) {
+            System.out.print("Enter number of 2-Room Flats: ");
+            String input = scanner.nextLine();
+            try {
+                twoRoom = Integer.parseInt(input);
+                validInput = true;
+            } catch (NumberFormatException e) {
+                System.out.println("Please input a valid integer!");
+            }
         }
 
-        System.out.print("Enter Max Officer Slot: ");
-        int maxOfficer = scanner.nextInt();
-        scanner.nextLine();
+        validInput = false;
+        while (!validInput) {
+            System.out.print("Enter the selling price of 2-Room Flats: ");
+            String input = scanner.nextLine();
+            try {
+                sellingPriceTwoRoom = Integer.parseInt(input);
+                validInput = true;
+            } catch (NumberFormatException e) {
+                System.out.println("Please input a valid integer!");
+            }
+        }
+
+        validInput = false;
+        while (!validInput) {
+            System.out.print("Enter number of 3-Room Flats: ");
+            String input = scanner.nextLine();
+            try {
+                threeRoom = Integer.parseInt(input);
+                validInput = true;
+            } catch (NumberFormatException e) {
+                System.out.println("Please input a valid integer!");
+            }
+        }
+
+        validInput = false;
+        while (!validInput) {
+            System.out.print("Enter the selling price of 3-Room Flats: ");
+            String input = scanner.nextLine();
+            try {
+                sellingPriceThreeRoom = Integer.parseInt(input);
+                validInput = true;
+            } catch (NumberFormatException e) {
+                System.out.println("Please input a valid integer!");
+            }
+        }
+
+        Date openDate = null, closeDate = null;
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+        validInput = false;
+        while (!validInput) {
+            System.out.print("Enter Opening Date (yyyy-MM-dd): ");
+            String dateInput = scanner.nextLine();
+            try {
+                openDate = sdf.parse(dateInput);
+                validInput = true;
+            } catch (ParseException e) {
+                System.out.println("Invalid date format. Please use yyyy-MM-dd.");
+            }
+        }
+
+        validInput = false;
+        while (!validInput) {
+            System.out.print("Enter Closing Date (yyyy-MM-dd): ");
+            String dateInput = scanner.nextLine();
+            try {
+                closeDate = sdf.parse(dateInput);
+                validInput = true;
+            } catch (ParseException e) {
+                System.out.println("Invalid date format. Please use yyyy-MM-dd.");
+            }
+        }
+
+        validInput = false;
+        int maxOfficer = 0;
+        while (!validInput) {
+            System.out.print("Enter Max Officer Slot: ");
+            String input = scanner.nextLine();
+            try {
+                maxOfficer = Integer.parseInt(input);
+                validInput = true;
+            } catch (NumberFormatException e) {
+                System.out.println("Please input a valid integer!");
+            }
+        }
 
         Project project = new Project(name, neighborhood, twoRoom, sellingPriceTwoRoom, threeRoom, sellingPriceThreeRoom, openDate, closeDate, maxOfficer);
         project.setManager(manager);
@@ -110,7 +237,19 @@ public class ManagerManageProject implements IManagerManageProject{
             System.out.println("            |  9) Exit                                       |");
             System.out.println("            +------------------------------------------------+\n\n");
             System.out.print("Enter choice: ");
-            int choice = scanner.nextInt();
+            int choice;
+            try{
+                choice = scanner.nextInt();
+            }
+            catch(InputMismatchException e){
+                ClearScreen.clear();
+                System.out.println("Please input an integer!");
+                BackButton.goBack();
+                scanner.nextLine();
+                continue;
+            }
+
+
             scanner.nextLine();
             ClearScreen.clear();
             switch (choice) {
@@ -174,7 +313,7 @@ public class ManagerManageProject implements IManagerManageProject{
                     System.out.println("Edit complete.");
                     return;
                 default:
-                    System.out.println("Invalid option.");
+                    System.out.println("Invalid choice! Please enter a valid option.");
             }
         }
     }

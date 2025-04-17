@@ -1,7 +1,10 @@
 package controller.officer.helper;
 import container.*;
 import entity.*;
+import utils.ClearScreen;
+
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 import controller.officer.template.IOfficerMakeEnquiry;
@@ -42,7 +45,16 @@ public class OfficerMakeEnquiry extends ApplicantMakeEnquiry implements IOfficer
         }
 
         System.out.print("Enter project number: ");
-        int choice = sc.nextInt();
+        int choice;
+        try{
+            choice = sc.nextInt();
+        }
+        catch(InputMismatchException e){
+            ClearScreen.clear();
+            System.out.println("Please input an integer!");
+            sc.nextLine();
+            return;
+        }
         sc.nextLine();
 
         if (choice < 1 || choice > availableProjects.size()) {
@@ -112,7 +124,16 @@ public class OfficerMakeEnquiry extends ApplicantMakeEnquiry implements IOfficer
         }
 
         System.out.print("Enter enquiry number to edit: ");
-        int choice = sc.nextInt();
+        int choice;
+        try{
+            choice = sc.nextInt();
+        }
+        catch(InputMismatchException e){
+            ClearScreen.clear();
+            System.out.println("Please input an integer!");
+            sc.nextLine();
+            return;
+        }
         sc.nextLine();
 
         if (choice < 1 || choice > editableEnquiries.size()) {
@@ -150,7 +171,17 @@ public class OfficerMakeEnquiry extends ApplicantMakeEnquiry implements IOfficer
         }
 
         System.out.print("Enter enquiry number to delete: ");
-        int choice = sc.nextInt();
+        int choice;
+        try{
+            choice = sc.nextInt();
+        }
+        catch(InputMismatchException e){
+            ClearScreen.clear();
+            System.out.println("Please input an integer!");
+            sc.nextLine();
+            return;
+        }
+        sc.nextLine();
 
         if (choice < 1 || choice > deletableEnquiries.size()) {
             System.out.println("Invalid choice.");

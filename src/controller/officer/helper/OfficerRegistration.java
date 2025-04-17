@@ -1,7 +1,10 @@
 package controller.officer.helper;
 import container.*;
 import entity.*;
+import utils.ClearScreen;
+
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 import controller.officer.template.IOfficerRegistration;
 public class OfficerRegistration implements IOfficerRegistration{
@@ -51,7 +54,16 @@ public class OfficerRegistration implements IOfficerRegistration{
         }
 
         System.out.print("Select a project to register (0 to cancel): ");
-        int choice = scanner.nextInt();
+        int choice;
+        try{
+            choice = scanner.nextInt();
+        }
+        catch(InputMismatchException e){
+            ClearScreen.clear();
+            System.out.println("Please input an integer!");
+            scanner.nextLine();
+            return;
+        }
         scanner.nextLine();
 
         if (choice < 1 || choice > availableProjects.size()) {

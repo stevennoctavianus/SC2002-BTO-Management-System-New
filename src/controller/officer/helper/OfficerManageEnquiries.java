@@ -1,8 +1,12 @@
 package controller.officer.helper;
 import container.*;
 import entity.*;
+import utils.ClearScreen;
+
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
+
 import controller.officer.template.IOfficerManageEnquiries;
 public class OfficerManageEnquiries implements IOfficerManageEnquiries{
     private Officer officer;
@@ -51,7 +55,16 @@ public class OfficerManageEnquiries implements IOfficerManageEnquiries{
         viewEnquiries();
 
         System.out.print("Select enquiry number to reply: ");
-        int choice = scanner.nextInt();
+        int choice;
+        try{
+            choice = scanner.nextInt();
+        }
+        catch(InputMismatchException e){
+            ClearScreen.clear();
+            System.out.println("Please input an integer!");
+            scanner.nextLine();
+            return;
+        }
         scanner.nextLine();
 
         if (choice < 1 || choice > enquiries.size()) {

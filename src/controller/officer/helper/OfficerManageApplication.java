@@ -1,6 +1,9 @@
 package controller.officer.helper;
 import container.*;
 import entity.*;
+import utils.ClearScreen;
+
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 import controller.officer.template.IOfficerManageApplication;
@@ -66,7 +69,16 @@ public class OfficerManageApplication implements IOfficerManageApplication{
         }
 
         System.out.print("Select an application to book (enter number or 0 to cancel): ");
-        int choice = scanner.nextInt();
+        int choice;
+        try{
+            choice = scanner.nextInt();
+        }
+        catch(InputMismatchException e){
+            ClearScreen.clear();
+            System.out.println("Please input an integer!");
+            scanner.nextLine();
+            return;
+        }
         scanner.nextLine();
 
         if (choice <= 0 || choice > successfulApplication.size()) {

@@ -1,6 +1,8 @@
 package controller.manager;
 import controller.PasswordService;
 import controller.manager.helper.*;
+
+import java.util.InputMismatchException;
 import java.util.Scanner;
 import entity.*;
 import utils.BackButton;
@@ -64,7 +66,17 @@ public class ManagerController {
             System.out.println("            | 17) Logout                                         |");
             System.out.println("            +----------------------------------------------------+\n\n");
             System.out.print("  Enter your choice: ");
-            int choice = scanner.nextInt();
+            int choice;
+            try{
+                choice = scanner.nextInt();
+            }
+            catch(InputMismatchException e){
+                ClearScreen.clear();
+                System.out.println("Please input an integer!");
+                BackButton.goBack();
+                scanner.nextLine();
+                continue;
+            }
             scanner.nextLine();
             ClearScreen.clear();
             switch (choice) {
@@ -99,7 +111,7 @@ public class ManagerController {
                     BackButton.goBack();
                     return;
                 default:
-                    System.out.println("Invalid choice. Try again.");
+                    System.out.println("Invalid choice! Please enter a valid option");
             }
             BackButton.goBack();
         }

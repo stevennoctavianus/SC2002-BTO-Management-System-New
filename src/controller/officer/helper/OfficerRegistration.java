@@ -88,8 +88,7 @@ public class OfficerRegistration implements IOfficerRegistration{
 
         System.out.println("\nRegistration History:");
         for (Registration r : registrations) {
-            System.out.println("- Project: " + r.getProject().getProjectName() +
-                               " | Status: " + r.getStatus());
+            System.out.println("- Project: " + r.getProject().getProjectName() + " | Status: " + r.getStatus());
         }
     }
 }

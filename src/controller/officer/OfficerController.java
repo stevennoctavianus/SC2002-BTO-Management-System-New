@@ -218,7 +218,7 @@ public class OfficerController {
 
             // System.out.println("            |  6) Generate Receipt                            |");
 
-            System.out.println("            |  7) Back                                        |");
+            System.out.println("            |  6) Back                                        |");
             System.out.println("            +--------------------------------------------------+\n\n");
             System.out.print("Enter choice: ");
             try{

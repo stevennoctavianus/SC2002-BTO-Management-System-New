@@ -270,8 +270,18 @@ public class ManagerManageProject implements IManagerManageProject{
         applicationList.removeApplicationsByProject(project);
 
         // 2. Remove related registrations
-        registrationList.removeRegistrationByProject(project);
 
+        // registrationList.removeRegistrationByProject(project);
+        ArrayList<Registration> registrationsToRemove = registrationList.getRegistrations();
+        for (Registration reg : registrationsToRemove) {
+            if (reg.getProject().equals(project)) {
+                // Remove from officer's registrations
+                Officer officer = reg.getOfficer();
+                officer.getRegistrations().remove(reg);
+            }
+        }
+        registrationList.removeRegistrationByProject(project);
+        registrationList.saveToCSV(); // Save updated RegistrationList to CSV
         // 3. Clear officer project references
         for (Officer officer : project.getOfficers()) {
             if (officer.getAssignedProject() != null && officer.getAssignedProject().equals(project)) {

@@ -13,6 +13,30 @@ import java.util.Scanner;
 
 public class MainMenu {
     public static void main(String[] args) {
+        // Catch uncaught exceptions globally and save data before crashing
+        Thread.setDefaultUncaughtExceptionHandler((thread, throwable) -> {
+            System.out.println("An unexpected error occurred: " + throwable.getMessage());
+
+            try {
+                DataSyncUtil syncUtil = new DataSyncUtil(
+                    DataInitializer.getApplicantList(),
+                    DataInitializer.getProjectList(),
+                    DataInitializer.getManagerList(),
+                    DataInitializer.getOfficerList(),
+                    DataInitializer.getApplicationList(),
+                    DataInitializer.getRegistrationList(),
+                    DataInitializer.getWithdrawalList(),
+                    DataInitializer.getEnquiryList()
+                );
+                syncUtil.saveAll();
+                System.out.println(" All data saved before crash.");
+            } catch (Exception e) {
+                System.out.println("Failed to save data during crash: " + e.getMessage());
+            }
+
+            System.exit(1);
+        });
+
         DataInitializer.loadData(); // Load users from CSV
         ApplicantList applicantList = DataInitializer.getApplicantList();
         ManagerList managerList = DataInitializer.getManagerList();
@@ -22,8 +46,25 @@ public class MainMenu {
         RegistrationList registrationList = DataInitializer.getRegistrationList();
         WithdrawalList withdrawalList = DataInitializer.getWithdrawalList();
         EnquiryList enquiryList = DataInitializer.getEnquiryList();
+        
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            DataSyncUtil syncUtil = new DataSyncUtil(
+                DataInitializer.getApplicantList(),
+                DataInitializer.getProjectList(),
+                DataInitializer.getManagerList(),
+                DataInitializer.getOfficerList(),
+                DataInitializer.getApplicationList(),
+                DataInitializer.getRegistrationList(),
+                DataInitializer.getWithdrawalList(),
+                DataInitializer.getEnquiryList()
+            );
+            syncUtil.saveAll();
+            System.out.println("All data saved before shutdown.");
+        }));
+
         Scanner scanner = new Scanner(System.in);
         ClearScreen.clear();
+        
         while (true) {
             System.out.println("  ____ _______ ____    __  __                                                   _   ");
         System.out.println(" |  _ \\__   __/ __ \\  |  \\/  |                                                 | |  ");

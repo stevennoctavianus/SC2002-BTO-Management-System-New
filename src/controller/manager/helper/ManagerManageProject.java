@@ -27,74 +27,6 @@ public class ManagerManageProject implements IManagerManageProject{
         this.scanner = new Scanner(System.in);
     }
 
-    // public void createProject() {
-    //     if (manager.getActiveProject() != null) {
-    //         System.out.println("You are already handling an active project: " + manager.getActiveProject().getProjectName());
-    //         System.out.println("You must finish managing the current project before creating a new one!");
-    //         return;
-    //     }
-    //         System.out.print("Enter Project Name: ");
-    //         String name = scanner.nextLine();
-
-    //         System.out.print("Enter Neighborhood: ");
-    //         String neighborhood = scanner.nextLine();
-    //     int twoRoom, sellingPriceThreeRoom, threeRoom, sellingPriceTwoRoom;
-    //     try{
-    //         System.out.print("Enter number of 2-Room Flats: ");
-    //         twoRoom = scanner.nextInt();
-
-    //         System.out.print("Enter the selling price of 2-Room Flats: ");
-    //         sellingPriceTwoRoom = scanner.nextInt();
-
-    //         System.out.print("Enter number of 3-Room Flats: ");
-    //         threeRoom = scanner.nextInt();
-    //         scanner.nextLine(); // consume newline
-
-    //         System.out.print("Enter the selling price of 3-Room Flats: ");
-    //         sellingPriceThreeRoom = scanner.nextInt();
-    //     }
-    //     catch(InputMismatchException e){
-    //         ClearScreen.clear();
-    //         System.out.println("Please input an integer!");
-    //         scanner.nextLine();
-    //         return;
-    //     }
-    //     scanner.nextLine();
-
-    //     Date openDate;
-    //     Date closeDate;
-
-    //     try {
-    //         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-
-    //         System.out.print("Enter Opening Date (yyyy-MM-dd): ");
-    //         openDate = sdf.parse(scanner.nextLine());
-
-    //         System.out.print("Enter Closing Date (yyyy-MM-dd): ");
-    //         closeDate = sdf.parse(scanner.nextLine());
-    //     }
-    //     catch (ParseException e) {
-    //         ClearScreen.clear();
-    //         System.out.println("Invalid date format. Please use yyyy-MM-dd.");
-    //         return;
-    //     }
-
-    //     System.out.print("Enter Max Officer Slot: ");
-    //     int maxOfficer = scanner.nextInt();
-    //     scanner.nextLine();
-
-    //     Project project = new Project(name, neighborhood, twoRoom, sellingPriceTwoRoom, threeRoom, sellingPriceThreeRoom, openDate, closeDate, maxOfficer);
-    //     project.setManager(manager);
-
-    //     // Assign manager's responsibility
-    //     manager.addManagedProject(project);
-    //     if (project.getVisibility()) {
-    //         manager.setActiveProject(project);
-    //     }
-
-    //     projectList.addProject(project);
-    //     System.out.println("Project created successfully.");
-    // }
     public void createProject() {
         if (manager.getActiveProject() != null) {
             System.out.println("You are already handling an active project: " + manager.getActiveProject().getProjectName());
@@ -102,8 +34,14 @@ public class ManagerManageProject implements IManagerManageProject{
             return;
         }
 
-        System.out.print("Enter Project Name: ");
-        String name = scanner.nextLine();
+        String name;
+         while (true) {
+             System.out.print("Enter Project Name: ");
+             name = scanner.nextLine();
+             if (projectList.getProjectByName(name) != null) {
+                 System.out.println("A project with this name already exists. Please enter a different name.");
+             } else {break;}
+         }
 
         System.out.print("Enter Neighborhood: ");
         String neighborhood = scanner.nextLine();

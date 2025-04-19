@@ -4,9 +4,10 @@ import java.util.List;
 import controller.officer.template.IOfficerGenerateReceipt;
 public class OfficerGenerateReceipt implements IOfficerGenerateReceipt{
     private Officer officer;
-
-    public OfficerGenerateReceipt(Officer officer) {
+    private Application application;
+    public OfficerGenerateReceipt(Officer officer, Application application) {
         this.officer = officer;
+        this.application = application;
     }
 
     public void generateReceipt() {
@@ -17,30 +18,26 @@ public class OfficerGenerateReceipt implements IOfficerGenerateReceipt{
             return;
         }
 
-        List<Application> applications = assignedProject.getApplication();
-        boolean hasReceipt = false;
+        if (application == null || application.getApplicationStatus() != Application.ApplicationStatus.BOOKED) {
+            System.out.println("No valid BOOKED application provided for receipt generation.");
+            return;
+        }
+
+        Applicant applicant = application.getApplicant();
+        if (applicant == null) {
+            System.out.println("Error: Applicant information is missing.");
+            return;
+        }
 
         System.out.println("\n=== Flat Booking Receipt for Project: " + assignedProject.getProjectName() + " ===");
-
-        for (Application application : applications) {
-            if (application.getApplicationStatus() == Application.ApplicationStatus.BOOKED) {
-                Applicant applicant = application.getApplicant();
-
-                System.out.println("-----------------------------------------");
-                System.out.println("Name           : " + applicant.getName());
-                System.out.println("NRIC           : " + applicant.getNric());
-                System.out.println("Age            : " + applicant.getAge());
-                System.out.println("Marital Status : " + applicant.getMaritalStatus());
-                System.out.println("Flat Type      : " + application.getFlatType());
-                System.out.println("Project Name   : " + assignedProject.getProjectName());
-                System.out.println("Neighborhood   : " + assignedProject.getNeighborhood());
-                System.out.println("-----------------------------------------");
-                hasReceipt = true;
-            }
-        }
-
-        if (!hasReceipt) {
-            System.out.println("No BOOKED applications found under your project.");
-        }
+        System.out.println("-----------------------------------------");
+        System.out.println("Name           : " + applicant.getName());
+        System.out.println("NRIC           : " + applicant.getNric());
+        System.out.println("Age            : " + applicant.getAge());
+        System.out.println("Marital Status : " + applicant.getMaritalStatus());
+        System.out.println("Flat Type      : " + application.getFlatType());
+        System.out.println("Project Name   : " + assignedProject.getProjectName());
+        System.out.println("Neighborhood   : " + assignedProject.getNeighborhood());
+        System.out.println("-----------------------------------------");
     }
 }

@@ -64,7 +64,7 @@ public class OfficerManageApplication implements IOfficerManageApplication{
         // Display NRICs
         System.out.println("\n=== Successful Applications (Eligible for Booking) ===");
         for (int i = 0; i < successfulApplication.size(); i++) {
-            System.out.println((i + 1) + ") " + successfulApplication.get(i).getApplicant().getNric());
+            System.out.println((i + 1) + ") " + successfulApplication.get(i).getApplicant().getName() + ": " + successfulApplication.get(i).getApplicant().getNric());
         }
 
         System.out.print("Select an application to book (enter number or 0 to cancel): ");
@@ -103,7 +103,7 @@ public class OfficerManageApplication implements IOfficerManageApplication{
             assignedProject.setAvailableTwoRoom(current - 1);
             selectedApplication.setBookedFlat(true);
             System.out.println("Success!");
-            
+
         }
         else if (type == Application.FlatType.THREEROOM) {
             int current = assignedProject.getAvailableThreeRoom();
@@ -122,10 +122,7 @@ public class OfficerManageApplication implements IOfficerManageApplication{
         // Update application status:
         selectedApplication.setApplicationStatus(Application.ApplicationStatus.BOOKED);
         // Use-a relationship:
-        OfficerGenerateReceipt receiptHandler = new OfficerGenerateReceipt(officer);
+        OfficerGenerateReceipt receiptHandler = new OfficerGenerateReceipt(officer, selectedApplication);
         receiptHandler.generateReceipt();
-
-        // selectedApplication.setApplicationStatus(Application.ApplicationStatus.BOOKED);
-        // System.out.println("Application status updated to BOOKED and flat availability adjusted.");
     }
 }

@@ -64,16 +64,18 @@ public class MainMenu {
 
         Scanner scanner = new Scanner(System.in);
         ClearScreen.clear();
-        
+
+        // Considering to add UserendSession when log out or change password
+
         while (true) {
             System.out.println("  ____ _______ ____    __  __                                                   _   ");
-        System.out.println(" |  _ \\__   __/ __ \\  |  \\/  |                                                 | |  ");
-        System.out.println(" | |_) | | | | |  | | | \\  / | __ _ _ __   __ _  __ _  ___ _ __ ___   ___ _ __ | |_ ");
-        System.out.println(" |  _ <  | | | |  | | | |\\/| |/ _` | '_ \\ / _` |/ _` |/ _ \\ '_ ` _ \\ / _ \\ '_ \\| __|");
-        System.out.println(" | |_) | | | | |__| | | |  | | (_| | | | | (_| | (_| |  __/ | | | | |  __/ | | | |_ ");
-        System.out.println(" |____/  |_|  \\____/  |_|  |_|\\__,_|_| |_|\\__,_|\\__,_|\\___|_| |_| |_|\\___|_| |_|\\__|");
-        System.out.println("                                                __/ |                               ");
-        System.out.println("                                               |___/                                ");
+            System.out.println(" |  _ \\__   __/ __ \\  |  \\/  |                                                 | |  ");
+            System.out.println(" | |_) | | | | |  | | | \\  / | __ _ _ __   __ _  __ _  ___ _ __ ___   ___ _ __ | |_ ");
+            System.out.println(" |  _ <  | | | |  | | | |\\/| |/ _` | '_ \\ / _` |/ _` |/ _ \\ '_ ` _ \\ / _ \\ '_ \\| __|");
+            System.out.println(" | |_) | | | | |__| | | |  | | (_| | | | | (_| | (_| |  __/ | | | | |  __/ | | | |_ ");
+            System.out.println(" |____/  |_|  \\____/  |_|  |_|\\__,_|_| |_|\\__,_|\\__,_|\\___|_| |_| |_|\\___|_| |_|\\__|");
+            System.out.println("                                                __/ |                               ");
+            System.out.println("                                               |___/                                ");
             System.out.println("                    +----------------------------------------+");
             System.out.println("                    |  1) Applicant Login                    |");
             System.out.println("                    |  2) Officer Login                      |");
@@ -97,7 +99,7 @@ public class MainMenu {
                         withdrawalList,
                         enquiryList
                     );
-                    syncUtil.saveAll(); 
+                    syncUtil.saveAll();
                     ClearScreen.clear();
                     System.out.println("Bye Bye!");
                     break;

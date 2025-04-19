@@ -31,7 +31,7 @@ public class OfficerController {
     private IOfficerManageEnquiries manageEnquiriesHandler;
     private IOfficerManageProject manageProjectHandler;
     private IOfficerManageApplication manageApplicationHandler;
-    private IOfficerGenerateReceipt receiptHandler;
+    // private IOfficerGenerateReceipt receiptHandler;
 
     public OfficerController(Officer officer, ProjectList projectList,
                              ApplicationList applicationList, EnquiryList enquiryList,
@@ -55,7 +55,7 @@ public class OfficerController {
         this.manageEnquiriesHandler = new OfficerManageEnquiries(officer, enquiryList);
         this.manageProjectHandler = new OfficerManageProject(officer, projectList);
         this.manageApplicationHandler = new OfficerManageApplication(officer, applicationList);
-        this.receiptHandler = new OfficerGenerateReceipt(officer);
+        // this.receiptHandler = new OfficerGenerateReceipt(officer);
     }
 
     public void showMenu() {
@@ -215,7 +215,9 @@ public class OfficerController {
             System.out.println("            |  3) View Project Details                        |");
             System.out.println("            |  4) View Applications                           |");
             System.out.println("            |  5) Update Applicant Profile                    |");
-            System.out.println("            |  6) Generate Receipt                            |");
+
+            // System.out.println("            |  6) Generate Receipt                            |");
+
             System.out.println("            |  7) Back                                        |");
             System.out.println("            +--------------------------------------------------+\n\n");
             System.out.print("Enter choice: ");
@@ -237,8 +239,8 @@ public class OfficerController {
                 case 3: manageProjectHandler.viewProjectDetails(); break;
                 case 4: manageApplicationHandler.viewApplications(); break;
                 case 5: manageApplicationHandler.updateApplicationStatus(); break;
-                case 6: receiptHandler.generateReceipt(); break;
-                case 7:
+                // case 6: receiptHandler.generateReceipt(); break;
+                case 6:
                     ClearScreen.clear();
                     return;
                 default:

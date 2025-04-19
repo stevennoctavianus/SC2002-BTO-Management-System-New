@@ -91,8 +91,8 @@ public class ManagerController {
                 case 14: enquiryManager.viewHandledProjectEnquiry(manager.getActiveProject()); break;
                 case 15: enquiryManager.replyHandledProjectEnquiry(manager.getActiveProject()); break;
                 case 16:
-                    /* Logic for Password change here */
-                    PasswordService.changePassWord(manager);
+                    boolean changed = PasswordService.changePassWord(manager);
+                    if (changed) return;
                     break;
                 case 17:
                     System.out.println("Logging out...");

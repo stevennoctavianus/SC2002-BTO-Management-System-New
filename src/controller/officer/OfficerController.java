@@ -85,8 +85,8 @@ public class OfficerController {
                 // Add change password feature:
 
                 case 4:
-                    /* Logic here */
-                    PasswordService.changePassWord(officer);
+                    boolean changed = PasswordService.changePassWord(officer);
+                    if (changed) return;
                     BackButton.goBack();
                     break;
                 case 5:

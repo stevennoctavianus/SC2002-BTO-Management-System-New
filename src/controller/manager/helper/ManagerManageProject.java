@@ -32,8 +32,16 @@ public class ManagerManageProject implements IManagerManageProject{
             return;
         }
 
-        System.out.print("Enter Project Name: ");
-        String name = scanner.nextLine();
+        String name;
+        while (true) {
+            System.out.print("Enter Project Name: ");
+            name = scanner.nextLine();
+            if (projectList.getProjectByName(name) != null) {
+                System.out.println("A project with this name already exists. Please enter a different name.");
+            } else {break;}
+        }
+        
+        
 
         System.out.print("Enter Neighborhood: ");
         String neighborhood = scanner.nextLine();

@@ -30,6 +30,7 @@ public class ApplicantMakeWithdrawal implements IApplicantMakeWithdrawal{
             Withdrawal withdrawal = new Withdrawal(application);
             withdrawalList.addWithdrawal(withdrawal);
             applicationList.removeApplication(application);
+            applicant.setCurrentApplication(null);
             System.out.println("Application withdrawn successfully.");
         }
         else {

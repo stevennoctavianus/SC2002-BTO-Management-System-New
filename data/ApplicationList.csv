@@ -1,2 +1,4 @@
 applicantNric,projectName,status
 S3456789E,Acacia Breeze,BOOKED
+S1234567A,Acacia Breeze,PENDING
+T7654321B,Acacia Breeze,SUCCESSFUL

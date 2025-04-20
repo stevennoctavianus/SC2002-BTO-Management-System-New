@@ -25,7 +25,7 @@ public class AuthenticationService {
             for (Officer o : DataInitializer.getOfficerList().getOfficerList()) {
                 if (o.getNric().equals(nric) && o.getPassword().equals(password)) return o;
             }
-        } else {
+        } else{
             for (Manager m : DataInitializer.getManagerList().getManagerList()) {
                 if (m.getNric().equals(nric) && m.getPassword().equals(password)) return m;
             }

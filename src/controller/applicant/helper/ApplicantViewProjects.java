@@ -59,6 +59,12 @@ public class ApplicantViewProjects implements IApplicantViewProjects {
                 }
             }
         }
+        Application currentApp = applicant.getCurrentApplication();
+        if (currentApp != null && currentApp.getApplicationStatus() != Application.ApplicationStatus.UNSUCCESSFUL) {
+            ClearScreen.clear();
+            System.out.println("You already have an active application.");
+            return;
+        }
 
         System.out.print("Enter Project Name to apply: ");
         String projectName = sc.nextLine();
@@ -66,12 +72,6 @@ public class ApplicantViewProjects implements IApplicantViewProjects {
 
         if (project == null) {
             System.out.println("Project not found.");
-            return;
-        }
-
-        Application currentApp = applicant.getCurrentApplication();
-        if (currentApp != null && currentApp.getApplicationStatus() != Application.ApplicationStatus.UNSUCCESSFUL) {
-            System.out.println("You already have an active application.");
             return;
         }
 

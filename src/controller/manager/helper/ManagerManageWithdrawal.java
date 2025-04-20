@@ -1,20 +1,39 @@
 package controller.manager.helper;
+
 import container.*;
 import entity.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 import controller.manager.template.IManagerManageWithdrawal;
-public class ManagerManageWithdrawal implements IManagerManageWithdrawal{
+
+/**
+ * Provides functionality for managers to handle withdrawal requests submitted by applicants.
+ * Managers can approve or reject pending withdrawals tied to projects they manage.
+ */
+public class ManagerManageWithdrawal implements IManagerManageWithdrawal {
+
     private WithdrawalList withdrawalList;
     private ApplicationList applicationList;
     private Scanner scanner;
 
+    /**
+     * Constructs a withdrawal handler for a manager.
+     *
+     * @param withdrawalList   the list of all withdrawal requests in the system
+     * @param applicationList  the list of applications tied to those withdrawals
+     */
     public ManagerManageWithdrawal(WithdrawalList withdrawalList, ApplicationList applicationList) {
         this.withdrawalList = withdrawalList;
         this.applicationList = applicationList;
         this.scanner = new Scanner(System.in);
     }
 
+    /**
+     * Allows the manager to view and process pending withdrawal requests for a specific project.
+     * Approved withdrawals update the application's status and restore flat availability if applicable.
+     *
+     * @param project the project whose withdrawals are being managed
+     */
     public void manageWithdrawal(Project project) {
         ArrayList<Withdrawal> pendingWithdrawals = withdrawalList.getPendingWithdrawalsByProject(project);
 
@@ -65,9 +84,7 @@ public class ManagerManageWithdrawal implements IManagerManageWithdrawal{
                 }
             }
 
-            // Change status to unsuccessful and clear currentApplication
             application.setApplicationStatus(Application.ApplicationStatus.UNSUCCESSFUL);
-
             System.out.println("Withdrawal approved. Application marked as UNSUCCESSFUL.");
         } else if (action.equals("2")) {
             withdrawal.setWithdrawalStatus(Withdrawal.WithdrawalStatus.REJECTED);
@@ -76,5 +93,4 @@ public class ManagerManageWithdrawal implements IManagerManageWithdrawal{
             System.out.println("Invalid action.");
         }
     }
-
 }

@@ -1,19 +1,32 @@
 package controller.manager.helper;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 import entity.*;
 import container.*;
 import controller.manager.template.IManagerManageEnquiries;
-public class ManagerManageEnquiries implements IManagerManageEnquiries{
+
+/**
+ * Provides functionality for managers to view and reply to enquiries submitted by applicants. Managers can access all enquiries or limit their view to those related to their own project.
+ */
+public class ManagerManageEnquiries implements IManagerManageEnquiries {
+
     private EnquiryList enquiryList;
     private Scanner scanner;
 
+    /**
+     * Constructs the enquiry handler for a manager using the global enquiry list.
+     *
+     * @param enquiryList the list of all enquiries submitted in the system
+     */
     public ManagerManageEnquiries(EnquiryList enquiryList) {
         this.enquiryList = enquiryList;
         this.scanner = new Scanner(System.in);
     }
 
-    // View all enquiries (not restricted to managed projects)
+    /**
+     * Displays all enquiries in the system, regardless of project ownership.
+     */
     public void viewEnquiry() {
         ArrayList<Enquiry> enquiries = enquiryList.getEnquiries();
         if (enquiries.isEmpty()) {
@@ -27,7 +40,11 @@ public class ManagerManageEnquiries implements IManagerManageEnquiries{
         }
     }
 
-    // View enquiries only for the project the manager is currently handling
+    /**
+     * Displays all enquiries submitted for the project currently managed by the manager.
+     *
+     * @param currentProject the manager's active project
+     */
     public void viewHandledProjectEnquiry(Project currentProject) {
         ArrayList<Enquiry> enquiries = enquiryList.getEnquiriesByProject(currentProject);
         if (enquiries.isEmpty()) {
@@ -41,7 +58,12 @@ public class ManagerManageEnquiries implements IManagerManageEnquiries{
         }
     }
 
-    // Reply to pending enquiries for the project the manager is currently handling
+    /**
+     * Allows the manager to reply to a pending enquiry for their currently managed project.
+     * Marks the enquiry as responded after a reply is submitted.
+     *
+     * @param currentProject the manager's active project
+     */
     public void replyHandledProjectEnquiry(Project currentProject) {
         ArrayList<Enquiry> pendingEnquiries = enquiryList.getPendingEnquiriesByProject(currentProject);
         if (pendingEnquiries.isEmpty()) {

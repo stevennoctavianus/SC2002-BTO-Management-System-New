@@ -1,17 +1,35 @@
 package controller.officer.helper;
+
 import container.*;
 import entity.*;
+import utils.ClearScreen;
+
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 import controller.officer.template.IOfficerMakeEnquiry;
 import controller.applicant.helper.ApplicantMakeEnquiry;
-public class OfficerMakeEnquiry extends ApplicantMakeEnquiry implements IOfficerMakeEnquiry{
+
+/**
+ * Allows officers to submit, view, edit, and delete enquiries about BTO projects.
+ * Inherits functionality from but excludes projects
+ * that the officer is currently managing.
+ */
+public class OfficerMakeEnquiry extends ApplicantMakeEnquiry implements IOfficerMakeEnquiry {
+
     private Officer officer;
     private ProjectList projectList;
     private EnquiryList enquiryList;
     private Scanner sc;
 
+    /**
+     * Constructs an enquiry handler for officers.
+     *
+     * @param officer      the officer making enquiries
+     * @param projectList  the list of all projects
+     * @param enquiryList  the global list of enquiries
+     */
     public OfficerMakeEnquiry(Officer officer, ProjectList projectList, EnquiryList enquiryList) {
         super(officer, projectList, enquiryList); // Officer extends Applicant
         this.officer = officer;
@@ -20,6 +38,9 @@ public class OfficerMakeEnquiry extends ApplicantMakeEnquiry implements IOfficer
         this.sc = new Scanner(System.in);
     }
 
+    /**
+     * Allows the officer to submit an enquiry, excluding projects they are managing.
+     */
     @Override
     public void makeEnquiry() {
         List<Project> allProjects = projectList.getProjectList();
@@ -42,7 +63,15 @@ public class OfficerMakeEnquiry extends ApplicantMakeEnquiry implements IOfficer
         }
 
         System.out.print("Enter project number: ");
-        int choice = sc.nextInt();
+        int choice;
+        try {
+            choice = sc.nextInt();
+        } catch (InputMismatchException e) {
+            ClearScreen.clear();
+            System.out.println("Please input an integer!");
+            sc.nextLine();
+            return;
+        }
         sc.nextLine();
 
         if (choice < 1 || choice > availableProjects.size()) {
@@ -61,6 +90,9 @@ public class OfficerMakeEnquiry extends ApplicantMakeEnquiry implements IOfficer
         System.out.println("Success! Your enquiry has been submitted.");
     }
 
+    /**
+     * Displays all enquiries submitted by the officer for projects they are not managing.
+     */
     @Override
     public void viewEnquiry() {
         System.out.println("\n===== My Enquiries (Excluding Managed Projects) =====");
@@ -81,6 +113,12 @@ public class OfficerMakeEnquiry extends ApplicantMakeEnquiry implements IOfficer
         }
     }
 
+    /**
+     * Utility method to check if the officer is managing the specified project.
+     *
+     * @param project the project to check
+     * @return true if the officer is managing the project, false otherwise
+     */
     public boolean isManagingProject(Project project) {
         for (Registration reg : officer.getRegistrations()) {
             if (reg.getProject().equals(project) && reg.getStatus() == Registration.RegistrationStatus.APPROVED) {
@@ -90,6 +128,9 @@ public class OfficerMakeEnquiry extends ApplicantMakeEnquiry implements IOfficer
         return false;
     }
 
+    /**
+     * Allows the officer to edit a pending enquiry submitted to a project they do not manage.
+     */
     @Override
     public void editEnquiry() {
         List<Enquiry> editableEnquiries = new ArrayList<>();
@@ -112,7 +153,15 @@ public class OfficerMakeEnquiry extends ApplicantMakeEnquiry implements IOfficer
         }
 
         System.out.print("Enter enquiry number to edit: ");
-        int choice = sc.nextInt();
+        int choice;
+        try {
+            choice = sc.nextInt();
+        } catch (InputMismatchException e) {
+            ClearScreen.clear();
+            System.out.println("Please input an integer!");
+            sc.nextLine();
+            return;
+        }
         sc.nextLine();
 
         if (choice < 1 || choice > editableEnquiries.size()) {
@@ -127,6 +176,9 @@ public class OfficerMakeEnquiry extends ApplicantMakeEnquiry implements IOfficer
         System.out.println("Enquiry updated.");
     }
 
+    /**
+     * Allows the officer to delete a pending enquiry they submitted to a project they are not managing.
+     */
     @Override
     public void deleteEnquiry() {
         List<Enquiry> deletableEnquiries = new ArrayList<>();
@@ -150,7 +202,16 @@ public class OfficerMakeEnquiry extends ApplicantMakeEnquiry implements IOfficer
         }
 
         System.out.print("Enter enquiry number to delete: ");
-        int choice = sc.nextInt();
+        int choice;
+        try {
+            choice = sc.nextInt();
+        } catch (InputMismatchException e) {
+            ClearScreen.clear();
+            System.out.println("Please input an integer!");
+            sc.nextLine();
+            return;
+        }
+        sc.nextLine();
 
         if (choice < 1 || choice > deletableEnquiries.size()) {
             System.out.println("Invalid choice.");
@@ -161,3 +222,4 @@ public class OfficerMakeEnquiry extends ApplicantMakeEnquiry implements IOfficer
         System.out.println("Enquiry deleted.");
     }
 }
+

@@ -1,14 +1,37 @@
 package controller.officer.helper;
+
 import container.*;
 import entity.*;
-import java.util.Scanner;
 import controller.officer.template.IOfficerViewProjects;
+import controller.FilterSettings;
+import controller.UserSession;
 import controller.applicant.helper.ApplicantViewProjects;
-public class OfficerViewProjects extends ApplicantViewProjects implements IOfficerViewProjects{
+import utils.ClearScreen;
+
+import java.util.Date;
+import java.util.InputMismatchException;
+import java.util.Scanner;
+
+/**
+ * Allows officers to view and apply for BTO projects similarly to applicants,
+ * but with additional checks to prevent conflicts with their registration or managerial roles.
+ * <p>
+ * Extends {@link ApplicantViewProjects} and implements {@link IOfficerViewProjects}.
+ */
+public class OfficerViewProjects extends ApplicantViewProjects implements IOfficerViewProjects {
+
     private Officer officer;
     private ProjectList projectList;
     private RegistrationList registrationList;
 
+    /**
+     * Constructs the officer-facing project view and application logic.
+     *
+     * @param officer           the officer using the system
+     * @param projectList       the list of all BTO projects
+     * @param applicationList   the global application list
+     * @param registrationList  the global registration list
+     */
     public OfficerViewProjects(Officer officer, ProjectList projectList, ApplicationList applicationList, RegistrationList registrationList) {
         super(officer, projectList, applicationList);
         this.officer = officer;
@@ -16,51 +39,57 @@ public class OfficerViewProjects extends ApplicantViewProjects implements IOffic
         this.registrationList = registrationList;
     }
 
+    /**
+     * Displays a filtered list of projects the officer can view and apply for.
+     * Projects already managed or registered by the officer are excluded.
+     */
     @Override
     public void viewProjectList() {
-
+        FilterSettings filters = UserSession.getFilterSettings();
         System.out.println("Available BTO Projects:");
-        for (Project project : projectList.getProjectList()) {
-
-            // Skip projects this officer is registered for (even if not yet approved)
+        for (Project project : projectList.getFilteredProjects(filters)) {
             Registration reg = registrationList.getRegistrationByOfficerAndProject(officer, project);
             if (reg != null) continue;
+            if (officer.getAssignedProject() != null &&
+                officer.getAssignedProject().equals(project)) continue;
 
-            // Skip if officer is assigned to this project
-            if (officer.getAssignedProject() != null && officer.getAssignedProject().equals(project)) {
-                continue;
-            }
-            if(officer.getMaritalStatus() == User.MaritalStatus.SINGLE && officer.getAge() >= 35 && project.getAvailableTwoRoom() > 0){
+            if (officer.getMaritalStatus() == User.MaritalStatus.SINGLE &&
+                officer.getAge() >= 35 &&
+                project.getAvailableTwoRoom() > 0) {
+                System.out.println(project);
+            } else if (project.getVisibility() &&
+                      (project.getAvailableThreeRoom() > 0 || project.getAvailableTwoRoom() > 0)) {
                 System.out.println(project);
             }
-            else{
-                if(project.getVisibility() == true && (project.getAvailableThreeRoom() > 0 || project.getAvailableTwoRoom() > 0)){
-                    System.out.println(project);
-                }
-            }
         }
-
-        /*********************** */
-        // Show all projects even if the visibility is turned off
     }
 
+    /**
+     * Allows the officer to apply for a project, similar to an applicant.
+     * Includes additional validation to avoid duplicate applications and registration conflicts.
+     */
     @Override
     public void applyForProject() {
         Scanner sc = new Scanner(System.in);
-        // Briefly show the name of available projects:
+        FilterSettings filters = UserSession.getFilterSettings();
+
         System.out.println("Projects you can apply:");
-        for (Project project : projectList.getProjectList()) {
+        for (Project project : projectList.getFilteredProjects(filters)) {
             Registration reg = registrationList.getRegistrationByOfficerAndProject(officer, project);
             if (reg != null) continue;
-            if (officer.getAssignedProject() != null && officer.getAssignedProject().equals(project)) continue;
-            if(officer.getMaritalStatus() == User.MaritalStatus.SINGLE && officer.getAge() >= 35 && project.getAvailableTwoRoom() > 0) System.out.println(project.getProjectName());
-            else{
-                if(project.getVisibility() == true && (project.getAvailableThreeRoom() > 0 || project.getAvailableTwoRoom() > 0)){
-                    System.out.println(project.getProjectName());
-                }
+            if (officer.getAssignedProject() != null &&
+                officer.getAssignedProject().equals(project)) continue;
+
+            if (officer.getMaritalStatus() == User.MaritalStatus.SINGLE &&
+                officer.getAge() >= 35 &&
+                project.getAvailableTwoRoom() > 0) {
+                System.out.println(project.getProjectName());
+            } else if (project.getVisibility() &&
+                      (project.getAvailableThreeRoom() > 0 || project.getAvailableTwoRoom() > 0)) {
+                System.out.println(project.getProjectName());
             }
         }
-        /****************************************/
+
         System.out.print("Enter Project Name to apply: ");
         String projectName = sc.nextLine();
         Project project = projectList.getProjectByName(projectName);
@@ -70,62 +99,69 @@ public class OfficerViewProjects extends ApplicantViewProjects implements IOffic
             return;
         }
 
-        // Officer is already assigned to manage this project
-        if (officer.getAssignedProject() != null && officer.getAssignedProject().equals(project)) {
+        if (officer.getAssignedProject() != null &&
+            officer.getAssignedProject().equals(project)) {
             System.out.println("You are already managing this project as an Officer. Cannot apply as an applicant.");
             return;
         }
 
-        // Officer has registration record for this project
         Registration reg = registrationList.getRegistrationByOfficerAndProject(officer, project);
         if (reg != null) {
             System.out.println("You have already registered for this project as an Officer. Cannot apply.");
             return;
         }
 
-        // Already has an application
-        Application existingApp = super.applicationList.getApplicationByApplicant(officer);
-        if (existingApp != null) {
+        if (super.applicationList.getApplicationByApplicant(officer) != null) {
             System.out.println("You already have an application.");
             return;
         }
 
+        if (project.getOpeningDate().after(new Date())) {
+            System.out.println("The project is currently not open for application.");
+            return;
+        }
 
-        // Manage Age group:
         Application.FlatType selectedFlatType;
-        //
-        if(officer.getMaritalStatus() == User.MaritalStatus.SINGLE && officer.getAge() >= 35){
+
+        if (officer.getMaritalStatus() == User.MaritalStatus.SINGLE &&
+            officer.getAge() >= 35) {
             System.out.println("You are only eligible to apply for 2-ROOM flat");
             selectedFlatType = Application.FlatType.TWOROOM;
-        }
-        else{
+        } else {
             System.out.println("Select flat type to apply for:");
             System.out.println("Enter 1 -> 2-room flat");
             System.out.println("Enter 2 -> 3-room flat");
             System.out.print("Enter choice (1 or 2): ");
-            int choice = sc.nextInt();
-            if (choice  == 1) {
-                if(project.getAvailableTwoRoom() == 0){
+
+            int choice;
+            try {
+                choice = sc.nextInt();
+            } catch (InputMismatchException e) {
+                ClearScreen.clear();
+                System.out.println("Please input an integer!");
+                sc.nextLine();
+                return;
+            }
+            sc.nextLine();
+
+            if (choice == 1) {
+                if (project.getAvailableTwoRoom() == 0) {
                     System.out.println("Sorry, there is not any 2-room flats");
                     return;
                 }
                 selectedFlatType = Application.FlatType.TWOROOM;
-            }
-            else if (choice == 2) {
-                if(project.getAvailableThreeRoom() == 0){
+            } else if (choice == 2) {
+                if (project.getAvailableThreeRoom() == 0) {
                     System.out.println("Sorry, there is not any 3-room flats");
                     return;
                 }
                 selectedFlatType = Application.FlatType.THREEROOM;
-            }
-            else {
+            } else {
                 System.out.println("Invalid choice. Application cancelled.");
                 return;
             }
         }
 
-
-        // Proceed with application
         Application newApplication = new Application(project, officer);
         newApplication.setFlatType(selectedFlatType);
         super.applicationList.addApplication(newApplication);
@@ -134,3 +170,5 @@ public class OfficerViewProjects extends ApplicantViewProjects implements IOffic
         System.out.println("Application submitted successfully!");
     }
 }
+
+

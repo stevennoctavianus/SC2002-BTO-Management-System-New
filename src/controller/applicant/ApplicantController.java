@@ -6,6 +6,10 @@ import entity.*;
 import utils.BackButton;
 import utils.ClearScreen;
 import controller.PasswordService;
+import controller.FilterMenu;
+import controller.UserSession;
+
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class ApplicantController {
@@ -36,27 +40,34 @@ public class ApplicantController {
     }
 
     public void showMenu() {
-        int choice;
+        int choice = 0;
         do {
-            System.out.println("+------------------------------------------------+");
-            System.out.println("|               Applicant Dashboard              |");
-            System.out.println("+------------------------------------------------+");
-            System.out.println("|  1) View BTO Project List                      |");
-            System.out.println("|  2) Apply for a BTO Project                    |");
-            System.out.println("|  3) View My Application                        |");
-            System.out.println("|  4) Withdraw Application                       |");
-            System.out.println("|  5) Submit an Enquiry                          |");
-            System.out.println("|  6) View My Enquiries                          |");
-            System.out.println("|  7) Edit an Enquiry                            |");
-            System.out.println("|  8) Delete an Enquiry                          |");
-            // Add change password here:
-            System.out.println("|  9) Change Password                            |");
-            System.out.println("| 10) Logout                                     |");
-            System.out.println("+------------------------------------------------+");
+            System.out.println("            +------------------------------------------------+");
+            System.out.println("            |               Applicant Dashboard              |");
+            System.out.println("            +------------------------------------------------+");
+            System.out.println("            |  1) View BTO Project List                      |");
+            System.out.println("            |  2) Apply for a BTO Project                    |");
+            System.out.println("            |  3) View My Application                        |");
+            System.out.println("            |  4) Withdraw Application                       |");
+            System.out.println("            |  5) Submit an Enquiry                          |");
+            System.out.println("            |  6) View My Enquiries                          |");
+            System.out.println("            |  7) Edit an Enquiry                            |");
+            System.out.println("            |  8) Delete an Enquiry                          |");
+            System.out.println("            |  9) Manage Filters                             |");
+            System.out.println("            | 10) Change Password                            |");
+            System.out.println("            | 11) Logout                                     |");
+            System.out.println("            +------------------------------------------------+\n\n");
             System.out.print("Enter your choice: ");
-
-            choice = scanner.nextInt();
-            scanner.nextLine(); // Consume newline
+            try {
+                choice = scanner.nextInt();
+            } catch (InputMismatchException e) {
+                ClearScreen.clear();
+                System.out.println("Please input an integer!");
+                BackButton.goBack();
+                scanner.nextLine();
+                continue;
+            }
+            scanner.nextLine();
             ClearScreen.clear();
             switch (choice) {
                 case 1:
@@ -83,20 +94,23 @@ public class ApplicantController {
                 case 8:
                     enquiryHandler.deleteEnquiry();
                     break;
-
-
-                // Should have a class called PasswordService -> avoid violate Single-Responsibility Principle
                 case 9:
-                    PasswordService.changePassWord(applicant);
+                    new FilterMenu().manageFilters();
+                    ClearScreen.clear();
                     break;
                 case 10:
-                    System.out.println("Logging out...");
+                    PasswordService.changePassWord(applicant);
+                    ClearScreen.clear();
                     break;
+                case 11:
+                    System.out.println("Logging out...");
+                    UserSession.logout();
+                    BackButton.goBack();
+                    return;
                 default:
                     System.out.println("Invalid choice! Please enter a valid option.");
             }
             BackButton.goBack();
-        }
-        while (choice != 10);
+        } while (choice != 11);
     }
 }

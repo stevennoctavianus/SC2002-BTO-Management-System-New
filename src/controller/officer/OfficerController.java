@@ -1,15 +1,18 @@
 package controller.officer;
 import controller.officer.helper.*;
-import controller.PasswordService;
 import controller.applicant.helper.*;
 import container.*;
 import entity.*;
 import utils.BackButton;
 import utils.ClearScreen;
 import controller.PasswordService;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 import controller.officer.template.*;
 import controller.applicant.template.*;
+import controller.FilterMenu;
+import controller.UserSession;
+
 public class OfficerController {
     private Officer officer;
     private ProjectList projectList;
@@ -29,7 +32,7 @@ public class OfficerController {
     private IOfficerManageEnquiries manageEnquiriesHandler;
     private IOfficerManageProject manageProjectHandler;
     private IOfficerManageApplication manageApplicationHandler;
-    private IOfficerGenerateReceipt receiptHandler;
+    // private IOfficerGenerateReceipt receiptHandler;
 
     public OfficerController(Officer officer, ProjectList projectList,
                              ApplicationList applicationList, EnquiryList enquiryList,
@@ -53,23 +56,32 @@ public class OfficerController {
         this.manageEnquiriesHandler = new OfficerManageEnquiries(officer, enquiryList);
         this.manageProjectHandler = new OfficerManageProject(officer, projectList);
         this.manageApplicationHandler = new OfficerManageApplication(officer, applicationList);
-        this.receiptHandler = new OfficerGenerateReceipt(officer, applicationList);
+        // this.receiptHandler = new OfficerGenerateReceipt(officer);
     }
 
     public void showMenu() {
-        int choice;
+        int choice = 0;
         do {
-            System.out.println("+--------------------------------------------------+");
-            System.out.println("|              Officer Dashboard                   |");
-            System.out.println("+--------------------------------------------------+");
-            System.out.println("|  1) Apply for BTO Project (as Applicant)         |");
-            System.out.println("|  2) Register for Project (as Officer)            |");
-            System.out.println("|  3) Manage Officer's Job                         |");
-            System.out.println("|  4) Change Password                              |");
-            System.out.println("|  5) Logout                                       |");
-            System.out.println("+--------------------------------------------------+");
+            System.out.println("            +--------------------------------------------------+");
+            System.out.println("            |              Officer Dashboard                   |");
+            System.out.println("            +--------------------------------------------------+");
+            System.out.println("            |  1) Apply for BTO Project (as Applicant)         |");
+            System.out.println("            |  2) Register for Project (as Officer)            |");
+            System.out.println("            |  3) Manage Officer's Job                         |");
+            System.out.println("            |  4) Change Password                              |");
+            System.out.println("            |  5) Manage Filters                               |");
+            System.out.println("            |  6) Logout                                       |");
+            System.out.println("            +--------------------------------------------------+\n\n");
             System.out.print("Enter choice: ");
-            choice = scanner.nextInt();
+            try {
+                choice = scanner.nextInt();
+            } catch (InputMismatchException e) {
+                ClearScreen.clear();
+                System.out.println("Please input an integer!");
+                BackButton.goBack();
+                scanner.nextLine();
+                continue;
+            }
             scanner.nextLine();
             ClearScreen.clear();
             switch (choice) {
@@ -82,43 +94,52 @@ public class OfficerController {
                 case 3:
                     showOfficerManagementMenu();
                     break;
-                // Add change password feature:
-
                 case 4:
-                    /* Logic here */
                     PasswordService.changePassWord(officer);
                     BackButton.goBack();
                     break;
                 case 5:
-                    System.out.println("Logging out...");
-                    BackButton.goBack();
+                    new FilterMenu().manageFilters();
+                    ClearScreen.clear();
                     break;
+                case 6:
+                    System.out.println("Logging out...");
+                    UserSession.logout();
+                    BackButton.goBack();
+                    return;
                 default:
-                    System.out.println("Invalid choice!");
+                    System.out.println("Invalid choice! Please choose a valid option");
                     BackButton.goBack();
             }
-
-        } while (choice != 5);
+        } while (choice != 6);
     }
 
     private void showApplicantMenu() {
-        int choice;
+        int choice = 0;
         do {
-            System.out.println("+--------------------------------------------------+");
-            System.out.println("|           Applicant Mode (Officer View)         |");
-            System.out.println("+--------------------------------------------------+");
-            System.out.println("|  1) View BTO Project List                       |");
-            System.out.println("|  2) Apply for a BTO Project                     |");
-            System.out.println("|  3) View My Application                         |");
-            System.out.println("|  4) Withdraw Application                        |");
-            System.out.println("|  5) Submit an Enquiry                           |");
-            System.out.println("|  6) View My Enquiries                           |");
-            System.out.println("|  7) Edit an Enquiry                             |");
-            System.out.println("|  8) Delete an Enquiry                           |");
-            System.out.println("|  9) Back                                        |");
-            System.out.println("+--------------------------------------------------+");
+            System.out.println("            +--------------------------------------------------+");
+            System.out.println("            |           Applicant Mode (Officer View)         |");
+            System.out.println("            +--------------------------------------------------+");
+            System.out.println("            |  1) View BTO Project List                       |");
+            System.out.println("            |  2) Apply for a BTO Project                     |");
+            System.out.println("            |  3) View My Application                         |");
+            System.out.println("            |  4) Withdraw Application                        |");
+            System.out.println("            |  5) Submit an Enquiry                           |");
+            System.out.println("            |  6) View My Enquiries                           |");
+            System.out.println("            |  7) Edit an Enquiry                             |");
+            System.out.println("            |  8) Delete an Enquiry                           |");
+            System.out.println("            |  9) Back                                        |");
+            System.out.println("            +-------------------------------------------------+\n\n");
             System.out.print("Enter choice: ");
-            choice = scanner.nextInt();
+            try {
+                choice = scanner.nextInt();
+            } catch (InputMismatchException e) {
+                ClearScreen.clear();
+                System.out.println("Please input an integer!");
+                BackButton.goBack();
+                scanner.nextLine();
+                continue;
+            }
             scanner.nextLine();
             ClearScreen.clear();
             switch (choice) {
@@ -135,24 +156,32 @@ public class OfficerController {
                     return;
                 default:
                     ClearScreen.clear();
-                    System.out.println("Invalid choice.");
+                    System.out.println("Invalid choice! Please choose a valid option");
             }
             BackButton.goBack();
         } while (true);
     }
 
     private void showOfficerRegistrationMenu() {
-        int choice;
+        int choice = 0;
         do {
-            System.out.println("+--------------------------------------------------+");
-            System.out.println("|              Officer Registration               |");
-            System.out.println("+--------------------------------------------------+");
-            System.out.println("|  1) Register as Officer                         |");
-            System.out.println("|  2) View Registration Status                    |");
-            System.out.println("|  3) Back                                         |");
-            System.out.println("+--------------------------------------------------+");
+            System.out.println("            +--------------------------------------------------+");
+            System.out.println("            |              Officer Registration                |");
+            System.out.println("            +--------------------------------------------------+");
+            System.out.println("            |  1) Register as Officer                          |");
+            System.out.println("            |  2) View Registration Status                     |");
+            System.out.println("            |  3) Back                                         |");
+            System.out.println("            +--------------------------------------------------+\n\n");
             System.out.print("Enter choice: ");
-            choice = scanner.nextInt();
+            try {
+                choice = scanner.nextInt();
+            } catch (InputMismatchException e) {
+                ClearScreen.clear();
+                System.out.println("Please input an integer!");
+                BackButton.goBack();
+                scanner.nextLine();
+                continue;
+            }
             scanner.nextLine();
             ClearScreen.clear();
             switch (choice) {
@@ -163,7 +192,7 @@ public class OfficerController {
                     return;
                 default:
                     ClearScreen.clear();
-                    System.out.println("Invalid choice.");
+                    System.out.println("Invalid choice! Please choose a valid option.");
             }
             BackButton.goBack();
         } while (true);
@@ -172,24 +201,33 @@ public class OfficerController {
     private void showOfficerManagementMenu() {
         if (officer.getAssignedProject() == null) {
             System.out.println("You do not have an active project. Cannot manage officer responsibilities.");
+            BackButton.goBack();
             return;
         }
 
-        int choice;
+        int choice = 0;
         do {
-            System.out.println("+--------------------------------------------------+");
-            System.out.println("|           Officer Project Management            |");
-            System.out.println("+--------------------------------------------------+");
-            System.out.println("|  1) View Enquiries                              |");
-            System.out.println("|  2) Reply Enquiry                               |");
-            System.out.println("|  3) View Project Details                        |");
-            System.out.println("|  4) View Applications                           |");
-            System.out.println("|  5) Update Applicant Profile                    |");
-            System.out.println("|  6) Generate Receipt                            |");
-            System.out.println("|  7) Back                                        |");
-            System.out.println("+--------------------------------------------------+");
+            System.out.println("            +--------------------------------------------------+");
+            System.out.println("            |           Officer Project Management            |");
+            System.out.println("            +--------------------------------------------------+");
+            System.out.println("            |  1) View Enquiries                              |");
+            System.out.println("            |  2) Reply Enquiry                               |");
+            System.out.println("            |  3) View Project Details                        |");
+            System.out.println("            |  4) View Applications                           |");
+            System.out.println("            |  5) Update Applicant Profile                    |");
+            // System.out.println("            |  6) Generate Receipt                            |");
+            System.out.println("            |  6) Back                                        |");
+            System.out.println("            +--------------------------------------------------+\n\n");
             System.out.print("Enter choice: ");
-            choice = scanner.nextInt();
+            try {
+                choice = scanner.nextInt();
+            } catch (InputMismatchException e) {
+                ClearScreen.clear();
+                System.out.println("Please input an integer!");
+                BackButton.goBack();
+                scanner.nextLine();
+                continue;
+            }
             scanner.nextLine();
             ClearScreen.clear();
             switch (choice) {
@@ -198,13 +236,13 @@ public class OfficerController {
                 case 3: manageProjectHandler.viewProjectDetails(); break;
                 case 4: manageApplicationHandler.viewApplications(); break;
                 case 5: manageApplicationHandler.updateApplicationStatus(); break;
-                case 6: receiptHandler.generateReceipt(); break;
-                case 7:
+                // case 6: receiptHandler.generateReceipt(); break;
+                case 6:
                     ClearScreen.clear();
                     return;
                 default:
                     ClearScreen.clear();
-                    System.out.println("Invalid choice.");
+                    System.out.println("Invalid choice! Please choose a valid option.");
             }
             BackButton.goBack();
         } while (true);

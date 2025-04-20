@@ -1,19 +1,34 @@
 package controller.manager.helper;
+
 import entity.*;
 import container.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 import controller.manager.template.IManagerManageRegistration;
-public class ManagerManageRegistration implements IManagerManageRegistration{
+
+/**
+ * Provides functionality for managers to view and manage officer registration requests.
+ * Managers can approve or reject pending registrations for projects they handle.
+ */
+public class ManagerManageRegistration implements IManagerManageRegistration {
+
     private RegistrationList registrationList;
     private Scanner scanner;
 
+    /**
+     * Constructs a manager registration handler using the global registration list.
+     *
+     * @param registrationList the list of all officer registration requests
+     */
     public ManagerManageRegistration(RegistrationList registrationList) {
         this.registrationList = registrationList;
         this.scanner = new Scanner(System.in);
     }
 
-    // View all registrations created by this manager (not filtered by project)
+    /**
+     * Displays all registrations in the system, regardless of project.
+     * Intended to give managers full visibility into current and past officer registrations.
+     */
     public void viewRegistration() {
         ArrayList<Registration> allRegistrations = registrationList.getRegistrations();
         if (allRegistrations.isEmpty()) {
@@ -23,11 +38,16 @@ public class ManagerManageRegistration implements IManagerManageRegistration{
 
         System.out.println("All Registrations:");
         for (Registration registration : allRegistrations) {
-            System.out.println(registration); // Ensure Registration.toString() is informative
+            System.out.println(registration);
         }
     }
 
-    // Manage PENDING officer registrations for a project the manager is currently handling
+    /**
+     * Allows the manager to review and process pending officer registrations for a specific project.
+     * If officer slots are full, the registration is automatically rejected.
+     *
+     * @param project the project for which registrations are being managed
+     */
     public void manageRegistration(Project project) {
         ArrayList<Registration> pendingRegistrations = registrationList.getPendingRegistrationsByProject(project);
 

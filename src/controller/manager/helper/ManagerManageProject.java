@@ -1,4 +1,5 @@
 package controller.manager.helper;
+
 import entity.*;
 import utils.BackButton;
 import utils.ClearScreen;
@@ -11,15 +12,29 @@ import java.util.Date;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import controller.manager.template.IManagerManageProject;
-public class ManagerManageProject implements IManagerManageProject{
+
+/**
+ * Provides managers with tools to create, edit, delete, and manage visibility for BTO projects.
+ * Also handles cleanup of related data such as applications and registrations when deleting a project.
+ */
+public class ManagerManageProject implements IManagerManageProject {
+
     private Manager manager;
     private ProjectList projectList;
     private ApplicationList applicationList;
     private RegistrationList registrationList;
-
     private Scanner scanner;
 
-    public ManagerManageProject(Manager manager, ProjectList projectList, ApplicationList applicationList, RegistrationList registrationList) {
+    /**
+     * Constructs the project manager controller.
+     *
+     * @param manager           the logged-in manager
+     * @param projectList       the list of all BTO projects
+     * @param applicationList   the list of all applications
+     * @param registrationList  the list of all officer registrations
+     */
+    public ManagerManageProject(Manager manager, ProjectList projectList,
+                                ApplicationList applicationList, RegistrationList registrationList) {
         this.manager = manager;
         this.projectList = projectList;
         this.applicationList = applicationList;
@@ -27,6 +42,10 @@ public class ManagerManageProject implements IManagerManageProject{
         this.scanner = new Scanner(System.in);
     }
 
+    /**
+     * Allows the manager to create a new project.
+     * Includes input validation and ensures the manager has no currently active project.
+     */
     public void createProject() {
         if (manager.getActiveProject() != null) {
             System.out.println("You are already handling an active project: " + manager.getActiveProject().getProjectName());
@@ -35,112 +54,30 @@ public class ManagerManageProject implements IManagerManageProject{
         }
 
         String name;
-         while (true) {
-             System.out.print("Enter Project Name: ");
-             name = scanner.nextLine();
-             if (projectList.getProjectByName(name) != null) {
-                 System.out.println("A project with this name already exists. Please enter a different name.");
-             } else {break;}
-         }
+        while (true) {
+            System.out.print("Enter Project Name: ");
+            name = scanner.nextLine();
+            if (projectList.getProjectByName(name) != null) {
+                System.out.println("A project with this name already exists. Please enter a different name.");
+            } else {
+                break;
+            }
+        }
 
         System.out.print("Enter Neighborhood: ");
         String neighborhood = scanner.nextLine();
 
-        int twoRoom = 0, sellingPriceTwoRoom = 0, threeRoom = 0, sellingPriceThreeRoom = 0;
-        boolean validInput = false;
-
-        // Handle integer inputs with retry
-        while (!validInput) {
-            System.out.print("Enter number of 2-Room Flats: ");
-            String input = scanner.nextLine();
-            try {
-                twoRoom = Integer.parseInt(input);
-                validInput = true;
-            } catch (NumberFormatException e) {
-                System.out.println("Please input a valid integer!");
-            }
-        }
-
-        validInput = false;
-        while (!validInput) {
-            System.out.print("Enter the selling price of 2-Room Flats: ");
-            String input = scanner.nextLine();
-            try {
-                sellingPriceTwoRoom = Integer.parseInt(input);
-                validInput = true;
-            } catch (NumberFormatException e) {
-                System.out.println("Please input a valid integer!");
-            }
-        }
-
-        validInput = false;
-        while (!validInput) {
-            System.out.print("Enter number of 3-Room Flats: ");
-            String input = scanner.nextLine();
-            try {
-                threeRoom = Integer.parseInt(input);
-                validInput = true;
-            } catch (NumberFormatException e) {
-                System.out.println("Please input a valid integer!");
-            }
-        }
-
-        validInput = false;
-        while (!validInput) {
-            System.out.print("Enter the selling price of 3-Room Flats: ");
-            String input = scanner.nextLine();
-            try {
-                sellingPriceThreeRoom = Integer.parseInt(input);
-                validInput = true;
-            } catch (NumberFormatException e) {
-                System.out.println("Please input a valid integer!");
-            }
-        }
-
-        Date openDate = null, closeDate = null;
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-
-        validInput = false;
-        while (!validInput) {
-            System.out.print("Enter Opening Date (yyyy-MM-dd): ");
-            String dateInput = scanner.nextLine();
-            try {
-                openDate = sdf.parse(dateInput);
-                validInput = true;
-            } catch (ParseException e) {
-                System.out.println("Invalid date format. Please use yyyy-MM-dd.");
-            }
-        }
-
-        validInput = false;
-        while (!validInput) {
-            System.out.print("Enter Closing Date (yyyy-MM-dd): ");
-            String dateInput = scanner.nextLine();
-            try {
-                closeDate = sdf.parse(dateInput);
-                validInput = true;
-            } catch (ParseException e) {
-                System.out.println("Invalid date format. Please use yyyy-MM-dd.");
-            }
-        }
-
-        validInput = false;
-        int maxOfficer = 0;
-        while (!validInput) {
-            System.out.print("Enter Max Officer Slot: ");
-            String input = scanner.nextLine();
-            try {
-                maxOfficer = Integer.parseInt(input);
-                validInput = true;
-            } catch (NumberFormatException e) {
-                System.out.println("Please input a valid integer!");
-            }
-        }
+        int twoRoom = getValidInt("Enter number of 2-Room Flats: ");
+        int sellingPriceTwoRoom = getValidInt("Enter the selling price of 2-Room Flats: ");
+        int threeRoom = getValidInt("Enter number of 3-Room Flats: ");
+        int sellingPriceThreeRoom = getValidInt("Enter the selling price of 3-Room Flats: ");
+        Date openDate = getValidDate("Enter Opening Date (yyyy-MM-dd): ");
+        Date closeDate = getValidDate("Enter Closing Date (yyyy-MM-dd): ");
+        int maxOfficer = getValidInt("Enter Max Officer Slot: ");
 
         Project project = new Project(name, neighborhood, twoRoom, sellingPriceTwoRoom, threeRoom, sellingPriceThreeRoom, openDate, closeDate, maxOfficer);
         project.setManager(manager);
 
-        // Assign manager's responsibility
         manager.addManagedProject(project);
         if (project.getVisibility()) {
             manager.setActiveProject(project);
@@ -150,6 +87,9 @@ public class ManagerManageProject implements IManagerManageProject{
         System.out.println("Project created successfully.");
     }
 
+    /**
+     * Allows the manager to edit attributes of an existing project they created.
+     */
     public void editProject() {
         System.out.print("Enter project name to edit: ");
         String name = scanner.nextLine();
@@ -175,11 +115,11 @@ public class ManagerManageProject implements IManagerManageProject{
             System.out.println("            |  9) Exit                                       |");
             System.out.println("            +------------------------------------------------+\n\n");
             System.out.print("Enter choice: ");
+
             int choice;
-            try{
+            try {
                 choice = scanner.nextInt();
-            }
-            catch(InputMismatchException e){
+            } catch (InputMismatchException e) {
                 ClearScreen.clear();
                 System.out.println("Please input an integer!");
                 BackButton.goBack();
@@ -187,65 +127,34 @@ public class ManagerManageProject implements IManagerManageProject{
                 continue;
             }
 
-
             scanner.nextLine();
             ClearScreen.clear();
+
             switch (choice) {
                 case 1:
                     System.out.print("New Neighborhood: ");
                     project.setNeighborhood(scanner.nextLine());
                     break;
                 case 2:
-                    System.out.print("New 2-Room Units: ");
-                    project.setAvailableTwoRoom(scanner.nextInt());
-                    scanner.nextLine();
+                    project.setAvailableTwoRoom(getValidInt("New 2-Room Units: "));
                     break;
                 case 3:
-                    System.out.print("New 2-Room Units Selling Price: ");
-                    project.setSellingPriceTwoRoom(scanner.nextInt());
-                    scanner.nextLine();
+                    project.setSellingPriceTwoRoom(getValidInt("New 2-Room Units Selling Price: "));
                     break;
                 case 4:
-                    System.out.print("New 3-Room Units: ");
-                    project.setAvailableThreeRoom(scanner.nextInt());
-                    scanner.nextLine();
+                    project.setAvailableThreeRoom(getValidInt("New 3-Room Units: "));
                     break;
                 case 5:
-                    System.out.print("New 3-Room Units Selling Price: ");
-                    project.setSellingPriceThreeRoom(scanner.nextInt());
-                    scanner.nextLine();
+                    project.setSellingPriceThreeRoom(getValidInt("New 3-Room Units Selling Price: "));
                     break;
-
                 case 6:
-                    try {
-                        System.out.print("New Opening Date (yyyy-MM-dd): ");
-                        String openDateStr = scanner.nextLine();
-                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-                        Date newOpenDate = sdf.parse(openDateStr);
-                        project.setOpeningDate(newOpenDate);
-                        System.out.println("Opening date updated.");
-                    } catch (ParseException e) {
-                        System.out.println("Invalid date format. Please use yyyy-MM-dd.");
-                    }
+                    project.setOpeningDate(getValidDate("New Opening Date (yyyy-MM-dd): "));
                     break;
-
                 case 7:
-                    try {
-                        System.out.print("New Closing Date (yyyy-MM-dd): ");
-                        String closeDateStr = scanner.nextLine();
-                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-                        Date newCloseDate = sdf.parse(closeDateStr);
-                        project.setClosingDate(newCloseDate);
-                        System.out.println("Closing date updated.");
-                    } catch (ParseException e) {
-                        System.out.println("Invalid date format. Please use yyyy-MM-dd.");
-                    }
+                    project.setClosingDate(getValidDate("New Closing Date (yyyy-MM-dd): "));
                     break;
-
                 case 8:
-                    System.out.print("New Max Officer Slots: ");
-                    project.setMaxOfficer(scanner.nextInt());
-                    scanner.nextLine();
+                    project.setMaxOfficer(getValidInt("New Max Officer Slots: "));
                     break;
                 case 9:
                     System.out.println("Edit complete.");
@@ -256,6 +165,9 @@ public class ManagerManageProject implements IManagerManageProject{
         }
     }
 
+    /**
+     * Deletes a project and performs cleanup of related applications, officer assignments, and manager records.
+     */
     public void deleteProject() {
         System.out.print("Enter project name to delete: ");
         String name = scanner.nextLine();
@@ -266,23 +178,18 @@ public class ManagerManageProject implements IManagerManageProject{
             return;
         }
 
-        // 1. Remove related applications
         applicationList.removeApplicationsByProject(project);
 
-        // 2. Remove related registrations
-
-        // registrationList.removeRegistrationByProject(project);
         ArrayList<Registration> registrationsToRemove = registrationList.getRegistrations();
         for (Registration reg : registrationsToRemove) {
             if (reg.getProject().equals(project)) {
-                // Remove from officer's registrations
                 Officer officer = reg.getOfficer();
                 officer.getRegistrations().remove(reg);
             }
         }
         registrationList.removeRegistrationByProject(project);
-        registrationList.saveToCSV(); // Save updated RegistrationList to CSV
-        // 3. Clear officer project references
+        registrationList.saveToCSV();
+
         for (Officer officer : project.getOfficers()) {
             if (officer.getAssignedProject() != null && officer.getAssignedProject().equals(project)) {
                 officer.setAssignedProject(null);
@@ -290,19 +197,17 @@ public class ManagerManageProject implements IManagerManageProject{
             officer.getManagedProjects().remove(project);
         }
 
-        // 4. Clear manager references
-        Manager manager = project.getManager();
-        if (manager != null) {
-            manager.getManagedProjects().remove(project);
-            if (manager.getActiveProject() != null && manager.getActiveProject().equals(project)) {
-                manager.setActiveProject(null);
-            }
+        manager.getManagedProjects().remove(project);
+        if (manager.getActiveProject() != null && manager.getActiveProject().equals(project)) {
+            manager.setActiveProject(null);
         }
 
-        // 5. Remove project from ProjectList
         projectList.removeProject(project);
     }
 
+    /**
+     * Toggles the visibility of a managed project (visible ↔ hidden).
+     */
     public void changeProjectVisibility() {
         System.out.print("Enter project name to change visibility: ");
         String name = scanner.nextLine();
@@ -317,6 +222,9 @@ public class ManagerManageProject implements IManagerManageProject{
         System.out.println("Visibility updated: " + (project.getVisibility() ? "Visible" : "Hidden"));
     }
 
+    /**
+     * Displays all projects that the manager has created or managed.
+     */
     public void viewOwnProject() {
         ArrayList<Project> myProjects = manager.getManagedProjects();
         if (myProjects.isEmpty()) {
@@ -330,10 +238,44 @@ public class ManagerManageProject implements IManagerManageProject{
         }
     }
 
+    /**
+     * Displays all projects in the system, regardless of ownership.
+     */
     public void viewAllCreatedProject() {
         System.out.println("\nAll Projects in the System:");
         for (Project project : projectList.getProjectList()) {
             System.out.println(project.toString());
+        }
+    }
+
+    /**
+     * Helper method to repeatedly prompt for and return a valid integer input.
+     */
+    private int getValidInt(String prompt) {
+        while (true) {
+            System.out.print(prompt);
+            String input = scanner.nextLine();
+            try {
+                return Integer.parseInt(input);
+            } catch (NumberFormatException e) {
+                System.out.println("Please input a valid integer!");
+            }
+        }
+    }
+
+    /**
+     * Helper method to repeatedly prompt for and return a valid date input.
+     */
+    private Date getValidDate(String prompt) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        while (true) {
+            System.out.print(prompt);
+            String input = scanner.nextLine();
+            try {
+                return sdf.parse(input);
+            } catch (ParseException e) {
+                System.out.println("Invalid date format. Please use yyyy-MM-dd.");
+            }
         }
     }
 }

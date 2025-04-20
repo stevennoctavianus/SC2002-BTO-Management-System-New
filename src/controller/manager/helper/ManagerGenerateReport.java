@@ -1,4 +1,5 @@
 package controller.manager.helper;
+
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -7,15 +8,29 @@ import entity.*;
 import utils.BackButton;
 import utils.ClearScreen;
 import controller.manager.template.IManagerGenerateReport;
-public class ManagerGenerateReport implements IManagerGenerateReport{
+
+/**
+ * Provides report generation features for managers to view or filter successful application bookings. Supports filtering by flat type, marital status, and project name.
+ */
+public class ManagerGenerateReport implements IManagerGenerateReport {
+
     private ApplicationList applicationList;
     private Scanner scanner;
 
+    /**
+     * Constructs a manager report generator using the shared application list.
+     *
+     * @param applicationList the list of all applications in the system
+     */
     public ManagerGenerateReport(ApplicationList applicationList) {
         this.applicationList = applicationList;
         this.scanner = new Scanner(System.in);
     }
 
+    /**
+     * Displays the report generation menu to the manager and routes the request
+     * to the appropriate report filter or view logic.
+     */
     public void generateReport() {
         System.out.println("            +-------------------------------------------------+");
         System.out.println("            |          Generate Booking Report               |");
@@ -26,18 +41,20 @@ public class ManagerGenerateReport implements IManagerGenerateReport{
         System.out.println("            |  4) Filter by Project Name                     |");
         System.out.println("            +------------------------------------------------+\n\n");
         System.out.print("Select an option: ");
+
         int option;
-        try{
-                option = scanner.nextInt();
-        }
-        catch(InputMismatchException e){
+        try {
+            option = scanner.nextInt();
+        } catch (InputMismatchException e) {
             ClearScreen.clear();
             System.out.println("Please input an integer!");
             BackButton.goBack();
             scanner.nextLine();
             return;
         }
+
         ClearScreen.clear();
+
         switch (option) {
             case 1:
                 printReport(applicationList.getSuccessfulApplications());
@@ -52,10 +69,15 @@ public class ManagerGenerateReport implements IManagerGenerateReport{
                 filterByProjectName();
                 break;
             default:
-                System.out.println("Invalid choice!Please enter a valid option");
+                System.out.println("Invalid choice! Please enter a valid option.");
         }
     }
 
+    /**
+     * Displays a formatted list of successful applications, including applicant and project details.
+     *
+     * @param applications the list of applications to display
+     */
     private void printReport(ArrayList<Application> applications) {
         if (applications.isEmpty()) {
             System.out.println("No bookings found.");
@@ -75,6 +97,9 @@ public class ManagerGenerateReport implements IManagerGenerateReport{
         }
     }
 
+    /**
+     * Filters successful applications by flat type (2-room or 3-room).
+     */
     private void filterByFlatType() {
         System.out.print("Enter Flat Type to filter (2-room or 3-room): ");
         String input = scanner.nextLine().toUpperCase();
@@ -93,6 +118,9 @@ public class ManagerGenerateReport implements IManagerGenerateReport{
         }
     }
 
+    /**
+     * Filters successful applications by applicant marital status.
+     */
     private void filterByMaritalStatus() {
         System.out.print("Enter Marital Status to filter (Single/Married): ");
         String status = scanner.nextLine();
@@ -111,6 +139,9 @@ public class ManagerGenerateReport implements IManagerGenerateReport{
         printReport(filtered);
     }
 
+    /**
+     * Filters successful applications by project name (case-insensitive).
+     */
     private void filterByProjectName() {
         System.out.print("Enter Project Name: ");
         String projectName = scanner.nextLine();

@@ -1,74 +1,145 @@
 package entity;
 
+/**
+ * An abstract base class modelling a user in the BTO system.
+ * Users have basic identity information such as name, NRIC, age, marital status, and login credentials.
+ * This class is extended by the specific user roles of Applicant, Officer, and Manager.
+ */
 public abstract class User {
+
     private String name;
     private String nric;
     private String password;
     private int age;
-    public enum MaritalStatus{
+
+    /**
+     * Enum to represent the marital status of a user.
+     */
+    public enum MaritalStatus {
         SINGLE,
         MARRIED
     }
+
     private MaritalStatus maritalStatus;
 
-    //Constructor
-    public User(){
+    /**
+     * Default constructor.
+     */
+    public User() {}
 
-    }
-
-    //Methods
-    public void changePassword(String password){
+    /**
+     * Changes the user's password.
+     *
+     * @param password the new password
+     */
+    public void changePassword(String password) {
         this.setPassword(password);
     }
 
-    public void login(){
-
+    /**
+     * Placeholder method for login functionality.
+     * Currently unused but can be overridden if needed.
+     */
+    public void login() {
+        // To be implemented if needed
     }
 
-    //Getter Setter
+    // --- Getters and Setters ---
 
-    public void setName(String name){
+    /**
+     * Sets the user's name.
+     *
+     * @param name the user's full name
+     */
+    public void setName(String name) {
         this.name = name;
     }
 
-    public String getName(){
+    /**
+     * Returns the user's name.
+     *
+     * @return the name of the user
+     */
+    public String getName() {
         return this.name;
     }
 
-    public void setNric(String nric){
+    /**
+     * Sets the user's NRIC.
+     *
+     * @param nric the national identification number
+     */
+    public void setNric(String nric) {
         this.nric = nric;
     }
 
-    public String getNric(){
+    /**
+     * Returns the user's NRIC.
+     *
+     * @return the NRIC
+     */
+    public String getNric() {
         return this.nric;
     }
 
-    public void setPassword(String password){
+    /**
+     * Sets the user's password.
+     *
+     * @param password the new password
+     */
+    public void setPassword(String password) {
         this.password = password;
     }
 
-    public String getPassword(){
+    /**
+     * Returns the user's password.
+     *
+     * @return the password
+     */
+    public String getPassword() {
         return this.password;
     }
 
-    public void setAge(int age){
+    /**
+     * Sets the user's age.
+     *
+     * @param age the user's age
+     */
+    public void setAge(int age) {
         this.age = age;
     }
 
-    public int getAge(){
+    /**
+     * Returns the user's age.
+     *
+     * @return the age
+     */
+    public int getAge() {
         return this.age;
     }
+
+    /**
+     * Sets the user's marital status from a string input.
+     * The input is case-insensitive and will be matched against enum values.
+     *
+     * @param input the marital status as a string (e.g., "single" or "married")
+     */
     public void setMaritalStatus(String input) {
         try {
             this.maritalStatus = MaritalStatus.valueOf(input.trim().toUpperCase());
         } catch (IllegalArgumentException e) {
             System.out.println("Invalid marital status: " + input);
-            this.maritalStatus = null; // or set a default value like MaritalStatus.SINGLE
+            this.maritalStatus = null; // Can also default to MaritalStatus.SINGLE if preferred
         }
     }
 
-    public MaritalStatus getMaritalStatus (){
+    /**
+     * Returns the user's marital status.
+     *
+     * @return the marital status
+     */
+    public MaritalStatus getMaritalStatus() {
         return this.maritalStatus;
     }
-
 }
+

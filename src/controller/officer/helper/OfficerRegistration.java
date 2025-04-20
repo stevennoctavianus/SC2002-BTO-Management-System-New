@@ -1,4 +1,5 @@
 package controller.officer.helper;
+
 import container.*;
 import entity.*;
 import utils.ClearScreen;
@@ -7,14 +8,30 @@ import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import controller.officer.template.IOfficerRegistration;
-public class OfficerRegistration implements IOfficerRegistration{
+
+/**
+ * Handles registration logic for officers who wish to manage a BTO project.
+ * Officers can only register if they are not already assigned or registered,
+ * and have not applied as applicants for the same project.
+ */
+public class OfficerRegistration implements IOfficerRegistration {
+
     private Officer officer;
     private ProjectList projectList;
     private RegistrationList registrationList;
     private ApplicationList applicationList;
     private Scanner scanner;
 
-    public OfficerRegistration(Officer officer, ProjectList projectList, RegistrationList registrationList, ApplicationList applicationList) {
+    /**
+     * Constructs an officer registration handler for the given system context.
+     *
+     * @param officer          the logged-in officer
+     * @param projectList      the list of all projects
+     * @param registrationList the list of all officer registrations
+     * @param applicationList  the list of all project applications
+     */
+    public OfficerRegistration(Officer officer, ProjectList projectList,
+                               RegistrationList registrationList, ApplicationList applicationList) {
         this.officer = officer;
         this.projectList = projectList;
         this.registrationList = registrationList;
@@ -22,19 +39,22 @@ public class OfficerRegistration implements IOfficerRegistration{
         this.scanner = new Scanner(System.in);
     }
 
+    /**
+     * Allows the officer to register for a project if they are not already assigned,
+     * and haven't applied to that project as an applicant.
+     * Prevents duplicate or invalid registrations.
+     */
     public void registerForProject() {
-        // If officer is already assigned or has a pending/approved registration
-        if (officer.getAssignedProject() != null || !officer.getPendingRegistrations().isEmpty() || !officer.getApprovedRegistrations().isEmpty()) {
+        if (officer.getAssignedProject() != null ||
+            !officer.getPendingRegistrations().isEmpty() ||
+            !officer.getApprovedRegistrations().isEmpty()) {
             System.out.println("You are already managing or registering for a project. Cannot register again.");
             return;
         }
 
-        // Filter available projects
         ArrayList<Project> availableProjects = new ArrayList<>();
         for (Project project : projectList.getProjectList()) {
             boolean hasSlot = project.getMaxOfficer() > project.getOfficers().size();
-
-            // Check if officer already applied as applicant (via application list)
             boolean hasNotApplied = applicationList.getApplicationByApplicant(officer) == null;
 
             if (hasSlot && hasNotApplied) {
@@ -47,7 +67,6 @@ public class OfficerRegistration implements IOfficerRegistration{
             return;
         }
 
-        // Display and let officer choose
         System.out.println("\nAvailable Projects for Officer Registration:");
         for (int i = 0; i < availableProjects.size(); i++) {
             System.out.println((i + 1) + ") " + availableProjects.get(i).getProjectName());
@@ -55,10 +74,9 @@ public class OfficerRegistration implements IOfficerRegistration{
 
         System.out.print("Select a project to register (0 to cancel): ");
         int choice;
-        try{
+        try {
             choice = scanner.nextInt();
-        }
-        catch(InputMismatchException e){
+        } catch (InputMismatchException e) {
             ClearScreen.clear();
             System.out.println("Please input an integer!");
             scanner.nextLine();
@@ -79,6 +97,10 @@ public class OfficerRegistration implements IOfficerRegistration{
         System.out.println("Registration submitted successfully for project: " + selectedProject.getProjectName());
     }
 
+    /**
+     * Displays the officer’s past and current registration attempts,
+     * along with their corresponding project names and approval statuses.
+     */
     public void viewRegistrationStatus() {
         ArrayList<Registration> registrations = officer.getRegistrations();
         if (registrations.isEmpty()) {
@@ -92,3 +114,4 @@ public class OfficerRegistration implements IOfficerRegistration{
         }
     }
 }
+

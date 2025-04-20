@@ -6,8 +6,11 @@ import utils.CSVWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+
+import controller.FilterSettings;
 
 /**
  * Manages a list of BTO {@link Project} instances.
@@ -223,5 +226,27 @@ public class ProjectList {
         }
 
         CSVWriter.writeCSV("../data/ProjectList.csv", data);
+    }
+    public List<Project> getFilteredProjects(FilterSettings filters) {
+        List<Project> filtered = new ArrayList<>();
+        for (Project project : projectList) {
+            boolean matches = true;
+            if (filters.getLocation() != null && !filters.getLocation().isEmpty() &&
+                !project.getNeighborhood().equalsIgnoreCase(filters.getLocation())) {
+                matches = false;
+            }
+            if (filters.getFlatType() != null) {
+                if (filters.getFlatType() == Application.FlatType.TWOROOM && project.getAvailableTwoRoom() == 0) {
+                    matches = false;
+                } else if (filters.getFlatType() == Application.FlatType.THREEROOM && project.getAvailableThreeRoom() == 0) {
+                    matches = false;
+                }
+            }
+            if (matches) {
+                filtered.add(project);
+            }
+        }
+        filtered.sort(Comparator.comparing(Project::getProjectName));
+        return filtered;
     }
 }

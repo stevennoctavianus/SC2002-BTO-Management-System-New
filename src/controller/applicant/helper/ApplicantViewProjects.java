@@ -1,6 +1,8 @@
 package controller.applicant.helper;
 
 import container.*;
+import controller.FilterSettings;
+import controller.UserSession;
 import controller.applicant.template.IApplicantViewProjects;
 import entity.*;
 import utils.ClearScreen;
@@ -9,10 +11,6 @@ import java.util.Date;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-/**
- * Handles viewing and applying for BTO projects on behalf of an applicant.
- * Also enforces eligibility rules and flat type restrictions based on applicant profile.
- */
 public class ApplicantViewProjects implements IApplicantViewProjects {
 
     private Applicant applicant;
@@ -20,13 +18,6 @@ public class ApplicantViewProjects implements IApplicantViewProjects {
     protected ApplicationList applicationList;
     private Scanner sc;
 
-    /**
-     * Constructs a handler for viewing and applying to projects.
-     *
-     * @param applicant       the applicant using this module
-     * @param projectList     the list of available BTO projects
-     * @param applicationList the shared application list
-     */
     public ApplicantViewProjects(Applicant applicant, ProjectList projectList, ApplicationList applicationList) {
         this.applicant = applicant;
         this.projectList = projectList;
@@ -34,19 +25,16 @@ public class ApplicantViewProjects implements IApplicantViewProjects {
         this.sc = new Scanner(System.in);
     }
 
-    /**
-     * Displays a list of projects the applicant is eligible to view.
-     * Filters are applied based on marital status, age, and project visibility.
-     */
     public void viewProjectList() {
+        FilterSettings filters = UserSession.getFilterSettings();
         if (applicant.getMaritalStatus() == User.MaritalStatus.SINGLE && applicant.getAge() >= 35) {
-            for (Project project : projectList.getProjectList()) {
+            for (Project project : projectList.getFilteredProjects(filters)) {
                 if (project.getAvailableTwoRoom() > 0 && project.getVisibility()) {
                     System.out.println(project);
                 }
             }
         } else {
-            for (Project project : projectList.getProjectList()) {
+            for (Project project : projectList.getFilteredProjects(filters)) {
                 if (project.getVisibility() && (project.getAvailableThreeRoom() > 0 || project.getAvailableTwoRoom() > 0)) {
                     System.out.println(project);
                 }
@@ -54,21 +42,18 @@ public class ApplicantViewProjects implements IApplicantViewProjects {
         }
     }
 
-    /**
-     * Allows the applicant to apply for a visible and eligible BTO project.
-     * Includes checks for application date, flat availability, and applicant restrictions.
-     */
     public void applyForProject() {
+        FilterSettings filters = UserSession.getFilterSettings();
         System.out.println("Projects you can apply: ");
 
         if (applicant.getMaritalStatus() == User.MaritalStatus.SINGLE && applicant.getAge() >= 35) {
-            for (Project project : projectList.getProjectList()) {
+            for (Project project : projectList.getFilteredProjects(filters)) {
                 if (project.getAvailableTwoRoom() > 0 && project.getVisibility()) {
                     System.out.println(project.getProjectName());
                 }
             }
         } else {
-            for (Project project : projectList.getProjectList()) {
+            for (Project project : projectList.getFilteredProjects(filters)) {
                 if (project.getVisibility() && (project.getAvailableThreeRoom() > 0 || project.getAvailableTwoRoom() > 0)) {
                     System.out.println(project.getProjectName());
                 }

@@ -1,5 +1,4 @@
 package interact;
-
 import container.*;
 import entity.*;
 import utils.BackButton;
@@ -9,26 +8,11 @@ import controller.*;
 import controller.applicant.ApplicantController;
 import controller.officer.OfficerController;
 import controller.manager.ManagerController;
-
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-/**
- * Entry point for the BTO Management System.
- * Handles user authentication, session routing based on role,
- * and ensures that all data is saved both on normal exit and unexpected termination.
- */
 public class MainMenu {
-
-    /**
-     * Main method that runs the BTO CLI program.
-     * It initializes data, authenticates users, and delegates control to respective role controllers.
-     *
-     * @param args not used
-     */
     public static void main(String[] args) {
-
-        // Catch any uncaught exceptions and attempt to save data before exiting
         Thread.setDefaultUncaughtExceptionHandler((thread, throwable) -> {
             System.out.println("An unexpected error occurred: " + throwable.getMessage());
             try {
@@ -50,7 +34,6 @@ public class MainMenu {
             System.exit(1);
         });
 
-        // Load all user and system data
         DataInitializer.loadData();
         ApplicantList applicantList = DataInitializer.getApplicantList();
         ManagerList managerList = DataInitializer.getManagerList();
@@ -61,11 +44,16 @@ public class MainMenu {
         WithdrawalList withdrawalList = DataInitializer.getWithdrawalList();
         EnquiryList enquiryList = DataInitializer.getEnquiryList();
 
-        // Save data when the user manually terminates the program (Ctrl+C or Exit)
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             DataSyncUtil syncUtil = new DataSyncUtil(
-                applicantList, projectList, managerList, officerList,
-                applicationList, registrationList, withdrawalList, enquiryList
+                DataInitializer.getApplicantList(),
+                DataInitializer.getProjectList(),
+                DataInitializer.getManagerList(),
+                DataInitializer.getOfficerList(),
+                DataInitializer.getApplicationList(),
+                DataInitializer.getRegistrationList(),
+                DataInitializer.getWithdrawalList(),
+                DataInitializer.getEnquiryList()
             );
             syncUtil.saveAll();
             System.out.println("All data saved before shutdown.");
@@ -75,7 +63,6 @@ public class MainMenu {
         ClearScreen.clear();
 
         while (true) {
-            // Display main menu banner
             System.out.println("  ____ _______ ____    __  __                                                   _   ");
             System.out.println(" |  _ \\__   __/ __ \\  |  \\/  |                                                 | |  ");
             System.out.println(" | |_) | | | | |  | | | \\  / | __ _ _ __   __ _  __ _  ___ _ __ ___   ___ _ __ | |_ ");
@@ -90,34 +77,36 @@ public class MainMenu {
             System.out.println("                    |  3) Manager Login                      |");
             System.out.println("                    |  4) Exit                               |");
             System.out.println("                    +----------------------------------------+");
-
             int choice;
             String nric, password;
             System.out.print("Enter choice: ");
             try {
                 choice = scanner.nextInt();
-                scanner.nextLine(); // consume newline
-
                 if (choice == 4) {
-                    // Save all data on clean exit
                     DataSyncUtil syncUtil = new DataSyncUtil(
-                        applicantList, projectList, managerList, officerList,
-                        applicationList, registrationList, withdrawalList, enquiryList
+                        applicantList,
+                        projectList,
+                        managerList,
+                        officerList,
+                        applicationList,
+                        registrationList,
+                        withdrawalList,
+                        enquiryList
                     );
                     syncUtil.saveAll();
                     ClearScreen.clear();
                     System.out.println("Bye Bye!");
                     break;
                 }
+                scanner.nextLine();
             } catch (InputMismatchException e) {
                 ClearScreen.clear();
                 System.out.println("Please input an integer!");
                 BackButton.goBack();
-                scanner.nextLine(); // clear the invalid input
+                scanner.nextLine();
                 continue;
             }
 
-            // Input NRIC
             System.out.print("Enter NRIC: ");
             nric = scanner.nextLine().trim();
             if (!AuthenticationService.validNRIC(nric)) {
@@ -127,16 +116,16 @@ public class MainMenu {
                 continue;
             }
 
-            // Input password
             System.out.print("Enter Password: ");
             password = scanner.nextLine().trim();
 
-            // Authenticate user based on role
             User user = AuthenticationService.authenticate(nric, password, choice);
             if (user != null) {
                 UserSession.setCurrentUser(user);
                 ClearScreen.clear();
-
+                // Prompt for filters before showing role-specific menu
+                new FilterMenu().manageFilters();
+                ClearScreen.clear();
                 if (user instanceof Officer) {
                     new OfficerController((Officer) user, projectList, applicationList, enquiryList, withdrawalList, registrationList).showMenu();
                 } else if (user instanceof Applicant) {
@@ -144,15 +133,12 @@ public class MainMenu {
                 } else if (user instanceof Manager) {
                     new ManagerController((Manager) user, projectList, applicationList, registrationList, withdrawalList, enquiryList).showMenu();
                 }
-
             } else {
                 ClearScreen.clear();
                 System.out.println("Invalid credentials. Please try again.\n");
                 BackButton.goBack();
             }
         }
-
         scanner.close();
     }
 }
-

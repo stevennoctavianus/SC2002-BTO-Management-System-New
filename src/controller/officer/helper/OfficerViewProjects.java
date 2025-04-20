@@ -3,6 +3,8 @@ package controller.officer.helper;
 import container.*;
 import entity.*;
 import controller.officer.template.IOfficerViewProjects;
+import controller.FilterSettings;
+import controller.UserSession;
 import controller.applicant.helper.ApplicantViewProjects;
 import utils.ClearScreen;
 
@@ -30,8 +32,7 @@ public class OfficerViewProjects extends ApplicantViewProjects implements IOffic
      * @param applicationList   the global application list
      * @param registrationList  the global registration list
      */
-    public OfficerViewProjects(Officer officer, ProjectList projectList,
-                               ApplicationList applicationList, RegistrationList registrationList) {
+    public OfficerViewProjects(Officer officer, ProjectList projectList, ApplicationList applicationList, RegistrationList registrationList) {
         super(officer, projectList, applicationList);
         this.officer = officer;
         this.projectList = projectList;
@@ -44,18 +45,14 @@ public class OfficerViewProjects extends ApplicantViewProjects implements IOffic
      */
     @Override
     public void viewProjectList() {
+        FilterSettings filters = UserSession.getFilterSettings();
         System.out.println("Available BTO Projects:");
-        for (Project project : projectList.getProjectList()) {
-
-            // Exclude projects already registered for
+        for (Project project : projectList.getFilteredProjects(filters)) {
             Registration reg = registrationList.getRegistrationByOfficerAndProject(officer, project);
             if (reg != null) continue;
-
-            // Exclude assigned project
             if (officer.getAssignedProject() != null &&
                 officer.getAssignedProject().equals(project)) continue;
 
-            // Check flat availability and eligibility
             if (officer.getMaritalStatus() == User.MaritalStatus.SINGLE &&
                 officer.getAge() >= 35 &&
                 project.getAvailableTwoRoom() > 0) {
@@ -74,9 +71,10 @@ public class OfficerViewProjects extends ApplicantViewProjects implements IOffic
     @Override
     public void applyForProject() {
         Scanner sc = new Scanner(System.in);
+        FilterSettings filters = UserSession.getFilterSettings();
 
         System.out.println("Projects you can apply:");
-        for (Project project : projectList.getProjectList()) {
+        for (Project project : projectList.getFilteredProjects(filters)) {
             Registration reg = registrationList.getRegistrationByOfficerAndProject(officer, project);
             if (reg != null) continue;
             if (officer.getAssignedProject() != null &&
@@ -101,7 +99,6 @@ public class OfficerViewProjects extends ApplicantViewProjects implements IOffic
             return;
         }
 
-        // Check if officer is already managing or registered for the project
         if (officer.getAssignedProject() != null &&
             officer.getAssignedProject().equals(project)) {
             System.out.println("You are already managing this project as an Officer. Cannot apply as an applicant.");

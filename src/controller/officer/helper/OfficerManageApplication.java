@@ -7,6 +7,9 @@ import utils.ClearScreen;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
+
+import controller.FilterSettings;
+import controller.UserSession;
 import controller.officer.template.IOfficerManageApplication;
 
 /**
@@ -37,6 +40,7 @@ public class OfficerManageApplication implements IOfficerManageApplication {
      * for the project the officer is currently managing.
      */
     public void viewApplications() {
+        FilterSettings filters = UserSession.getFilterSettings();
         Project assignedProject = officer.getAssignedProject();
         if (assignedProject == null) {
             System.out.println("You are not assigned to any project.");
@@ -49,14 +53,15 @@ public class OfficerManageApplication implements IOfficerManageApplication {
         boolean found = false;
         for (Application application : applications) {
             if (application.getProject().equals(assignedProject)
-                && application.getApplicationStatus() == Application.ApplicationStatus.SUCCESSFUL) {
+                && application.getApplicationStatus() == Application.ApplicationStatus.SUCCESSFUL
+                && (filters.getFlatType() == null || application.getFlatType() == filters.getFlatType())) {
                 System.out.println("Applicant NRIC: " + application.getApplicant().getNric());
                 found = true;
             }
         }
 
         if (!found) {
-            System.out.println("No successful applications found for your project.");
+            System.out.println("No successful applications found for your project with current filters.");
         }
     }
 
@@ -65,6 +70,7 @@ public class OfficerManageApplication implements IOfficerManageApplication {
      * Reduces flat availability based on the chosen flat type.
      */
     public void updateApplicationStatus() {
+        FilterSettings filters = UserSession.getFilterSettings();
         Project assignedProject = officer.getAssignedProject();
         if (assignedProject == null) {
             System.out.println("You are not assigned to any project.");
@@ -75,11 +81,12 @@ public class OfficerManageApplication implements IOfficerManageApplication {
 
         List<Application> successfulApplication = applications.stream()
             .filter(app -> app.getProject().equals(assignedProject)
-                && app.getApplicationStatus() == Application.ApplicationStatus.SUCCESSFUL)
+                && app.getApplicationStatus() == Application.ApplicationStatus.SUCCESSFUL
+                && (filters.getFlatType() == null || app.getFlatType() == filters.getFlatType()))
             .toList();
 
         if (successfulApplication.isEmpty()) {
-            System.out.println("No successful applications to update.");
+            System.out.println("No successful applications to update with current filters.");
             return;
         }
 

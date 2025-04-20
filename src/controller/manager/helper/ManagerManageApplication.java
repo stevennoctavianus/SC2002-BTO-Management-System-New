@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import entity.*;
 import container.*;
+import controller.FilterSettings;
+import controller.UserSession;
 import controller.manager.template.IManagerManageApplication;
 
 /**
@@ -31,6 +33,7 @@ public class ManagerManageApplication implements IManagerManageApplication {
      * @param project the project whose applications should be listed
      */
     public void viewApplication(Project project) {
+        FilterSettings filters = UserSession.getFilterSettings();
         ArrayList<Application> applications = applicationList.getApplicationsByProject(project);
         if (applications.isEmpty()) {
             System.out.println("No applications for this project.");
@@ -39,6 +42,9 @@ public class ManagerManageApplication implements IManagerManageApplication {
 
         System.out.println("All Applications for Project: " + project.getProjectName());
         for (Application app : applications) {
+            if (filters.getFlatType() != null && app.getFlatType() != filters.getFlatType()) {
+                continue;
+            }
             System.out.println(app);
         }
     }
@@ -50,6 +56,7 @@ public class ManagerManageApplication implements IManagerManageApplication {
      * @param project the project whose applications are being managed
      */
     public void manageApplication(Project project) {
+        FilterSettings filters = UserSession.getFilterSettings();
         ArrayList<Application> pendingApplications = applicationList.getPendingApplicationsByProject(project);
 
         if (pendingApplications.isEmpty()) {
@@ -58,8 +65,18 @@ public class ManagerManageApplication implements IManagerManageApplication {
         }
 
         System.out.println("Pending Applications:");
+        ArrayList<Application> filteredPending = new ArrayList<>();
         for (int i = 0; i < pendingApplications.size(); i++) {
-            System.out.println((i + 1) + ". " + pendingApplications.get(i));
+            Application app = pendingApplications.get(i);
+            if (filters.getFlatType() == null || app.getFlatType() == filters.getFlatType()) {
+                filteredPending.add(app);
+                System.out.println((filteredPending.size()) + ". " + app);
+            }
+        }
+
+        if (filteredPending.isEmpty()) {
+            System.out.println("No pending applications match the current filters.");
+            return;
         }
 
         System.out.print("Select application to manage (enter number): ");
@@ -71,12 +88,12 @@ public class ManagerManageApplication implements IManagerManageApplication {
             return;
         }
 
-        if (choice < 0 || choice >= pendingApplications.size()) {
+        if (choice < 0 || choice >= filteredPending.size()) {
             System.out.println("Invalid choice.");
             return;
         }
 
-        Application selectedApp = pendingApplications.get(choice);
+        Application selectedApp = filteredPending.get(choice);
         Application.FlatType flatType = selectedApp.getFlatType();
         int availability;
 

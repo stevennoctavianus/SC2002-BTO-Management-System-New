@@ -12,7 +12,7 @@ public class UserSession {
      * The current user of the system (could be an Applicant, Officer, or Manager).
      */
     private static User currentUser;
-
+    private static FilterSettings filterSettings;
     /**
      * Sets the current user for the session.
      *
@@ -20,6 +20,7 @@ public class UserSession {
      */
     public static void setCurrentUser(User user) {
         currentUser = user;
+        filterSettings = new FilterSettings();
     }
 
     /**
@@ -30,12 +31,18 @@ public class UserSession {
     public static User getCurrentUser() {
         return currentUser;
     }
-
+    public static FilterSettings getFilterSettings() {
+        if (filterSettings == null) {
+            filterSettings = new FilterSettings();
+        }
+        return filterSettings;
+    }
     /**
      * Logs the current user out by clearing the session.
      */
     public static void logout() {
         currentUser = null;
+        filterSettings = null;
     }
 }
 

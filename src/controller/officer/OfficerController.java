@@ -1,23 +1,19 @@
 package controller.officer;
-
 import controller.officer.helper.*;
-import controller.PasswordService;
 import controller.applicant.helper.*;
 import container.*;
 import entity.*;
 import utils.BackButton;
 import utils.ClearScreen;
+import controller.PasswordService;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import controller.officer.template.*;
 import controller.applicant.template.*;
+import controller.FilterMenu;
+import controller.UserSession;
 
-/**
- * Handles all officer-related operations in the system, including registration,
- * project management, and applicant-like interactions (e.g. submitting enquiries and applications).
- */
 public class OfficerController {
-
     private Officer officer;
     private ProjectList projectList;
     private ApplicationList applicationList;
@@ -36,18 +32,8 @@ public class OfficerController {
     private IOfficerManageEnquiries manageEnquiriesHandler;
     private IOfficerManageProject manageProjectHandler;
     private IOfficerManageApplication manageApplicationHandler;
+    // private IOfficerGenerateReceipt receiptHandler;
 
-    /**
-     * Constructs the officer controller and initializes all handlers for both
-     * officer-specific and applicant-style functionality.
-     *
-     * @param officer           the logged-in officer
-     * @param projectList       list of all available projects
-     * @param applicationList   list of all applications in the system
-     * @param enquiryList       list of all submitted enquiries
-     * @param withdrawalList    list of all withdrawal requests
-     * @param registrationList  list of all officer registrations
-     */
     public OfficerController(Officer officer, ProjectList projectList,
                              ApplicationList applicationList, EnquiryList enquiryList,
                              WithdrawalList withdrawalList, RegistrationList registrationList) {
@@ -59,22 +45,20 @@ public class OfficerController {
         this.registrationList = registrationList;
         this.scanner = new Scanner(System.in);
 
-        // Shared applicant-like functionality
+        // Officer can still do applicant-like tasks
         this.projectHandler = new OfficerViewProjects(officer, projectList, applicationList, registrationList);
         this.enquiryHandler = new OfficerMakeEnquiry(officer, projectList, enquiryList);
         this.applicationHandler = new ApplicantViewApplication(officer, applicationList);
         this.withdrawalHandler = new ApplicantMakeWithdrawal(officer, withdrawalList, applicationList);
 
-        // Officer-specific functionality
+        // Officer role-specific functionality
         this.registrationHandler = new OfficerRegistration(officer, projectList, registrationList, applicationList);
         this.manageEnquiriesHandler = new OfficerManageEnquiries(officer, enquiryList);
         this.manageProjectHandler = new OfficerManageProject(officer, projectList);
         this.manageApplicationHandler = new OfficerManageApplication(officer, applicationList);
+        // this.receiptHandler = new OfficerGenerateReceipt(officer);
     }
 
-    /**
-     * Displays the main dashboard for officer users and handles routing to different menus.
-     */
     public void showMenu() {
         int choice = 0;
         do {
@@ -85,7 +69,8 @@ public class OfficerController {
             System.out.println("            |  2) Register for Project (as Officer)            |");
             System.out.println("            |  3) Manage Officer's Job                         |");
             System.out.println("            |  4) Change Password                              |");
-            System.out.println("            |  5) Logout                                       |");
+            System.out.println("            |  5) Manage Filters                               |");
+            System.out.println("            |  6) Logout                                       |");
             System.out.println("            +--------------------------------------------------+\n\n");
             System.out.print("Enter choice: ");
             try {
@@ -99,30 +84,36 @@ public class OfficerController {
             }
             scanner.nextLine();
             ClearScreen.clear();
-
             switch (choice) {
-                case 1: showApplicantMenu(); break;
-                case 2: showOfficerRegistrationMenu(); break;
-                case 3: showOfficerManagementMenu(); break;
+                case 1:
+                    showApplicantMenu();
+                    break;
+                case 2:
+                    showOfficerRegistrationMenu();
+                    break;
+                case 3:
+                    showOfficerManagementMenu();
+                    break;
                 case 4:
                     PasswordService.changePassWord(officer);
                     BackButton.goBack();
-                    return;
-                case 5:
-                    System.out.println("Logging out...");
-                    BackButton.goBack();
                     break;
+                case 5:
+                    new FilterMenu().manageFilters();
+                    ClearScreen.clear();
+                    break;
+                case 6:
+                    System.out.println("Logging out...");
+                    UserSession.logout();
+                    BackButton.goBack();
+                    return;
                 default:
                     System.out.println("Invalid choice! Please choose a valid option");
                     BackButton.goBack();
             }
-        } while (choice != 5);
+        } while (choice != 6);
     }
 
-    /**
-     * Displays the officer's applicant-mode menu, allowing access to enquiry, application,
-     * and project-browsing functionality.
-     */
     private void showApplicantMenu() {
         int choice = 0;
         do {
@@ -138,7 +129,7 @@ public class OfficerController {
             System.out.println("            |  7) Edit an Enquiry                             |");
             System.out.println("            |  8) Delete an Enquiry                           |");
             System.out.println("            |  9) Back                                        |");
-            System.out.println("            +--------------------------------------------------+\n\n");
+            System.out.println("            +-------------------------------------------------+\n\n");
             System.out.print("Enter choice: ");
             try {
                 choice = scanner.nextInt();
@@ -151,7 +142,6 @@ public class OfficerController {
             }
             scanner.nextLine();
             ClearScreen.clear();
-
             switch (choice) {
                 case 1: projectHandler.viewProjectList(); break;
                 case 2: projectHandler.applyForProject(); break;
@@ -172,9 +162,6 @@ public class OfficerController {
         } while (true);
     }
 
-    /**
-     * Allows the officer to register for a new project or check the status of current registrations.
-     */
     private void showOfficerRegistrationMenu() {
         int choice = 0;
         do {
@@ -197,7 +184,6 @@ public class OfficerController {
             }
             scanner.nextLine();
             ClearScreen.clear();
-
             switch (choice) {
                 case 1: registrationHandler.registerForProject(); break;
                 case 2: registrationHandler.viewRegistrationStatus(); break;
@@ -212,11 +198,6 @@ public class OfficerController {
         } while (true);
     }
 
-    /**
-     * Displays the officer’s management dashboard for viewing enquiries,
-     * project details, and updating successful applications.
-     * Only accessible if the officer is currently assigned to a project.
-     */
     private void showOfficerManagementMenu() {
         if (officer.getAssignedProject() == null) {
             System.out.println("You do not have an active project. Cannot manage officer responsibilities.");
@@ -234,6 +215,7 @@ public class OfficerController {
             System.out.println("            |  3) View Project Details                        |");
             System.out.println("            |  4) View Applications                           |");
             System.out.println("            |  5) Update Applicant Profile                    |");
+            // System.out.println("            |  6) Generate Receipt                            |");
             System.out.println("            |  6) Back                                        |");
             System.out.println("            +--------------------------------------------------+\n\n");
             System.out.print("Enter choice: ");
@@ -248,13 +230,13 @@ public class OfficerController {
             }
             scanner.nextLine();
             ClearScreen.clear();
-
             switch (choice) {
                 case 1: manageEnquiriesHandler.viewEnquiries(); break;
                 case 2: manageEnquiriesHandler.replyToEnquiry(); break;
                 case 3: manageProjectHandler.viewProjectDetails(); break;
                 case 4: manageApplicationHandler.viewApplications(); break;
                 case 5: manageApplicationHandler.updateApplicationStatus(); break;
+                // case 6: receiptHandler.generateReceipt(); break;
                 case 6:
                     ClearScreen.clear();
                     return;
@@ -266,4 +248,3 @@ public class OfficerController {
         } while (true);
     }
 }
-

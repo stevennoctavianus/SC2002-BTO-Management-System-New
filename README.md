@@ -40,7 +40,8 @@ Welcome to the **SC2002 BTO Management System**, a Java-based Command Line Inter
 ## 🖥️ User Interface (CLI)
 
 The system uses a clean, structured text-based UI for all roles:
-
+![image](https://github.com/user-attachments/assets/3a1c7b9a-29e7-4f28-a6eb-80968053284b)
+![image](https://github.com/user-attachments/assets/91d09fec-d71a-4473-91a4-80d360c88c82)
 ```plaintext
 Welcome to the BTO Management System
 1) Applicant Login
@@ -109,7 +110,6 @@ SC2002-BTO-Management-System/
 - Role-specific subclasses (`Applicant`, `Officer`, `Manager`)
 - Controllers and Boundaries follow clean MVC-ish separation
 
-📎 _[Attach or link to your UML diagram if available]_
 
 ---
 

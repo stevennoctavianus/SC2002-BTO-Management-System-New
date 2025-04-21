@@ -46,6 +46,7 @@ public class ManagerGenerateReport implements IManagerGenerateReport {
         int option;
         try {
             option = scanner.nextInt();
+            scanner.nextLine();
         } catch (InputMismatchException e) {
             ClearScreen.clear();
             System.out.println(Colour.RED + "Please input an integer!" + Colour.RESET);
@@ -102,7 +103,7 @@ public class ManagerGenerateReport implements IManagerGenerateReport {
      * Filters successful applications by flat type (2-room or 3-room).
      */
     private void filterByFlatType() {
-        System.out.print(Colour.BLUE + "Enter Flat Type to filter (2-room or 3-room): " + Colour.RESET);
+        System.out.print(Colour.BLUE + "Enter Flat Type to filter (tworoom or threeroom): " + Colour.RESET);
         String input = scanner.nextLine().toUpperCase();
 
         try {

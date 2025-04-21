@@ -2,6 +2,7 @@ package controller.officer.helper;
 
 import container.*;
 import entity.*;
+import entity.Registration.RegistrationStatus;
 import controller.officer.template.IOfficerViewProjects;
 import controller.FilterSettings;
 import controller.UserSession;
@@ -50,7 +51,7 @@ public class OfficerViewProjects extends ApplicantViewProjects implements IOffic
         if (officer.getMaritalStatus() == User.MaritalStatus.SINGLE && officer.getAge() >= 35){
             for (Project project : projectList.getFilteredProjects(filters)) {
                 Registration reg = registrationList.getRegistrationByOfficerAndProject(officer, project);
-                if (reg != null) continue;
+                if (reg != null && reg.getStatus() != RegistrationStatus.REJECTED) continue;
                 if (officer.getAssignedProject() != null && officer.getAssignedProject().equals(project)) continue;
                 if (project.getAvailableTwoRoom() > 0 && project.getVisibility()) {
                     System.out.println(project);
@@ -60,12 +61,13 @@ public class OfficerViewProjects extends ApplicantViewProjects implements IOffic
         else {
             for (Project project : projectList.getFilteredProjects(filters)) {
                 Registration reg = registrationList.getRegistrationByOfficerAndProject(officer, project);
-                if (reg != null) continue;
+                if (reg != null && reg.getStatus() != RegistrationStatus.REJECTED) continue;
                 if (officer.getAssignedProject() != null && officer.getAssignedProject().equals(project)) continue;
                 if (project.getVisibility() && (project.getAvailableThreeRoom() > 0 || project.getAvailableTwoRoom() > 0)) {
                     System.out.println(project);
                 }
             }
+
         }
     }
 
@@ -79,20 +81,26 @@ public class OfficerViewProjects extends ApplicantViewProjects implements IOffic
         FilterSettings filters = UserSession.getFilterSettings();
 
         System.out.println(Colour.BLUE_UNDERLINED + "Projects you can apply:" + Colour.RESET);
-        for (Project project : projectList.getFilteredProjects(filters)) {
-            Registration reg = registrationList.getRegistrationByOfficerAndProject(officer, project);
-            if (reg != null) continue;
-            if (officer.getAssignedProject() != null &&
-                officer.getAssignedProject().equals(project)) continue;
-
-            if (officer.getMaritalStatus() == User.MaritalStatus.SINGLE &&
-                officer.getAge() >= 35 &&
-                project.getAvailableTwoRoom() > 0) {
-                System.out.println(project.getProjectName());
-            } else if (project.getVisibility() &&
-                      (project.getAvailableThreeRoom() > 0 || project.getAvailableTwoRoom() > 0)) {
-                System.out.println(project.getProjectName());
+        if (officer.getMaritalStatus() == User.MaritalStatus.SINGLE && officer.getAge() >= 35){
+            for (Project project : projectList.getFilteredProjects(filters)) {
+                Registration reg = registrationList.getRegistrationByOfficerAndProject(officer, project);
+                if (reg != null && reg.getStatus() != RegistrationStatus.REJECTED) continue;
+                if (officer.getAssignedProject() != null && officer.getAssignedProject().equals(project)) continue;
+                if (project.getAvailableTwoRoom() > 0 && project.getVisibility()) {
+                    System.out.println(project.getProjectName());
+                }
             }
+        }
+        else {
+            for (Project project : projectList.getFilteredProjects(filters)) {
+                Registration reg = registrationList.getRegistrationByOfficerAndProject(officer, project);
+                if (reg != null && reg.getStatus() != RegistrationStatus.REJECTED) continue;
+                if (officer.getAssignedProject() != null && officer.getAssignedProject().equals(project)) continue;
+                if (project.getVisibility() && (project.getAvailableThreeRoom() > 0 || project.getAvailableTwoRoom() > 0)) {
+                    System.out.println(project.getProjectName());
+                }
+            }
+
         }
 
         System.out.println(Colour.BLUE + "Enter Project Name to apply: " + Colour.RESET);
@@ -111,7 +119,7 @@ public class OfficerViewProjects extends ApplicantViewProjects implements IOffic
         }
 
         Registration reg = registrationList.getRegistrationByOfficerAndProject(officer, project);
-        if (reg != null) {
+        if (reg != null && reg.getStatus() != RegistrationStatus.REJECTED) {
             System.out.println(Colour.RED + "You have already registered for this project as an Officer. Cannot apply." + Colour.RESET);
             return;
         }

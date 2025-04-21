@@ -185,7 +185,8 @@ public class ApplicationList {
             data.add(new String[]{
                 a.getApplicant().getNric(),
                 a.getProject().getProjectName(),
-                a.getApplicationStatus().name()
+                a.getApplicationStatus().name(),
+                
             });
         }
 

@@ -162,8 +162,6 @@ Ensure these are placed in the `data/` directory.
   </tr>
 </table>
 
-<div align="center">
-
 ---
 
 ## 📚 JavaDocs

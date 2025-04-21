@@ -57,7 +57,7 @@ public class OfficerGenerateReceipt implements IOfficerGenerateReceipt {
         System.out.println(Colour.BLUE + "Marital Status : " + Colour.RESET + applicant.getMaritalStatus());
         System.out.println(Colour.BLUE + "Flat Type      : " + Colour.RESET + application.getFlatType());
         System.out.println(Colour.BLUE + "Project Name   : " + Colour.RESET + assignedProject.getProjectName());
-        System.out.println(Colour.BLUE + "Neighboruhood  : " + Colour.RESET + assignedProject.getNeighborhood());
+        System.out.println(Colour.BLUE + "Neighbourhood  : " + Colour.RESET + assignedProject.getNeighborhood());
         System.out.println("-------------------------------------------");
     }
 }

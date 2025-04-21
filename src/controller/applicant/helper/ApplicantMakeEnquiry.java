@@ -128,15 +128,15 @@ public class ApplicantMakeEnquiry implements IApplicantMakeEnquiry {
         sc.nextLine();
 
         if (choice < 1 || choice > applicantEnquiries.size()) {
-            System.out.println("Invalid choice.");
+            System.out.println(Colour.RED + "Invalid choice." + Colour.RESET);
             return;
         }
 
-        System.out.println("Enter new message: ");
+        System.out.println(Colour.BLUE + "Enter new message: " + Colour.RESET);
         String message = sc.nextLine();
         applicantEnquiries.get(choice - 1).setMessage(message);
 
-        System.out.println("\nEnquiry updated.");
+        System.out.println(Colour.GREEN + "\nEnquiry updated." + Colour.RESET);
     }
 
     /**

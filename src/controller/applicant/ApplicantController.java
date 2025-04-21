@@ -100,8 +100,7 @@ public class ApplicantController {
                     break;
                 case 10:
                     PasswordService.changePassWord(applicant);
-                    ClearScreen.clear();
-                    break;
+                    return;
                 case 11:
                     System.out.println("Logging out...");
                     UserSession.logout();

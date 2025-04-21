@@ -1,6 +1,8 @@
 package controller.officer.helper;
 
 import entity.*;
+import utils.Colour;
+
 import java.util.List;
 import controller.officer.template.IOfficerGenerateReceipt;
 
@@ -32,31 +34,31 @@ public class OfficerGenerateReceipt implements IOfficerGenerateReceipt {
         Project assignedProject = officer.getAssignedProject();
 
         if (assignedProject == null) {
-            System.out.println("You are not currently assigned to any project.");
+            System.out.println(Colour.RED + "You are not currently assigned to any project."  + Colour.RESET);
             return;
         }
 
         if (application == null || application.getApplicationStatus() != Application.ApplicationStatus.BOOKED) {
-            System.out.println("No valid BOOKED application provided for receipt generation.");
+            System.out.println(Colour.RED + "No valid BOOKED application provided for receipt generation." + Colour.RESET);
             return;
         }
 
         Applicant applicant = application.getApplicant();
         if (applicant == null) {
-            System.out.println("Error: Applicant information is missing.");
+            System.out.println(Colour.RED + "Error: Applicant information is missing." + Colour.RESET);
             return;
         }
 
-        System.out.println("\n=== Flat Booking Receipt for Project: " + assignedProject.getProjectName() + " ===");
-        System.out.println("-----------------------------------------");
-        System.out.println("Name           : " + applicant.getName());
-        System.out.println("NRIC           : " + applicant.getNric());
-        System.out.println("Age            : " + applicant.getAge());
-        System.out.println("Marital Status : " + applicant.getMaritalStatus());
-        System.out.println("Flat Type      : " + application.getFlatType());
-        System.out.println("Project Name   : " + assignedProject.getProjectName());
-        System.out.println("Neighborhood   : " + assignedProject.getNeighborhood());
-        System.out.println("-----------------------------------------");
+        System.out.println(Colour.BLUE + "\n==== Flat Booking Receipt for Project: " + assignedProject.getProjectName() + " ====" + Colour.RESET);
+        System.out.println("-------------------------------------------");
+        System.out.println(Colour.BLUE + "Name           : " + Colour.RESET + applicant.getName());
+        System.out.println(Colour.BLUE + "NRIC           : " + Colour.RESET + applicant.getNric());
+        System.out.println(Colour.BLUE + "Age            : " + Colour.RESET + applicant.getAge());
+        System.out.println(Colour.BLUE + "Marital Status : " + Colour.RESET + applicant.getMaritalStatus());
+        System.out.println(Colour.BLUE + "Flat Type      : " + Colour.RESET + application.getFlatType());
+        System.out.println(Colour.BLUE + "Project Name   : " + Colour.RESET + assignedProject.getProjectName());
+        System.out.println(Colour.BLUE + "Neighboruhood  : " + Colour.RESET + assignedProject.getNeighborhood());
+        System.out.println("-------------------------------------------");
     }
 }
 

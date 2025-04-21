@@ -3,6 +3,7 @@ package controller.officer.helper;
 import container.*;
 import entity.*;
 import utils.ClearScreen;
+import utils.Colour;
 
 import java.util.ArrayList;
 import java.util.InputMismatchException;
@@ -51,43 +52,43 @@ public class OfficerMakeEnquiry extends ApplicantMakeEnquiry implements IOfficer
             .toList();
 
         if (availableProjects.isEmpty()) {
-            System.out.println("You cannot make enquiries because you are managing all the projects.");
+            System.out.println(Colour.RED + "You cannot make enquiries because you are managing all the projects." + Colour.RESET);
             return;
         }
 
         int index = 1;
-        System.out.println("Which project do you want to enquire?");
+        System.out.println(Colour.BLUE +"Which project do you want to enquire?" + Colour.RESET);
         for (Project project : availableProjects) {
             System.out.println(index + ") " + project.getProjectName());
             index++;
         }
 
-        System.out.print("Enter project number: ");
+        System.out.println(Colour.BLUE +"Enter project number: " + Colour.RESET);
         int choice;
         try {
             choice = sc.nextInt();
         } catch (InputMismatchException e) {
             ClearScreen.clear();
-            System.out.println("Please input an integer!");
+            System.out.println(Colour.RED + "Please input an integer!" + Colour.RESET);
             sc.nextLine();
             return;
         }
         sc.nextLine();
 
         if (choice < 1 || choice > availableProjects.size()) {
-            System.out.println("Invalid project choice.");
+            System.out.println(Colour.RED + "Invalid project choice." + Colour.RESET);
             return;
         }
 
         Project selectedProject = availableProjects.get(choice - 1);
 
-        System.out.print("Enter your message: ");
+        System.out.println(Colour.BLUE + "Enter your message: " + Colour.RESET);
         String message = sc.nextLine();
 
         Enquiry enquiry = new Enquiry(officer, selectedProject, message);
         enquiryList.addEnquiry(enquiry);
 
-        System.out.println("Success! Your enquiry has been submitted.");
+        System.out.println(Colour.GREEN + "Success! Your enquiry has been submitted." + Colour.RESET);
     }
 
     /**
@@ -95,7 +96,7 @@ public class OfficerMakeEnquiry extends ApplicantMakeEnquiry implements IOfficer
      */
     @Override
     public void viewEnquiry() {
-        System.out.println("\n===== My Enquiries (Excluding Managed Projects) =====");
+        System.out.println(Colour.BLUE + "\n===== My Enquiries (Excluding Managed Projects) =====" + Colour.RESET);
         boolean found = false;
         int index = 1;
 
@@ -109,7 +110,7 @@ public class OfficerMakeEnquiry extends ApplicantMakeEnquiry implements IOfficer
         }
 
         if (!found) {
-            System.out.println("No enquiries found.");
+            System.out.println(Colour.RED +"No enquiries found." + Colour.RESET);
         }
     }
 
@@ -136,7 +137,7 @@ public class OfficerMakeEnquiry extends ApplicantMakeEnquiry implements IOfficer
         List<Enquiry> editableEnquiries = new ArrayList<>();
         int index = 1;
 
-        System.out.println("\n===== Select Enquiry to Edit (Excluding Managed Projects) =====");
+        System.out.println(Colour.BLUE +"\n===== Select Enquiry to Edit (Excluding Managed Projects) =====" + Colour.RESET);
         for (Enquiry enquiry : enquiryList.getEnquiries()) {
             if (enquiry.getApplicant().equals(officer) &&
                 enquiry.getStatus() == Enquiry.EnquiryStatus.PENDING &&
@@ -148,32 +149,32 @@ public class OfficerMakeEnquiry extends ApplicantMakeEnquiry implements IOfficer
         }
 
         if (editableEnquiries.isEmpty()) {
-            System.out.println("No pending enquiries to edit.");
+            System.out.println(Colour.RED + "No pending enquiries to edit." + Colour.RESET);
             return;
         }
 
-        System.out.print("Enter enquiry number to edit: ");
+        System.out.println(Colour.BLUE + "Enter enquiry number to edit: " + Colour.RESET);
         int choice;
         try {
             choice = sc.nextInt();
         } catch (InputMismatchException e) {
             ClearScreen.clear();
-            System.out.println("Please input an integer!");
+            System.out.println(Colour.RED + "Please input an integer!" + Colour.RESET);
             sc.nextLine();
             return;
         }
         sc.nextLine();
 
         if (choice < 1 || choice > editableEnquiries.size()) {
-            System.out.println("Invalid choice.");
+            System.out.println(Colour.RED +"Invalid choice." + Colour.RESET);
             return;
         }
 
-        System.out.print("Enter new message: ");
+        System.out.print(Colour.BLUE + "Enter new message: " + Colour.RESET);
         String message = sc.nextLine();
         editableEnquiries.get(choice - 1).setMessage(message);
 
-        System.out.println("Enquiry updated.");
+        System.out.println(Colour.GREEN + "Enquiry updated." );
     }
 
     /**
@@ -184,7 +185,7 @@ public class OfficerMakeEnquiry extends ApplicantMakeEnquiry implements IOfficer
         List<Enquiry> deletableEnquiries = new ArrayList<>();
         int index = 1;
 
-        System.out.println("\n===== Select Enquiry to Delete (Excluding Managed Projects) =====");
+        System.out.println(Colour.BLUE + "\n===== Select Enquiry to Delete (Excluding Managed Projects) =====" + Colour.RESET);
         for (Enquiry enquiry : enquiryList.getEnquiries()) {
             if (enquiry.getApplicant().equals(officer) &&
                 enquiry.getStatus() == Enquiry.EnquiryStatus.PENDING &&
@@ -197,29 +198,29 @@ public class OfficerMakeEnquiry extends ApplicantMakeEnquiry implements IOfficer
         }
 
         if (deletableEnquiries.isEmpty()) {
-            System.out.println("No pending enquiries to delete.");
+            System.out.println(Colour.RED + "No pending enquiries to delete." + Colour.RESET);
             return;
         }
 
-        System.out.print("Enter enquiry number to delete: ");
+        System.out.print(Colour.BLUE + "Enter enquiry number to delete: " + Colour.RESET);
         int choice;
         try {
             choice = sc.nextInt();
         } catch (InputMismatchException e) {
             ClearScreen.clear();
-            System.out.println("Please input an integer!");
+            System.out.println(Colour.RED + "Please input an integer!" + Colour.RESET);
             sc.nextLine();
             return;
         }
         sc.nextLine();
 
         if (choice < 1 || choice > deletableEnquiries.size()) {
-            System.out.println("Invalid choice.");
+            System.out.println(Colour.RED + "Invalid choice." );
             return;
         }
 
         enquiryList.removeEnquiry(deletableEnquiries.get(choice - 1));
-        System.out.println("Enquiry deleted.");
+        System.out.println(Colour.GREEN +"Enquiry deleted." + Colour.RESET);
     }
 }
 

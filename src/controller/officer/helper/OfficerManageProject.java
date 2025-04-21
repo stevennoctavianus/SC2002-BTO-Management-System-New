@@ -2,6 +2,7 @@ package controller.officer.helper;
 
 import container.*;
 import entity.*;
+import utils.Colour;
 import controller.officer.template.IOfficerManageProject;
 
 /**
@@ -32,11 +33,11 @@ public class OfficerManageProject implements IOfficerManageProject {
         Project assignedProject = officer.getAssignedProject();
 
         if (assignedProject == null) {
-            System.out.println("You are not assigned to any project.");
+            System.out.println(Colour.RED + "You are not assigned to any project." );
             return;
         }
 
-        System.out.println("\n===== Project Details =====");
+        System.out.println(Colour.BLUE + "\n===== Project Details =====" + Colour.RESET);
         System.out.println(assignedProject.toString());
     }
 }

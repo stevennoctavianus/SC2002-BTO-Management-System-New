@@ -3,6 +3,7 @@ package container;
 import entity.*;
 import utils.CSVReader;
 import utils.CSVWriter;
+import utils.Colour;
 
 import java.util.*;
 
@@ -55,7 +56,7 @@ public class ApplicationList {
                 this.applicationList.add(application);
                 applicant.setCurrentApplication(application); // Link to applicant
             } else {
-                System.out.println("Could not find Applicant or Project for: " + nric + " / " + projectName);
+                System.out.println(Colour.RED + "Could not find Applicant or Project for: " + nric + Colour.RESET + " / " + Colour.RED + projectName + Colour.RESET);
             }
         }
     }
@@ -76,9 +77,9 @@ public class ApplicationList {
      */
     public void removeApplication(Application application) {
         if (applicationList.remove(application)) {
-            System.out.println("Application removed successfully.");
+            System.out.println(Colour.GREEN + "Application removed successfully." + Colour.RESET);
         } else {
-            System.out.println("Application not found.");
+            System.out.println(Colour.RED + "Application not found." + Colour.RESET);
         }
     }
 

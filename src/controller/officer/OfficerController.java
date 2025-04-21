@@ -5,6 +5,7 @@ import container.*;
 import entity.*;
 import utils.BackButton;
 import utils.ClearScreen;
+import utils.Colour;
 import controller.PasswordService;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -72,12 +73,12 @@ public class OfficerController {
             System.out.println("            |  5) Manage Filters                               |");
             System.out.println("            |  6) Logout                                       |");
             System.out.println("            +--------------------------------------------------+\n\n");
-            System.out.print("Enter choice: ");
+            System.out.print(Colour.BLUE + "Enter choice: " + Colour.RESET);
             try {
                 choice = scanner.nextInt();
             } catch (InputMismatchException e) {
                 ClearScreen.clear();
-                System.out.println("Please input an integer!");
+                System.out.println(Colour.RED + "Please input an integer!" + Colour.RESET);
                 BackButton.goBack();
                 scanner.nextLine();
                 continue;
@@ -96,19 +97,18 @@ public class OfficerController {
                     break;
                 case 4:
                     PasswordService.changePassWord(officer);
-                    BackButton.goBack();
-                    break;
+                    return;
                 case 5:
                     new FilterMenu().manageFilters();
                     ClearScreen.clear();
                     break;
                 case 6:
-                    System.out.println("Logging out...");
+                    System.out.println(Colour.BLUE + "Logging out..." + Colour.RESET);
                     UserSession.logout();
                     BackButton.goBack();
                     return;
                 default:
-                    System.out.println("Invalid choice! Please choose a valid option");
+                    System.out.println(Colour.RED + "Invalid choice! Please choose a valid option" + Colour.RESET);
                     BackButton.goBack();
             }
         } while (choice != 6);
@@ -117,9 +117,9 @@ public class OfficerController {
     private void showApplicantMenu() {
         int choice = 0;
         do {
-            System.out.println("            +--------------------------------------------------+");
+            System.out.println("            +-------------------------------------------------+");
             System.out.println("            |           Applicant Mode (Officer View)         |");
-            System.out.println("            +--------------------------------------------------+");
+            System.out.println("            +-------------------------------------------------+");
             System.out.println("            |  1) View BTO Project List                       |");
             System.out.println("            |  2) Apply for a BTO Project                     |");
             System.out.println("            |  3) View My Application                         |");
@@ -130,12 +130,12 @@ public class OfficerController {
             System.out.println("            |  8) Delete an Enquiry                           |");
             System.out.println("            |  9) Back                                        |");
             System.out.println("            +-------------------------------------------------+\n\n");
-            System.out.print("Enter choice: ");
+            System.out.print(Colour.BLUE + "Enter choice: " + Colour.RESET);
             try {
                 choice = scanner.nextInt();
             } catch (InputMismatchException e) {
                 ClearScreen.clear();
-                System.out.println("Please input an integer!");
+                System.out.println(Colour.RED + "Please input an integer!" + Colour.RESET);
                 BackButton.goBack();
                 scanner.nextLine();
                 continue;
@@ -156,7 +156,7 @@ public class OfficerController {
                     return;
                 default:
                     ClearScreen.clear();
-                    System.out.println("Invalid choice! Please choose a valid option");
+                    System.out.println(Colour.RED + "Invalid choice! Please choose a valid option" + Colour.RESET);
             }
             BackButton.goBack();
         } while (true);
@@ -172,12 +172,12 @@ public class OfficerController {
             System.out.println("            |  2) View Registration Status                     |");
             System.out.println("            |  3) Back                                         |");
             System.out.println("            +--------------------------------------------------+\n\n");
-            System.out.print("Enter choice: ");
+            System.out.print(Colour.BLUE + "Enter choice: " + Colour.RESET);
             try {
                 choice = scanner.nextInt();
             } catch (InputMismatchException e) {
                 ClearScreen.clear();
-                System.out.println("Please input an integer!");
+                System.out.println(Colour.RED + "Please input an integer!" + Colour.RESET);
                 BackButton.goBack();
                 scanner.nextLine();
                 continue;
@@ -192,7 +192,7 @@ public class OfficerController {
                     return;
                 default:
                     ClearScreen.clear();
-                    System.out.println("Invalid choice! Please choose a valid option.");
+                    System.out.println(Colour.RED + "Invalid choice! Please choose a valid option." + Colour.RESET);
             }
             BackButton.goBack();
         } while (true);
@@ -200,7 +200,7 @@ public class OfficerController {
 
     private void showOfficerManagementMenu() {
         if (officer.getAssignedProject() == null) {
-            System.out.println("You do not have an active project. Cannot manage officer responsibilities.");
+            System.out.println(Colour.RED + "You do not have an active project. Cannot manage officer responsibilities." + Colour.RESET);
             BackButton.goBack();
             return;
         }
@@ -218,12 +218,12 @@ public class OfficerController {
             // System.out.println("            |  6) Generate Receipt                            |");
             System.out.println("            |  6) Back                                        |");
             System.out.println("            +--------------------------------------------------+\n\n");
-            System.out.print("Enter choice: ");
+            System.out.print(Colour.BLUE + "Enter choice: " + Colour.RESET);
             try {
                 choice = scanner.nextInt();
             } catch (InputMismatchException e) {
                 ClearScreen.clear();
-                System.out.println("Please input an integer!");
+                System.out.println(Colour.RED + "Please input an integer!" + Colour.RESET);
                 BackButton.goBack();
                 scanner.nextLine();
                 continue;
@@ -242,7 +242,7 @@ public class OfficerController {
                     return;
                 default:
                     ClearScreen.clear();
-                    System.out.println("Invalid choice! Please choose a valid option.");
+                    System.out.println(Colour.RED + "Invalid choice! Please choose a valid option." + Colour.RESET);
             }
             BackButton.goBack();
         } while (true);

@@ -7,6 +7,7 @@ import container.*;
 import entity.*;
 import utils.BackButton;
 import utils.ClearScreen;
+import utils.Colour;
 import controller.manager.template.IManagerGenerateReport;
 
 /**
@@ -32,22 +33,22 @@ public class ManagerGenerateReport implements IManagerGenerateReport {
      * to the appropriate report filter or view logic.
      */
     public void generateReport() {
-        System.out.println("            +-------------------------------------------------+");
-        System.out.println("            |          Generate Booking Report               |");
-        System.out.println("            +-------------------------------------------------+");
+        System.out.println("            +------------------------------------------------+");
+        System.out.println("            |             Generate Booking Report            |");
+        System.out.println("            +------------------------------------------------+");
         System.out.println("            |  1) View All Bookings                          |");
         System.out.println("            |  2) Filter by Flat Type                        |");
         System.out.println("            |  3) Filter by Marital Status                   |");
         System.out.println("            |  4) Filter by Project Name                     |");
         System.out.println("            +------------------------------------------------+\n\n");
-        System.out.print("Select an option: ");
+        System.out.print(Colour.BLUE + "Select an option: " + Colour.RESET);
 
         int option;
         try {
             option = scanner.nextInt();
         } catch (InputMismatchException e) {
             ClearScreen.clear();
-            System.out.println("Please input an integer!");
+            System.out.println(Colour.RED + "Please input an integer!" + Colour.RESET);
             BackButton.goBack();
             scanner.nextLine();
             return;
@@ -69,7 +70,7 @@ public class ManagerGenerateReport implements IManagerGenerateReport {
                 filterByProjectName();
                 break;
             default:
-                System.out.println("Invalid choice! Please enter a valid option.");
+                System.out.println(Colour.RED + "Invalid choice! Please enter a valid option." + Colour.RESET);
         }
     }
 
@@ -80,19 +81,19 @@ public class ManagerGenerateReport implements IManagerGenerateReport {
      */
     private void printReport(ArrayList<Application> applications) {
         if (applications.isEmpty()) {
-            System.out.println("No bookings found.");
+            System.out.println(Colour.RED + "No bookings found." + Colour.RESET);
             return;
         }
 
-        System.out.println("\n===== Booking Report =====");
+        System.out.println(Colour.BLUE + "\n===== Booking Report =====" + Colour.RESET);
         for (Application app : applications) {
             Applicant applicant = app.getApplicant();
-            System.out.println("Name: " + applicant.getName());
-            System.out.println("NRIC: " + applicant.getNric());
-            System.out.println("Age: " + applicant.getAge());
-            System.out.println("Marital Status: " + applicant.getMaritalStatus());
-            System.out.println("Project Name: " + app.getProject().getProjectName());
-            System.out.println("Flat Type: " + app.getFlatType());
+            System.out.println(Colour.BLUE + "Name: " + Colour.RESET + applicant.getName());
+            System.out.println(Colour.BLUE + "NRIC: " + Colour.RESET + applicant.getNric());
+            System.out.println(Colour.BLUE + "Age: " + Colour.RESET + applicant.getAge());
+            System.out.println(Colour.BLUE + "Marital Status: " + Colour.RESET + applicant.getMaritalStatus());
+            System.out.println(Colour.BLUE + "Project Name: " + Colour.RESET + app.getProject().getProjectName());
+            System.out.println(Colour.BLUE + "Flat Type: " + Colour.RESET + app.getFlatType());
             System.out.println("-------------------------------");
         }
     }
@@ -101,7 +102,7 @@ public class ManagerGenerateReport implements IManagerGenerateReport {
      * Filters successful applications by flat type (2-room or 3-room).
      */
     private void filterByFlatType() {
-        System.out.print("Enter Flat Type to filter (2-room or 3-room): ");
+        System.out.print(Colour.BLUE + "Enter Flat Type to filter (2-room or 3-room): " + Colour.RESET);
         String input = scanner.nextLine().toUpperCase();
 
         try {
@@ -114,7 +115,7 @@ public class ManagerGenerateReport implements IManagerGenerateReport {
             }
             printReport(filtered);
         } catch (IllegalArgumentException e) {
-            System.out.println("Invalid flat type.");
+            System.out.println(Colour.RED + "Invalid flat type." + Colour.RESET);
         }
     }
 
@@ -122,7 +123,7 @@ public class ManagerGenerateReport implements IManagerGenerateReport {
      * Filters successful applications by applicant marital status.
      */
     private void filterByMaritalStatus() {
-        System.out.print("Enter Marital Status to filter (Single/Married): ");
+        System.out.print(Colour.BLUE + "Enter Marital Status to filter (Single/Married): ");
         String status = scanner.nextLine();
 
         ArrayList<Application> filtered = new ArrayList<>();
@@ -134,7 +135,7 @@ public class ManagerGenerateReport implements IManagerGenerateReport {
                 }
             }
         } catch (IllegalArgumentException e) {
-            System.out.println("Invalid marital status.");
+            System.out.println(Colour.RED + "Invalid marital status." + Colour.RESET);
         }
         printReport(filtered);
     }
@@ -143,7 +144,7 @@ public class ManagerGenerateReport implements IManagerGenerateReport {
      * Filters successful applications by project name (case-insensitive).
      */
     private void filterByProjectName() {
-        System.out.print("Enter Project Name: ");
+        System.out.print(Colour.BLUE + "Enter Project Name: " + Colour.RESET);
         String projectName = scanner.nextLine();
 
         ArrayList<Application> filtered = new ArrayList<>();

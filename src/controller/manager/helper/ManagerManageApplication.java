@@ -3,6 +3,7 @@ package controller.manager.helper;
 import java.util.ArrayList;
 import java.util.Scanner;
 import entity.*;
+import utils.Colour;
 import container.*;
 import controller.FilterSettings;
 import controller.UserSession;
@@ -36,11 +37,11 @@ public class ManagerManageApplication implements IManagerManageApplication {
         FilterSettings filters = UserSession.getFilterSettings();
         ArrayList<Application> applications = applicationList.getApplicationsByProject(project);
         if (applications.isEmpty()) {
-            System.out.println("No applications for this project.");
+            System.out.println(Colour.RED + "No applications for this project." + Colour.RESET);
             return;
         }
 
-        System.out.println("All Applications for Project: " + project.getProjectName());
+        System.out.println(Colour.BLUE_UNDERLINED + "All Applications for Project: " + Colour.RESET + project.getProjectName());
         for (Application app : applications) {
             if (filters.getFlatType() != null && app.getFlatType() != filters.getFlatType()) {
                 continue;
@@ -60,11 +61,11 @@ public class ManagerManageApplication implements IManagerManageApplication {
         ArrayList<Application> pendingApplications = applicationList.getPendingApplicationsByProject(project);
 
         if (pendingApplications.isEmpty()) {
-            System.out.println("No pending applications to manage.");
+            System.out.println(Colour.RED + "No pending applications to manage." + Colour.RESET);
             return;
         }
 
-        System.out.println("Pending Applications:");
+        System.out.println(Colour.BLUE_UNDERLINED + "Pending Applications:" + Colour.RESET);
         ArrayList<Application> filteredPending = new ArrayList<>();
         for (int i = 0; i < pendingApplications.size(); i++) {
             Application app = pendingApplications.get(i);
@@ -75,21 +76,21 @@ public class ManagerManageApplication implements IManagerManageApplication {
         }
 
         if (filteredPending.isEmpty()) {
-            System.out.println("No pending applications match the current filters.");
+            System.out.println(Colour.RED + "No pending applications match the current filters." + Colour.RESET);
             return;
         }
 
-        System.out.print("Select application to manage (enter number): ");
+        System.out.print(Colour.BLUE + "Select application to manage (enter number): " + Colour.RESET);
         int choice;
         try {
             choice = Integer.parseInt(scanner.nextLine()) - 1;
         } catch (NumberFormatException e) {
-            System.out.println("Invalid input.");
+            System.out.println(Colour.RED + "Invalid input." + Colour.RESET);
             return;
         }
 
         if (choice < 0 || choice >= filteredPending.size()) {
-            System.out.println("Invalid choice.");
+            System.out.println(Colour.RED + "Invalid choice." + Colour.RESET);
             return;
         }
 
@@ -104,9 +105,9 @@ public class ManagerManageApplication implements IManagerManageApplication {
         }
 
         if (availability > 0) {
-            System.out.println("1. Accept");
+            System.out.println("\n1. Accept");
             System.out.println("2. Reject");
-            System.out.print("Enter your choice: ");
+            System.out.println("Enter your choice (1 or 2): ");
             String action = scanner.nextLine();
 
             if (action.equals("1")) {
@@ -116,18 +117,18 @@ public class ManagerManageApplication implements IManagerManageApplication {
                 } else {
                     project.setAvailableThreeRoom(availability - 1);
                 }
-                System.out.println("Application accepted.");
+                System.out.println(Colour.GREEN + "Application accepted." + Colour.RESET);
             } else if (action.equals("2")) {
                 selectedApp.setApplicationStatus(Application.ApplicationStatus.UNSUCCESSFUL);
                 selectedApp.getApplicant().setCurrentApplication(null);
-                System.out.println("Application rejected.");
+                System.out.println(Colour.RED + "Application rejected." + Colour.RESET);
             } else {
-                System.out.println("Invalid action.");
+                System.out.println(Colour.RED + "Invalid action." + Colour.RESET);
             }
         } else {
             selectedApp.setApplicationStatus(Application.ApplicationStatus.UNSUCCESSFUL);
             selectedApp.getApplicant().setCurrentApplication(null);
-            System.out.println("No more flats available for " + flatType + ". Application rejected.");
+            System.out.println(Colour.RED + "No more flats available for " + flatType + ". Application rejected." + Colour.RESET);
         }
     }
 }

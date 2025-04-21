@@ -3,6 +3,7 @@ package controller.manager.helper;
 import entity.*;
 import utils.BackButton;
 import utils.ClearScreen;
+import utils.Colour;
 import container.*;
 
 import java.text.ParseException;
@@ -48,32 +49,32 @@ public class ManagerManageProject implements IManagerManageProject {
      */
     public void createProject() {
         if (manager.getActiveProject() != null) {
-            System.out.println("You are already handling an active project: " + manager.getActiveProject().getProjectName());
-            System.out.println("You must finish managing the current project before creating a new one!");
+            System.out.println(Colour.RED + "You are already handling an active project: " + manager.getActiveProject().getProjectName());
+            System.out.println("You must finish managing the current project before creating a new one!" + Colour.RESET);
             return;
         }
 
         String name;
         while (true) {
-            System.out.print("Enter Project Name: ");
+            System.out.print(Colour.BLUE + "Enter Project Name: " + Colour.RESET);
             name = scanner.nextLine();
             if (projectList.getProjectByName(name) != null) {
-                System.out.println("A project with this name already exists. Please enter a different name.");
+                System.out.println(Colour.RED + "A project with this name already exists. Please enter a different name." + Colour.RESET);
             } else {
                 break;
             }
         }
 
-        System.out.print("Enter Neighborhood: ");
+        System.out.print(Colour.BLUE + "Enter Neighbourhood: " + Colour.RESET);
         String neighborhood = scanner.nextLine();
 
-        int twoRoom = getValidInt("Enter number of 2-Room Flats: ");
-        int sellingPriceTwoRoom = getValidInt("Enter the selling price of 2-Room Flats: ");
-        int threeRoom = getValidInt("Enter number of 3-Room Flats: ");
-        int sellingPriceThreeRoom = getValidInt("Enter the selling price of 3-Room Flats: ");
-        Date openDate = getValidDate("Enter Opening Date (yyyy-MM-dd): ");
-        Date closeDate = getValidDate("Enter Closing Date (yyyy-MM-dd): ");
-        int maxOfficer = getValidInt("Enter Max Officer Slot: ");
+        int twoRoom = getValidInt(Colour.BLUE + "Enter number of 2-Room Flats: " + Colour.RESET);
+        int sellingPriceTwoRoom = getValidInt(Colour.BLUE + "Enter the selling price of 2-Room Flats: " + Colour.RESET);
+        int threeRoom = getValidInt(Colour.BLUE + "Enter number of 3-Room Flats: " + Colour.RESET);
+        int sellingPriceThreeRoom = getValidInt(Colour.BLUE + "Enter the selling price of 3-Room Flats: " + Colour.RESET);
+        Date openDate = getValidDate(Colour.BLUE + "Enter Opening Date (yyyy-MM-dd): " + Colour.RESET);
+        Date closeDate = getValidDate(Colour.BLUE + "Enter Closing Date (yyyy-MM-dd): " + Colour.RESET);
+        int maxOfficer = getValidInt(Colour.BLUE + "Enter Max Officer Slot: " + Colour.RESET);
 
         Project project = new Project(name, neighborhood, twoRoom, sellingPriceTwoRoom, threeRoom, sellingPriceThreeRoom, openDate, closeDate, maxOfficer);
         project.setManager(manager);
@@ -84,27 +85,27 @@ public class ManagerManageProject implements IManagerManageProject {
         }
 
         projectList.addProject(project);
-        System.out.println("Project created successfully.");
+        System.out.println(Colour.GREEN + "Project created successfully." + Colour.RESET);
     }
 
     /**
      * Allows the manager to edit attributes of an existing project they created.
      */
     public void editProject() {
-        System.out.print("Enter project name to edit: ");
+        System.out.print(Colour.BLUE + "Enter project name to edit:  " + Colour.RESET);
         String name = scanner.nextLine();
 
         Project project = projectList.getProjectByName(name);
         if (project == null || !manager.getManagedProjects().contains(project)) {
-            System.out.println("Project not found or not owned by you.");
+            System.out.println(Colour.RED + "Project not found or not owned by you." + Colour.RESET);
             return;
         }
 
         while (true) {
             System.out.println("            +------------------------------------------------+");
-            System.out.println("            |            Select What to Edit                 |");
+            System.out.println("            |              Select What to Edit               |");
             System.out.println("            +------------------------------------------------+");
-            System.out.println("            |  1) Neighborhood                               |");
+            System.out.println("            |  1) Neighbourhood                              |");
             System.out.println("            |  2) 2-Room Units                               |");
             System.out.println("            |  3) Selling Price of 2-Room Units              |");
             System.out.println("            |  4) 3-Room Units                               |");
@@ -114,14 +115,14 @@ public class ManagerManageProject implements IManagerManageProject {
             System.out.println("            |  8) Max Officer Slots                          |");
             System.out.println("            |  9) Exit                                       |");
             System.out.println("            +------------------------------------------------+\n\n");
-            System.out.print("Enter choice: ");
+            System.out.print(Colour.BLUE + "Enter choice: " + Colour.RESET);
 
             int choice;
             try {
                 choice = scanner.nextInt();
             } catch (InputMismatchException e) {
                 ClearScreen.clear();
-                System.out.println("Please input an integer!");
+                System.out.println(Colour.RED + "Please input an integer!" + Colour.RESET);
                 BackButton.goBack();
                 scanner.nextLine();
                 continue;
@@ -132,35 +133,35 @@ public class ManagerManageProject implements IManagerManageProject {
 
             switch (choice) {
                 case 1:
-                    System.out.print("New Neighborhood: ");
+                    System.out.print(Colour.BLUE + "New Neighbourhood: " + Colour.RESET);
                     project.setNeighborhood(scanner.nextLine());
                     break;
                 case 2:
-                    project.setAvailableTwoRoom(getValidInt("New 2-Room Units: "));
+                    project.setAvailableTwoRoom(getValidInt(Colour.BLUE + "New 2-Room Units: " + Colour.RESET));
                     break;
                 case 3:
-                    project.setSellingPriceTwoRoom(getValidInt("New 2-Room Units Selling Price: "));
+                    project.setSellingPriceTwoRoom(getValidInt(Colour.BLUE + "New 2-Room Units Selling Price: " + Colour.RESET));
                     break;
                 case 4:
-                    project.setAvailableThreeRoom(getValidInt("New 3-Room Units: "));
+                    project.setAvailableThreeRoom(getValidInt(Colour.BLUE + "New 3-Room Units: " + Colour.RESET));
                     break;
                 case 5:
-                    project.setSellingPriceThreeRoom(getValidInt("New 3-Room Units Selling Price: "));
+                    project.setSellingPriceThreeRoom(getValidInt(Colour.BLUE + "New 3-Room Units Selling Price: " + Colour.RESET));
                     break;
                 case 6:
-                    project.setOpeningDate(getValidDate("New Opening Date (yyyy-MM-dd): "));
+                    project.setOpeningDate(getValidDate(Colour.BLUE + "New Opening Date (yyyy-MM-dd): " + Colour.RESET));
                     break;
                 case 7:
-                    project.setClosingDate(getValidDate("New Closing Date (yyyy-MM-dd): "));
+                    project.setClosingDate(getValidDate(Colour.BLUE + "New Closing Date (yyyy-MM-dd): " + Colour.RESET));
                     break;
                 case 8:
-                    project.setMaxOfficer(getValidInt("New Max Officer Slots: "));
+                    project.setMaxOfficer(getValidInt(Colour.BLUE + "New Max Officer Slots: " + Colour.RESET));
                     break;
                 case 9:
-                    System.out.println("Edit complete.");
+                    System.out.println(Colour.GREEN + "Edit complete." + Colour.RESET);
                     return;
                 default:
-                    System.out.println("Invalid choice! Please enter a valid option.");
+                    System.out.println(Colour.RED + "Invalid choice! Please enter a valid option." + Colour.RESET);
             }
         }
     }
@@ -169,12 +170,12 @@ public class ManagerManageProject implements IManagerManageProject {
      * Deletes a project and performs cleanup of related applications, officer assignments, and manager records.
      */
     public void deleteProject() {
-        System.out.print("Enter project name to delete: ");
+        System.out.print(Colour.BLUE + "Enter project name to delete: " + Colour.RESET);
         String name = scanner.nextLine();
 
         Project project = projectList.getProjectByName(name);
         if (project == null || !manager.getManagedProjects().contains(project)) {
-            System.out.println("Project not found or not managed by you.");
+            System.out.println(Colour.RED + "Project not found or not managed by you." + Colour.RESET);
             return;
         }
 
@@ -209,17 +210,17 @@ public class ManagerManageProject implements IManagerManageProject {
      * Toggles the visibility of a managed project (visible ↔ hidden).
      */
     public void changeProjectVisibility() {
-        System.out.print("Enter project name to change visibility: ");
+        System.out.print(Colour.BLUE + "Enter project name to change visibility: " + Colour.RESET);
         String name = scanner.nextLine();
 
         Project project = projectList.getProjectByName(name);
         if (project == null || !manager.getManagedProjects().contains(project)) {
-            System.out.println("Project not found or not managed by you.");
+            System.out.println(Colour.RED + "Project not found or not managed by you." + Colour.RESET);
             return;
         }
 
         project.setVisibility(!project.getVisibility());
-        System.out.println("Visibility updated: " + (project.getVisibility() ? "Visible" : "Hidden"));
+        System.out.println(Colour.GREEN + "Visibility updated: " + (project.getVisibility() ? "Visible" : "Hidden") + Colour.RESET);
     }
 
     /**
@@ -228,11 +229,11 @@ public class ManagerManageProject implements IManagerManageProject {
     public void viewOwnProject() {
         ArrayList<Project> myProjects = manager.getManagedProjects();
         if (myProjects.isEmpty()) {
-            System.out.println("You have not created any projects.");
+            System.out.println(Colour.RED + "You have not created any projects." + Colour.RESET);
             return;
         }
 
-        System.out.println("\nYour Projects:");
+        System.out.println(Colour.BLUE_UNDERLINED + "\nYour Projects:" + Colour.RESET);
         for (Project project : myProjects) {
             System.out.println(project.toString());
         }
@@ -242,7 +243,7 @@ public class ManagerManageProject implements IManagerManageProject {
      * Displays all projects in the system, regardless of ownership.
      */
     public void viewAllCreatedProject() {
-        System.out.println("\nAll Projects in the System:");
+        System.out.println(Colour.BLUE_UNDERLINED + "\nAll Projects in the System: " + Colour.RESET);
         for (Project project : projectList.getProjectList()) {
             System.out.println(project.toString());
         }
@@ -258,7 +259,7 @@ public class ManagerManageProject implements IManagerManageProject {
             try {
                 return Integer.parseInt(input);
             } catch (NumberFormatException e) {
-                System.out.println("Please input a valid integer!");
+                System.out.println(Colour.RED + "Please input a valid integer!" + Colour.RESET);
             }
         }
     }
@@ -274,7 +275,7 @@ public class ManagerManageProject implements IManagerManageProject {
             try {
                 return sdf.parse(input);
             } catch (ParseException e) {
-                System.out.println("Invalid date format. Please use yyyy-MM-dd.");
+                System.out.println(Colour.RED + "Invalid date format. Please use yyyy-MM-dd." + Colour.RESET);
             }
         }
     }

@@ -1,4 +1,5 @@
 package controller.manager;
+
 import controller.PasswordService;
 import controller.manager.helper.*;
 import java.util.InputMismatchException;
@@ -11,7 +12,14 @@ import container.*;
 import controller.manager.template.*;
 import controller.FilterMenu;
 
+/**
+ * Controls the main menu interactions for a manager user in the BTO system.
+ * <p>
+ * Handles creation and modification of projects, as well as reviewing and responding to
+ * applications, registrations, enquiries, withdrawals, and generating booking reports.
+ */
 public class ManagerController {
+
     private Manager manager;
     private ProjectList projectList;
     private ApplicationList applicationList;
@@ -26,7 +34,18 @@ public class ManagerController {
     private IManagerGenerateReport reportGenerator;
     private IManagerManageEnquiries enquiryManager;
 
-    public ManagerController(Manager manager, ProjectList projectList, ApplicationList applicationList, RegistrationList registrationList, WithdrawalList withdrawalList, EnquiryList enquiryList) {
+    /**
+     * Constructs a manager controller for handling administrative operations.
+     *
+     * @param manager           the manager currently logged in
+     * @param projectList       the list of all BTO projects
+     * @param applicationList   the list of applications submitted by applicants
+     * @param registrationList  the list of officer registrations
+     * @param withdrawalList    the list of withdrawal requests
+     * @param enquiryList       the list of enquiries submitted by users
+     */
+    public ManagerController(Manager manager, ProjectList projectList, ApplicationList applicationList,
+                             RegistrationList registrationList, WithdrawalList withdrawalList, EnquiryList enquiryList) {
         this.manager = manager;
         this.projectList = projectList;
         this.applicationList = applicationList;
@@ -42,6 +61,12 @@ public class ManagerController {
         this.enquiryManager = new ManagerManageEnquiries(enquiryList);
     }
 
+    /**
+     * Displays and manages the main dashboard menu for the manager.
+     * <p>
+     * Options include creating/editing/deleting projects, managing applications,
+     * registrations, withdrawals, replying to enquiries, generating reports, and updating filters.
+     */
     public void showMenu() {
         Scanner scanner = new Scanner(System.in);
         while (true) {
@@ -68,6 +93,7 @@ public class ManagerController {
             System.out.println("            | 18) Logout                                         |");
             System.out.println("            +----------------------------------------------------+\n\n");
             System.out.print("  Enter your choice: ");
+
             int choice;
             try {
                 choice = scanner.nextInt();
@@ -78,8 +104,9 @@ public class ManagerController {
                 scanner.nextLine();
                 continue;
             }
-            scanner.nextLine();
+            scanner.nextLine(); // consume newline
             ClearScreen.clear();
+
             switch (choice) {
                 case 1: projectManager.createProject(); break;
                 case 2: projectManager.editProject(); break;
@@ -117,6 +144,7 @@ public class ManagerController {
                 default:
                     System.out.println(Colour.RED + "Invalid choice! Please enter a valid option." + Colour.RESET);
             }
+
             BackButton.goBack();
         }
     }

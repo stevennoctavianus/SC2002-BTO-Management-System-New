@@ -14,6 +14,14 @@ import controller.applicant.template.*;
 import controller.FilterMenu;
 import controller.UserSession;
 
+/**
+ * Controls the main interface and navigation for Officer users in the BTO system.
+ * <p>
+ * Officers can perform both applicant-related tasks and officer-specific tasks
+ * such as registering for projects, managing project applications, responding to enquiries,
+ * and updating applicant statuses.
+ */
+
 public class OfficerController {
     private Officer officer;
     private ProjectList projectList;
@@ -33,7 +41,7 @@ public class OfficerController {
     private IOfficerManageEnquiries manageEnquiriesHandler;
     private IOfficerManageProject manageProjectHandler;
     private IOfficerManageApplication manageApplicationHandler;
-    // private IOfficerGenerateReceipt receiptHandler;
+    
 
     public OfficerController(Officer officer, ProjectList projectList,
                              ApplicationList applicationList, EnquiryList enquiryList,
@@ -46,20 +54,22 @@ public class OfficerController {
         this.registrationList = registrationList;
         this.scanner = new Scanner(System.in);
 
-        // Officer can still do applicant-like tasks
+        
         this.projectHandler = new OfficerViewProjects(officer, projectList, applicationList, registrationList);
         this.enquiryHandler = new OfficerMakeEnquiry(officer, projectList, enquiryList);
         this.applicationHandler = new ApplicantViewApplication(officer, applicationList);
         this.withdrawalHandler = new ApplicantMakeWithdrawal(officer, withdrawalList, applicationList);
 
-        // Officer role-specific functionality
+       
         this.registrationHandler = new OfficerRegistration(officer, projectList, registrationList, applicationList);
         this.manageEnquiriesHandler = new OfficerManageEnquiries(officer, enquiryList);
         this.manageProjectHandler = new OfficerManageProject(officer, projectList);
         this.manageApplicationHandler = new OfficerManageApplication(officer, applicationList);
-        // this.receiptHandler = new OfficerGenerateReceipt(officer);
+        
     }
-
+    /**
+     * Displays the main officer dashboard and routes user to selected features.
+     */
     public void showMenu() {
         int choice = 0;
         do {
@@ -113,7 +123,10 @@ public class OfficerController {
             }
         } while (choice != 6);
     }
-
+     /**
+     * Displays the applicant-like interface for officers to apply/view/withdraw
+     * from projects and manage their own enquiries.
+     */
     private void showApplicantMenu() {
         int choice = 0;
         do {
@@ -161,7 +174,10 @@ public class OfficerController {
             BackButton.goBack();
         } while (true);
     }
-
+    /**
+     * Displays officer registration menu allowing registration to a project
+     * or viewing registration status.
+     */
     private void showOfficerRegistrationMenu() {
         int choice = 0;
         do {
@@ -197,6 +213,11 @@ public class OfficerController {
             BackButton.goBack();
         } while (true);
     }
+
+    /**
+     * Displays management functions for officers assigned to a project,
+     * including viewing applications, replying to enquiries, and updating application status.
+     */
 
     private void showOfficerManagementMenu() {
         if (officer.getAssignedProject() == null) {

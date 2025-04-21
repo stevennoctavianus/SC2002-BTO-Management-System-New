@@ -1,2 +1,2 @@
-applicantNric,projectName,status
-S1234567A,Acacia Breeze,BOOKED
+applicantNric,projectName,status,flatType
+T7654321B,Acacia Breeze,SUCCESSFUL,TWOROOM

@@ -41,25 +41,30 @@ public class ApplicationList {
         List<String[]> data = CSVReader.readCSV(filePath);
         for (String[] row : data) {
             if (row[0].equalsIgnoreCase("applicantNric")) continue; // Skip header
-
+    
             String nric = row[0];
             String projectName = row[1];
             String statusStr = row[2];
-
+            String flatTypeStr = row[3];
+    
             Applicant applicant = applicantList.getApplicantByNric(nric);
             Project project = projectList.getProjectByName(projectName);
             Application.ApplicationStatus status = Application.ApplicationStatus.valueOf(statusStr);
-
+            Application.FlatType flatType = Application.FlatType.valueOf(flatTypeStr);
+    
             if (applicant != null && project != null) {
                 Application application = new Application(project, applicant);
                 application.setApplicationStatus(status);
+                application.setFlatType(flatType);
                 this.applicationList.add(application);
                 applicant.setCurrentApplication(application); // Link to applicant
             } else {
-                System.out.println(Colour.RED + "Could not find Applicant or Project for: " + nric + Colour.RESET + " / " + Colour.RED + projectName + Colour.RESET);
+                System.out.println("Could not find Applicant or Project for: " + nric + " / " + projectName);
             }
         }
     }
+    
+    
 
     /**
      * Adds a new application to the list.
@@ -179,17 +184,18 @@ public class ApplicationList {
      */
     public void saveToCSV() {
         List<String[]> data = new ArrayList<>();
-        data.add(new String[]{"applicantNric", "projectName", "status"});
-
+        data.add(new String[]{"applicantNric", "projectName", "status", "flatType"});
+    
         for (Application a : this.applicationList) {
             data.add(new String[]{
                 a.getApplicant().getNric(),
                 a.getProject().getProjectName(),
                 a.getApplicationStatus().name(),
-                
+                a.getFlatType() != null ? a.getFlatType().name() : ""
             });
         }
-
+    
         CSVWriter.writeCSV("../data/ApplicationList.csv", data);
     }
+    
 }

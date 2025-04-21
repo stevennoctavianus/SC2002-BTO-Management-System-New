@@ -127,15 +127,42 @@ Ensure these are placed in the `data/` directory.
 
 ## 👥 Contributors
 
-| Name           | GitHub Username |
-|----------------|------------------|
-| Hoang Thinh    | @thinh0416       |
-| Steven         | @steven-lead     |
-| Faheem         | @faheemdev       |
-| Eishani        | @eishani-code    |
-| He Haoyu       | @hehaoyu1999     |
+<table>
+  <tr>
+    <td align="center">
+      <a href="https://github.com/Nitecry7">
+        <img src="https://github.com/Nitecry7.png" width="100" height="100" style="border-radius: 50%;"><br />
+        <sub><b>Wayne Wee</b></sub>
+      </a>
+    </td>
+    <td align="center">
+      <a href="https://github.com/stevennoctavianus">
+        <img src="https://github.com/stevennoctavianus.png" width="100" height="100" style="border-radius: 50%;"><br />
+        <sub><b>Steven</b></sub>
+      </a>
+    </td>
+    <td align="center">
+      <a href="https://github.com/Eishani">
+        <img src="https://github.com/Eishani.png" width="100" height="100" style="border-radius: 50%;"><br />
+        <sub><b>Hoang Thinh</b></sub>
+      </a>
+    </td>
+    <td align="center">
+      <a href="https://github.com/vanillatte11037">
+        <img src="https://github.com/vanillatte11037.png" width="100" height="100" style="border-radius: 50%;"><br />
+        <sub><b>Mabel</b></sub>
+      </a>
+    </td>
+    <td align="center">
+      <a href="https://github.com/vanillatte11037">
+        <img src="https://github.com/vanillatte11037.png" width="100" height="100" style="border-radius: 50%;"><br />
+        <sub><b>Nigel</b></sub>
+      </a>
+    </td>
+  </tr>
+</table>
 
-Made with ❤️ for NTU's SC2002 OOP module.
+<div align="center">
 
 ---
 

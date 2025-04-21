@@ -1,10 +1,10 @@
 package interact;
 import container.*;
 import entity.*;
+import utils.Colour; 
 import utils.BackButton;
 import utils.ClearScreen;
 import utils.DataSyncUtil;
-import utils.Colour;
 import controller.*;
 import controller.applicant.ApplicantController;
 import controller.officer.OfficerController;
@@ -76,7 +76,8 @@ public class MainMenu {
             System.out.println("                    |  1) Applicant Login                    |");
             System.out.println("                    |  2) Officer Login                      |");
             System.out.println("                    |  3) Manager Login                      |");
-            System.out.println("                    |  4) Exit                               |");
+            System.out.println("                    |  4) Register as Applicant              |");
+            System.out.println("                    |  5) Exit                               |");
             System.out.println("                    +----------------------------------------+\n\n");
             int choice;
             String nric, password;
@@ -84,6 +85,12 @@ public class MainMenu {
             try {
                 choice = scanner.nextInt();
                 if (choice == 4) {
+                    RegistrationService regService = new RegistrationService(applicantList);
+                    regService.registerNewApplicant();
+                    BackButton.goBack();
+                    continue;
+                }
+                if (choice == 5) {
                     DataSyncUtil syncUtil = new DataSyncUtil(
                         applicantList,
                         projectList,
@@ -136,7 +143,7 @@ public class MainMenu {
                 }
             } else {
                 ClearScreen.clear();
-                System.out.println(Colour.RED + "Invalid credentials. Please try again.\n" + Colour.RESET);
+                System.out.println(Colour.RED + "Invalid credentials. Please try again.\n" + Colour.RESET); 
                 BackButton.goBack();
             }
         }

@@ -2,6 +2,7 @@ package controller.applicant.helper;
 
 import container.*;
 import entity.*;
+import utils.Colour;
 import controller.applicant.template.IApplicantViewApplication;
 
 /**
@@ -32,11 +33,11 @@ public class ApplicantViewApplication implements IApplicantViewApplication {
         Application application = applicationList.getApplicationByApplicant(applicant);
 
         if (application != null) {
-            System.out.println("Project Name: " + application.getProject().getProjectName());
-            System.out.println("Flat Type: " + application.getFlatType());
-            System.out.println("Status: " + application.getApplicationStatus());
+            System.out.println(Colour.BLUE + "Project Name: " + Colour.RESET + application.getProject().getProjectName());
+            System.out.println(Colour.BLUE + "Flat Type: " + Colour.RESET + application.getFlatType());
+            System.out.println(Colour.BLUE + "Status: " + Colour.RESET + application.getApplicationStatus());
         } else {
-            System.out.println("No Application found.");
+            System.out.println(Colour.RED + "No Application found." + Colour.RESET);
         }
     }
 }

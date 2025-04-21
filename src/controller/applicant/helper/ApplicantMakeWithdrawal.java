@@ -2,6 +2,7 @@ package controller.applicant.helper;
 
 import container.*;
 import entity.*;
+import utils.Colour;
 
 import java.util.Scanner;
 import controller.applicant.template.IApplicantMakeWithdrawal;
@@ -38,11 +39,11 @@ public class ApplicantMakeWithdrawal implements IApplicantMakeWithdrawal {
     public void withdrawApplication() {
         Application application = applicationList.getApplicationByApplicant(applicant);
         if (application == null) {
-            System.out.println("You do not have an active application to withdraw.");
+            System.out.println(Colour.RED + "You do not have an active application to withdraw." + Colour.RESET);
             return;
         }
 
-        System.out.print("Are you sure you want to withdraw? (yes/no): ");
+        System.out.print(Colour.BLUE + "Are you sure you want to withdraw? (Yes/No): " + Colour.RESET);
         String confirmation = scanner.nextLine();
 
         if (confirmation.equalsIgnoreCase("yes")) {
@@ -50,9 +51,9 @@ public class ApplicantMakeWithdrawal implements IApplicantMakeWithdrawal {
             withdrawalList.addWithdrawal(withdrawal);
             applicationList.removeApplication(application);
             applicant.setCurrentApplication(null);
-            System.out.println("Application withdrawn successfully.");
+            System.out.println(Colour.GREEN + "Application withdrawn successfully." + Colour.RESET);
         } else {
-            System.out.println("Withdrawal cancelled.");
+            System.out.println(Colour.RED + "Withdrawal cancelled." + Colour.RESET);
         }
     }
 }

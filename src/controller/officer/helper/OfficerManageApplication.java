@@ -3,6 +3,7 @@ package controller.officer.helper;
 import container.*;
 import entity.*;
 import utils.ClearScreen;
+import utils.Colour;
 
 import java.util.InputMismatchException;
 import java.util.List;
@@ -43,11 +44,11 @@ public class OfficerManageApplication implements IOfficerManageApplication {
         FilterSettings filters = UserSession.getFilterSettings();
         Project assignedProject = officer.getAssignedProject();
         if (assignedProject == null) {
-            System.out.println("You are not assigned to any project.");
+            System.out.println(Colour.RED + "You are not assigned to any project." + Colour.RESET);
             return;
         }
 
-        System.out.println("\n=== Successful Applications for Project: " + assignedProject.getProjectName() + " ===");
+        System.out.println(Colour.BLUE + "\n==== Successful Applications for Project: " + assignedProject.getProjectName() + " ====" + Colour.RESET);
         List<Application> applications = applicationList.getApplicationList();
 
         boolean found = false;
@@ -55,13 +56,13 @@ public class OfficerManageApplication implements IOfficerManageApplication {
             if (application.getProject().equals(assignedProject)
                 && application.getApplicationStatus() == Application.ApplicationStatus.SUCCESSFUL
                 && (filters.getFlatType() == null || application.getFlatType() == filters.getFlatType())) {
-                System.out.println("Applicant NRIC: " + application.getApplicant().getNric());
+                System.out.println(Colour.BLUE + "Applicant NRIC: " + application.getApplicant().getNric() + Colour.RESET);
                 found = true;
             }
         }
 
         if (!found) {
-            System.out.println("No successful applications found for your project with current filters.");
+            System.out.println(Colour.RED + "No successful applications found for your project with current filters." + Colour.RESET);
         }
     }
 
@@ -73,7 +74,7 @@ public class OfficerManageApplication implements IOfficerManageApplication {
         FilterSettings filters = UserSession.getFilterSettings();
         Project assignedProject = officer.getAssignedProject();
         if (assignedProject == null) {
-            System.out.println("You are not assigned to any project.");
+            System.out.println(Colour.RED + "You are not assigned to any project." + Colour.RESET);
             return;
         }
 
@@ -86,30 +87,30 @@ public class OfficerManageApplication implements IOfficerManageApplication {
             .toList();
 
         if (successfulApplication.isEmpty()) {
-            System.out.println("No successful applications to update with current filters.");
+            System.out.println(Colour.RED + "No successful applications to update with current filters." + Colour.RESET);
             return;
         }
 
-        System.out.println("\n=== Successful Applications (Eligible for Booking) ===");
+        System.out.println(Colour.BLUE + "\n==== Successful Applications (Eligible for Booking) ====" + Colour.RESET);
         for (int i = 0; i < successfulApplication.size(); i++) {
             System.out.println((i + 1) + ") " + successfulApplication.get(i).getApplicant().getName()
                 + ": " + successfulApplication.get(i).getApplicant().getNric());
         }
 
-        System.out.print("Select an application to book (enter number or 0 to cancel): ");
+        System.out.print(Colour.BLUE + "Select an application to book (enter number or 0 to cancel): " + Colour.RESET);
         int choice;
         try {
             choice = scanner.nextInt();
         } catch (InputMismatchException e) {
             ClearScreen.clear();
-            System.out.println("Please input an integer!");
+            System.out.println(Colour.RED + "Please input an integer!" + Colour.RESET);
             scanner.nextLine();
             return;
         }
         scanner.nextLine();
 
         if (choice <= 0 || choice > successfulApplication.size()) {
-            System.out.println("Cancelled or invalid choice.");
+            System.out.println(Colour.RED + "Cancelled or invalid choice." + Colour.RESET);
             return;
         }
 

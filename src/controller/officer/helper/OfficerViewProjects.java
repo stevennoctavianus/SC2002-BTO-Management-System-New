@@ -7,6 +7,7 @@ import controller.FilterSettings;
 import controller.UserSession;
 import controller.applicant.helper.ApplicantViewProjects;
 import utils.ClearScreen;
+import utils.Colour;
 
 import java.util.Date;
 import java.util.InputMismatchException;
@@ -46,7 +47,7 @@ public class OfficerViewProjects extends ApplicantViewProjects implements IOffic
     @Override
     public void viewProjectList() {
         FilterSettings filters = UserSession.getFilterSettings();
-        System.out.println("Available BTO Projects:");
+        System.out.println(Colour.BLUE_UNDERLINED + "Available BTO Projects:" + Colour.RESET);
         for (Project project : projectList.getFilteredProjects(filters)) {
             Registration reg = registrationList.getRegistrationByOfficerAndProject(officer, project);
             if (reg != null) continue;
@@ -73,7 +74,7 @@ public class OfficerViewProjects extends ApplicantViewProjects implements IOffic
         Scanner sc = new Scanner(System.in);
         FilterSettings filters = UserSession.getFilterSettings();
 
-        System.out.println("Projects you can apply:");
+        System.out.println(Colour.BLUE_UNDERLINED + "Projects you can apply:" + Colour.RESET);
         for (Project project : projectList.getFilteredProjects(filters)) {
             Registration reg = registrationList.getRegistrationByOfficerAndProject(officer, project);
             if (reg != null) continue;
@@ -90,34 +91,34 @@ public class OfficerViewProjects extends ApplicantViewProjects implements IOffic
             }
         }
 
-        System.out.print("Enter Project Name to apply: ");
+        System.out.println(Colour.BLUE + "Enter Project Name to apply: " + Colour.RESET);
         String projectName = sc.nextLine();
         Project project = projectList.getProjectByName(projectName);
 
         if (project == null) {
-            System.out.println("Project not found.");
+            System.out.println(Colour.RED + "Project not found." + Colour.RESET);
             return;
         }
 
         if (officer.getAssignedProject() != null &&
             officer.getAssignedProject().equals(project)) {
-            System.out.println("You are already managing this project as an Officer. Cannot apply as an applicant.");
+            System.out.println(Colour.RED + "You are already managing this project as an Officer. Cannot apply as an applicant." + Colour.RESET);
             return;
         }
 
         Registration reg = registrationList.getRegistrationByOfficerAndProject(officer, project);
         if (reg != null) {
-            System.out.println("You have already registered for this project as an Officer. Cannot apply.");
+            System.out.println(Colour.RED + "You have already registered for this project as an Officer. Cannot apply." + Colour.RESET);
             return;
         }
 
         if (super.applicationList.getApplicationByApplicant(officer) != null) {
-            System.out.println("You already have an application.");
+            System.out.println(Colour.RED + "You already have an application." + Colour.RESET);
             return;
         }
 
         if (project.getOpeningDate().after(new Date())) {
-            System.out.println("The project is currently not open for application.");
+            System.out.println(Colour.RED + "The project is currently not open for application." + Colour.RESET);
             return;
         }
 
@@ -125,12 +126,12 @@ public class OfficerViewProjects extends ApplicantViewProjects implements IOffic
 
         if (officer.getMaritalStatus() == User.MaritalStatus.SINGLE &&
             officer.getAge() >= 35) {
-            System.out.println("You are only eligible to apply for 2-ROOM flat");
+            System.out.println(Colour.YELLOW + "You are only eligible to apply for 2-ROOM flat" + Colour.RESET);
             selectedFlatType = Application.FlatType.TWOROOM;
         } else {
             System.out.println("Select flat type to apply for:");
-            System.out.println("Enter 1 -> 2-room flat");
-            System.out.println("Enter 2 -> 3-room flat");
+            System.out.println("\nEnter 1 -> 2-Room Flat");
+            System.out.println("Enter 2 -> 3-Room Flat");
             System.out.print("Enter choice (1 or 2): ");
 
             int choice;
@@ -138,7 +139,7 @@ public class OfficerViewProjects extends ApplicantViewProjects implements IOffic
                 choice = sc.nextInt();
             } catch (InputMismatchException e) {
                 ClearScreen.clear();
-                System.out.println("Please input an integer!");
+                System.out.println(Colour.RED + "Please input an integer!" + Colour.RESET);
                 sc.nextLine();
                 return;
             }
@@ -146,18 +147,18 @@ public class OfficerViewProjects extends ApplicantViewProjects implements IOffic
 
             if (choice == 1) {
                 if (project.getAvailableTwoRoom() == 0) {
-                    System.out.println("Sorry, there is not any 2-room flats");
+                    System.out.println(Colour.BLUE + "Sorry, there are no available 2-room flats." + Colour.RESET);
                     return;
                 }
                 selectedFlatType = Application.FlatType.TWOROOM;
             } else if (choice == 2) {
                 if (project.getAvailableThreeRoom() == 0) {
-                    System.out.println("Sorry, there is not any 3-room flats");
+                    System.out.println(Colour.BLUE + "Sorry, there are no available 3-room flats." + Colour.RESET);
                     return;
                 }
                 selectedFlatType = Application.FlatType.THREEROOM;
             } else {
-                System.out.println("Invalid choice. Application cancelled.");
+                System.out.println(Colour.RED + "Invalid choice. Application cancelled." + Colour.RESET);
                 return;
             }
         }
@@ -167,7 +168,7 @@ public class OfficerViewProjects extends ApplicantViewProjects implements IOffic
         super.applicationList.addApplication(newApplication);
         officer.addApplication(newApplication);
         officer.setCurrentApplication(newApplication);
-        System.out.println("Application submitted successfully!");
+        System.out.println(Colour.GREEN + "Application submitted successfully!" + Colour.RESET);
     }
 }
 

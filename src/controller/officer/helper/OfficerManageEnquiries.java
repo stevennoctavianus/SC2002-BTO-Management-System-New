@@ -3,6 +3,7 @@ package controller.officer.helper;
 import container.*;
 import entity.*;
 import utils.ClearScreen;
+import utils.Colour;
 
 import java.util.Scanner;
 import java.util.ArrayList;
@@ -38,17 +39,17 @@ public class OfficerManageEnquiries implements IOfficerManageEnquiries {
     public void viewEnquiries() {
         Project assignedProject = officer.getAssignedProject();
         if (assignedProject == null) {
-            System.out.println("You are not assigned to any project.");
+            System.out.println(Colour.RED + "You are not assigned to any project." + Colour.RESET);
             return;
         }
 
         ArrayList<Enquiry> enquiries = enquiryList.getEnquiriesByProject(assignedProject);
         if (enquiries.isEmpty()) {
-            System.out.println("No enquiries found for your project.");
+            System.out.println(Colour.RED + "No enquiries found for your project." + Colour.RESET);
             return;
         }
 
-        System.out.println("\n-- Enquiries for Project: " + assignedProject.getProjectName() + " --");
+        System.out.println(Colour.BLUE + "\n==== Enquiries for Project: " + assignedProject.getProjectName() + " ====" + Colour.RESET);
         for (int i = 0; i < enquiries.size(); i++) {
             Enquiry enquiry = enquiries.get(i);
             System.out.println((i + 1) + ") " + enquiry.toString());
@@ -62,43 +63,43 @@ public class OfficerManageEnquiries implements IOfficerManageEnquiries {
     public void replyToEnquiry() {
         Project assignedProject = officer.getAssignedProject();
         if (assignedProject == null) {
-            System.out.println("You are not assigned to any project.");
+            System.out.println(Colour.RED + "You are not assigned to any project." + Colour.RESET);
             return;
         }
 
         ArrayList<Enquiry> enquiries = enquiryList.getEnquiriesByProject(assignedProject);
         if (enquiries.isEmpty()) {
-            System.out.println("No enquiries to reply to.");
+            System.out.println(Colour.RED + "No enquiries to reply to." + Colour.RESET);
             return;
         }
 
         viewEnquiries();
 
-        System.out.print("Select enquiry number to reply: ");
+        System.out.print(Colour.RED + "Select enquiry number to reply: " + Colour.RESET);
         int choice;
         try {
             choice = scanner.nextInt();
         } catch (InputMismatchException e) {
             ClearScreen.clear();
-            System.out.println("Please input an integer!");
+            System.out.println(Colour.RED + "Please input an integer!" + Colour.RESET);
             scanner.nextLine();
             return;
         }
         scanner.nextLine();
 
         if (choice < 1 || choice > enquiries.size()) {
-            System.out.println("Invalid selection.");
+            System.out.println(Colour.RED + "Invalid selection." + Colour.RESET);   
             return;
         }
 
         Enquiry selectedEnquiry = enquiries.get(choice - 1);
-        System.out.println("Enquiry: " + selectedEnquiry.getMessage());
-        System.out.print("Enter your reply: ");
+        System.out.println(Colour.BLUE + "Enquiry: " + Colour.RESET + selectedEnquiry.getMessage());
+        System.out.print(Colour.BLUE + "Enter your reply: " + Colour.RESET);
         String reply = scanner.nextLine();
 
         selectedEnquiry.setReply(reply);
         selectedEnquiry.setStatus(Enquiry.EnquiryStatus.RESPONDED);
-        System.out.println("Reply sent successfully.");
+        System.out.println(Colour.GREEN + "Reply sent successfully." + Colour.RESET);
     }
 }
 

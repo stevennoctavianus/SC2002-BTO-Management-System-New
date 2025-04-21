@@ -15,7 +15,7 @@ public class BackButton {
      */
     public static void goBack() {
         Scanner sc = new Scanner(System.in);
-        System.out.println("\nPress ENTER to return ...");
+        System.out.println(Colour.BLUE + "\nPress ENTER to return ..." + Colour.RESET);
         sc.nextLine();
         ClearScreen.clear();
     }

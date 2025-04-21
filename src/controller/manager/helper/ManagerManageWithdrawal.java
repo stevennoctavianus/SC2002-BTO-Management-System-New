@@ -2,6 +2,8 @@ package controller.manager.helper;
 
 import container.*;
 import entity.*;
+import utils.Colour;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 import controller.manager.template.IManagerManageWithdrawal;
@@ -38,26 +40,26 @@ public class ManagerManageWithdrawal implements IManagerManageWithdrawal {
         ArrayList<Withdrawal> pendingWithdrawals = withdrawalList.getPendingWithdrawalsByProject(project);
 
         if (pendingWithdrawals.isEmpty()) {
-            System.out.println("No pending withdrawals for this project.");
+            System.out.println(Colour.RED + "No pending withdrawals for this project." + Colour.RESET);
             return;
         }
 
-        System.out.println("Pending Withdrawals:");
+        System.out.println(Colour.BLUE_UNDERLINED + "Pending Withdrawals: " + Colour.RESET);
         for (int i = 0; i < pendingWithdrawals.size(); i++) {
             System.out.println((i + 1) + ". " + pendingWithdrawals.get(i));
         }
 
-        System.out.print("Select a withdrawal to manage (enter number): ");
+        System.out.print(Colour.BLUE + "Select a withdrawal to manage (enter number): " + Colour.RESET);
         int choice;
         try {
             choice = Integer.parseInt(scanner.nextLine()) - 1;
         } catch (NumberFormatException e) {
-            System.out.println("Invalid input.");
+            System.out.println(Colour.RED + "Invalid input." + Colour.RESET);
             return;
         }
 
         if (choice < 0 || choice >= pendingWithdrawals.size()) {
-            System.out.println("Invalid choice.");
+            System.out.println(Colour.RED + "Invalid choice." + Colour.RESET);
             return;
         }
 
@@ -65,9 +67,9 @@ public class ManagerManageWithdrawal implements IManagerManageWithdrawal {
         Application application = withdrawal.getApplication();
         Applicant applicant = application.getApplicant();
 
-        System.out.println("1. Approve");
+        System.out.println("\n1. Approve");
         System.out.println("2. Reject");
-        System.out.print("Enter your choice: ");
+        System.out.println(Colour.BLUE + "Enter your choice: " + Colour.RESET);
         String action = scanner.nextLine();
 
         if (action.equals("1")) {
@@ -85,12 +87,12 @@ public class ManagerManageWithdrawal implements IManagerManageWithdrawal {
             }
 
             application.setApplicationStatus(Application.ApplicationStatus.UNSUCCESSFUL);
-            System.out.println("Withdrawal approved. Application marked as UNSUCCESSFUL.");
+            System.out.println(Colour.GREEN + "Withdrawal approved. Application marked as UNSUCCESSFUL." + Colour.RESET);
         } else if (action.equals("2")) {
             withdrawal.setWithdrawalStatus(Withdrawal.WithdrawalStatus.REJECTED);
-            System.out.println("Withdrawal rejected.");
+            System.out.println(Colour.RED + "Withdrawal rejected." + Colour.RESET);
         } else {
-            System.out.println("Invalid action.");
+            System.out.println(Colour.RED + "Invalid action." + Colour.RESET);
         }
     }
 }

@@ -3,6 +3,7 @@ package controller.officer.helper;
 import container.*;
 import entity.*;
 import utils.ClearScreen;
+import utils.Colour;
 
 import java.util.ArrayList;
 import java.util.InputMismatchException;
@@ -48,7 +49,7 @@ public class OfficerRegistration implements IOfficerRegistration {
         if (officer.getAssignedProject() != null ||
             !officer.getPendingRegistrations().isEmpty() ||
             !officer.getApprovedRegistrations().isEmpty()) {
-            System.out.println("You are already managing or registering for a project. Cannot register again.");
+            System.out.println(Colour.RED + "You are already managing or registering for a project. Cannot register again." + Colour.RESET);
             return;
         }
 
@@ -63,29 +64,29 @@ public class OfficerRegistration implements IOfficerRegistration {
         }
 
         if (availableProjects.isEmpty()) {
-            System.out.println(" No projects are currently available for registration.");
+            System.out.println(Colour.RED + "No projects are currently available for registration." + Colour.RESET);
             return;
         }
 
-        System.out.println("\nAvailable Projects for Officer Registration:");
+        System.out.println(Colour.BLUE_UNDERLINED + "\nAvailable Projects for Officer Registration:" + Colour.RESET);
         for (int i = 0; i < availableProjects.size(); i++) {
             System.out.println((i + 1) + ") " + availableProjects.get(i).getProjectName());
         }
 
-        System.out.print("Select a project to register (0 to cancel): ");
+        System.out.print(Colour.BLUE + "Select a project to register (0 to cancel): " + Colour.RESET);
         int choice;
         try {
             choice = scanner.nextInt();
         } catch (InputMismatchException e) {
             ClearScreen.clear();
-            System.out.println("Please input an integer!");
+            System.out.println(Colour.RED + "Please input an integer!" + Colour.RESET);
             scanner.nextLine();
             return;
         }
         scanner.nextLine();
 
         if (choice < 1 || choice > availableProjects.size()) {
-            System.out.println("Registration cancelled.");
+            System.out.println(Colour.RED + "Registration cancelled." + Colour.RESET);
             return;
         }
 
@@ -94,7 +95,7 @@ public class OfficerRegistration implements IOfficerRegistration {
         registrationList.addRegistration(registration);
         officer.addRegistration(registration);
 
-        System.out.println("Registration submitted successfully for project: " + selectedProject.getProjectName());
+        System.out.println(Colour.GREEN + "Registration submitted successfully for project: " + selectedProject.getProjectName() + Colour.RESET);
     }
 
     /**
@@ -104,13 +105,13 @@ public class OfficerRegistration implements IOfficerRegistration {
     public void viewRegistrationStatus() {
         ArrayList<Registration> registrations = officer.getRegistrations();
         if (registrations.isEmpty()) {
-            System.out.println("No registration history found.");
+            System.out.println(Colour.RED + "No registration history found." + Colour.RESET);
             return;
         }
 
-        System.out.println("\nRegistration History:");
+        System.out.println(Colour.BLUE_UNDERLINED + "\nRegistration History:" + Colour.RESET);
         for (Registration r : registrations) {
-            System.out.println("- Project: " + r.getProject().getProjectName() + " | Status: " + r.getStatus());
+            System.out.println(Colour.BLUE + "- Project: " + Colour.RESET + r.getProject().getProjectName() + " | " + Colour.BLUE + "Status: " + Colour.RESET + r.getStatus());
         }
     }
 }

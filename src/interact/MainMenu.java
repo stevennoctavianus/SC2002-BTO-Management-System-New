@@ -4,6 +4,7 @@ import entity.*;
 import utils.BackButton;
 import utils.ClearScreen;
 import utils.DataSyncUtil;
+import utils.Colour;
 import controller.*;
 import controller.applicant.ApplicantController;
 import controller.officer.OfficerController;
@@ -14,7 +15,7 @@ import java.util.Scanner;
 public class MainMenu {
     public static void main(String[] args) {
         Thread.setDefaultUncaughtExceptionHandler((thread, throwable) -> {
-            System.out.println("An unexpected error occurred: " + throwable.getMessage());
+            System.out.println(Colour.RED + "An unexpected error occurred: " + throwable.getMessage() + Colour.RESET);
             try {
                 DataSyncUtil syncUtil = new DataSyncUtil(
                     DataInitializer.getApplicantList(),
@@ -27,9 +28,9 @@ public class MainMenu {
                     DataInitializer.getEnquiryList()
                 );
                 syncUtil.saveAll();
-                System.out.println("All data saved before crash.");
+                System.out.println(Colour.GREEN + "All data saved before crash." + Colour.RESET);
             } catch (Exception e) {
-                System.out.println("Failed to save data during crash: " + e.getMessage());
+                System.out.println(Colour.RED + "Failed to save data during crash: " + e.getMessage() + Colour.RESET);
             }
             System.exit(1);
         });
@@ -56,30 +57,30 @@ public class MainMenu {
                 DataInitializer.getEnquiryList()
             );
             syncUtil.saveAll();
-            System.out.println("All data saved before shutdown.");
+            System.out.println(Colour.GREEN + "All data saved before shutdown." + Colour.RESET);
         }));
 
         Scanner scanner = new Scanner(System.in);
         ClearScreen.clear();
 
         while (true) {
-            System.out.println("  ____ _______ ____    __  __                                                   _   ");
+            System.out.println(Colour.BLUE + "  ____ _______ ____    __  __                                                   _   ");
             System.out.println(" |  _ \\__   __/ __ \\  |  \\/  |                                                 | |  ");
             System.out.println(" | |_) | | | | |  | | | \\  / | __ _ _ __   __ _  __ _  ___ _ __ ___   ___ _ __ | |_ ");
             System.out.println(" |  _ <  | | | |  | | | |\\/| |/ _` | '_ \\ / _` |/ _` |/ _ \\ '_ ` _ \\ / _ \\ '_ \\| __|");
             System.out.println(" | |_) | | | | |__| | | |  | | (_| | | | | (_| | (_| |  __/ | | | | |  __/ | | | |_ ");
             System.out.println(" |____/  |_|  \\____/  |_|  |_|\\__,_|_| |_|\\__,_|\\__,_|\\___|_| |_| |_|\\___|_| |_|\\__|");
             System.out.println("                                                __/ |                               ");
-            System.out.println("                                               |___/                                ");
+            System.out.println("                                               |___/                                " + Colour.RESET);
             System.out.println("                    +----------------------------------------+");
             System.out.println("                    |  1) Applicant Login                    |");
             System.out.println("                    |  2) Officer Login                      |");
             System.out.println("                    |  3) Manager Login                      |");
             System.out.println("                    |  4) Exit                               |");
-            System.out.println("                    +----------------------------------------+");
+            System.out.println("                    +----------------------------------------+\n\n");
             int choice;
             String nric, password;
-            System.out.print("Enter choice: ");
+            System.out.print(Colour.BLUE + "Enter choice: " + Colour.RESET);
             try {
                 choice = scanner.nextInt();
                 if (choice == 4) {
@@ -95,28 +96,28 @@ public class MainMenu {
                     );
                     syncUtil.saveAll();
                     ClearScreen.clear();
-                    System.out.println("Bye Bye!");
+                    System.out.println(Colour.BLUE + "Bye Bye!" + Colour.RESET);
                     break;
                 }
                 scanner.nextLine();
             } catch (InputMismatchException e) {
                 ClearScreen.clear();
-                System.out.println("Please input an integer!");
+                System.out.println(Colour.RED + "Please input an integer!" + Colour.RESET);
                 BackButton.goBack();
                 scanner.nextLine();
                 continue;
             }
 
-            System.out.print("Enter NRIC: ");
-            nric = scanner.nextLine().trim();
+            System.out.print(Colour.BLUE + "Enter NRIC: " + Colour.RESET);
+            nric = scanner.nextLine().trim().toUpperCase();
             if (!AuthenticationService.validNRIC(nric)) {
                 ClearScreen.clear();
-                System.out.println("Invalid NRIC\n");
+                System.out.println(Colour.RED + "Invalid NRIC\n" + Colour.RESET);
                 BackButton.goBack();
                 continue;
             }
 
-            System.out.print("Enter Password: ");
+            System.out.print(Colour.BLUE + "Enter Password: " + Colour.RESET);
             password = scanner.nextLine().trim();
 
             User user = AuthenticationService.authenticate(nric, password, choice);
@@ -135,7 +136,7 @@ public class MainMenu {
                 }
             } else {
                 ClearScreen.clear();
-                System.out.println("Invalid credentials. Please try again.\n");
+                System.out.println(Colour.RED + "Invalid credentials. Please try again.\n" + Colour.RESET);
                 BackButton.goBack();
             }
         }

@@ -3,6 +3,8 @@ package container;
 import entity.*;
 import utils.CSVReader;
 import utils.CSVWriter;
+import utils.Colour;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -49,7 +51,7 @@ public class ProjectList {
 
         for (String[] row : data) {
             if (row.length < 12) {
-                System.out.println("Skipping invalid row: " + String.join(",", row));
+                System.out.println(Colour.BLUE + "Skipping invalid row: " + String.join(",", row) + Colour.RESET);
                 continue;
             }
 
@@ -67,7 +69,7 @@ public class ProjectList {
 
                 Manager manager = findManagerByName(managerName);
                 if (manager == null) {
-                    System.out.println("Manager not found: " + managerName);
+                    System.out.println(Colour.RED + "Manager not found: " + managerName + Colour.RESET);
                     continue;
                 }
 
@@ -97,14 +99,14 @@ public class ProjectList {
                             );
                             officer.getManagedProjects().add(project);
                         } else {
-                            System.out.println("Officer not found: " + officerName);
+                            System.out.println(Colour.RED + "Officer not found: " + officerName + Colour.RESET);
                         }
                     }
                 }
 
                 projectList.add(project);
             } catch (ParseException | NumberFormatException e) {
-                System.out.println("Error parsing row: " + String.join(",", row));
+                System.out.println(Colour.RED + "Error parsing row: " + String.join(",", row) + Colour.RESET);
                 e.printStackTrace();
             }
         }
@@ -180,9 +182,9 @@ public class ProjectList {
      */
     public void removeProject(Project project) {
         if (projectList.remove(project)) {
-            System.out.println("Project '" + project.getProjectName() + "' removed successfully.");
+            System.out.println(Colour.GREEN + "Project '" + project.getProjectName() + "' removed successfully." + Colour.RESET);
         } else {
-            System.out.println("Project not found in the list.");
+            System.out.println(Colour.RED + "Project not found in the list." + Colour.RESET);
         }
     }
 

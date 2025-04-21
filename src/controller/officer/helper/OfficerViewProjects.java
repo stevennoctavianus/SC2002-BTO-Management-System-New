@@ -63,7 +63,7 @@ public class OfficerViewProjects extends ApplicantViewProjects implements IOffic
                 Registration reg = registrationList.getRegistrationByOfficerAndProject(officer, project);
                 if (reg != null && reg.getStatus() != RegistrationStatus.REJECTED) continue;
                 if (officer.getAssignedProject() != null && officer.getAssignedProject().equals(project)) continue;
-                if (project.getVisibility() && (project.getAvailableThreeRoom() > 0 || project.getAvailableTwoRoom() > 0)) {
+                if (project.getVisibility() && ((project.getAvailableThreeRoom() > 0 || project.getAvailableTwoRoom() > 0))) {
                     System.out.println(project);
                 }
             }
@@ -96,7 +96,7 @@ public class OfficerViewProjects extends ApplicantViewProjects implements IOffic
                 Registration reg = registrationList.getRegistrationByOfficerAndProject(officer, project);
                 if (reg != null && reg.getStatus() != RegistrationStatus.REJECTED) continue;
                 if (officer.getAssignedProject() != null && officer.getAssignedProject().equals(project)) continue;
-                if (project.getVisibility() && (project.getAvailableThreeRoom() > 0 || project.getAvailableTwoRoom() > 0)) {
+                if (project.getVisibility() && ((project.getAvailableThreeRoom() > 0 || project.getAvailableTwoRoom() > 0))) {
                     System.out.println(project.getProjectName());
                 }
             }

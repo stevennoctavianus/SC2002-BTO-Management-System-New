@@ -36,7 +36,7 @@ public class ApplicantViewProjects implements IApplicantViewProjects {
             }
         } else {
             for (Project project : projectList.getFilteredProjects(filters)) {
-                if (project.getVisibility() && (project.getAvailableThreeRoom() > 0 || project.getAvailableTwoRoom() > 0)) {
+                if (project.getVisibility() && ((project.getAvailableThreeRoom() > 0 || project.getAvailableTwoRoom() > 0))) {
                     System.out.println(project);
                 }
             }

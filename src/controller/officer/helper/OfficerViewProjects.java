@@ -47,20 +47,24 @@ public class OfficerViewProjects extends ApplicantViewProjects implements IOffic
     @Override
     public void viewProjectList() {
         FilterSettings filters = UserSession.getFilterSettings();
-        System.out.println(Colour.BLUE_UNDERLINED + "Available BTO Projects:" + Colour.RESET);
-        for (Project project : projectList.getFilteredProjects(filters)) {
-            Registration reg = registrationList.getRegistrationByOfficerAndProject(officer, project);
-            if (reg != null) continue;
-            if (officer.getAssignedProject() != null &&
-                officer.getAssignedProject().equals(project)) continue;
-
-            if (officer.getMaritalStatus() == User.MaritalStatus.SINGLE &&
-                officer.getAge() >= 35 &&
-                project.getAvailableTwoRoom() > 0) {
-                System.out.println(project);
-            } else if (project.getVisibility() &&
-                      (project.getAvailableThreeRoom() > 0 || project.getAvailableTwoRoom() > 0)) {
-                System.out.println(project);
+        if (officer.getMaritalStatus() == User.MaritalStatus.SINGLE && officer.getAge() >= 35){
+            for (Project project : projectList.getFilteredProjects(filters)) {
+                Registration reg = registrationList.getRegistrationByOfficerAndProject(officer, project);
+                if (reg != null) continue;
+                if (officer.getAssignedProject() != null && officer.getAssignedProject().equals(project)) continue;
+                if (project.getAvailableTwoRoom() > 0 && project.getVisibility()) {
+                    System.out.println(project);
+                }
+            }
+        }
+        else {
+            for (Project project : projectList.getFilteredProjects(filters)) {
+                Registration reg = registrationList.getRegistrationByOfficerAndProject(officer, project);
+                if (reg != null) continue;
+                if (officer.getAssignedProject() != null && officer.getAssignedProject().equals(project)) continue;
+                if (project.getVisibility() && (project.getAvailableThreeRoom() > 0 || project.getAvailableTwoRoom() > 0)) {
+                    System.out.println(project);
+                }
             }
         }
     }

@@ -1,7 +1,8 @@
 package interact;
+
 import container.*;
 import entity.*;
-import utils.Colour; 
+import utils.Colour;
 import utils.BackButton;
 import utils.ClearScreen;
 import utils.DataSyncUtil;
@@ -9,23 +10,54 @@ import controller.*;
 import controller.applicant.ApplicantController;
 import controller.officer.OfficerController;
 import controller.manager.ManagerController;
+
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+/**
+ * Entry point of the BTO Management System.
+ * <p>
+ * Presents a main menu for users to log in based on their role (Applicant, Officer, Manager),
+ * or register as a new applicant. Also includes graceful shutdown hooks and error recovery mechanisms.
+ * All session-related user data is managed through {@link UserSession}, and persistent data is stored
+ * using the {@link DataSyncUtil}.
+ */
 public class MainMenu {
+
+    /**
+     * Starts the BTO system, handles user authentication and dispatches users to their respective dashboards.
+     * <p>
+     * This method sets up:
+     * <ul>
+     *   <li>Uncaught exception handler for emergency data saving</li>
+     *   <li>Shutdown hook for normal termination</li>
+     *   <li>Main menu for login and registration</li>
+     * </ul>
+     *
+     * Users can:
+     * <ul>
+     *   <li>Login as Applicant, Officer, or Manager</li>
+     *   <li>Register as a new Applicant</li>
+     *   <li>Exit the program safely</li>
+     * </ul>
+     *
+     * All data is persisted to CSV files on exit or crash.
+     *
+     * @param args command-line arguments (not used)
+     */
     public static void main(String[] args) {
         Thread.setDefaultUncaughtExceptionHandler((thread, throwable) -> {
             System.out.println(Colour.RED + "An unexpected error occurred: " + throwable.getMessage() + Colour.RESET);
             try {
                 DataSyncUtil syncUtil = new DataSyncUtil(
-                    DataInitializer.getApplicantList(),
-                    DataInitializer.getProjectList(),
-                    DataInitializer.getManagerList(),
-                    DataInitializer.getOfficerList(),
-                    DataInitializer.getApplicationList(),
-                    DataInitializer.getRegistrationList(),
-                    DataInitializer.getWithdrawalList(),
-                    DataInitializer.getEnquiryList()
+                        DataInitializer.getApplicantList(),
+                        DataInitializer.getProjectList(),
+                        DataInitializer.getManagerList(),
+                        DataInitializer.getOfficerList(),
+                        DataInitializer.getApplicationList(),
+                        DataInitializer.getRegistrationList(),
+                        DataInitializer.getWithdrawalList(),
+                        DataInitializer.getEnquiryList()
                 );
                 syncUtil.saveAll();
                 System.out.println(Colour.GREEN + "All data saved before crash." + Colour.RESET);
@@ -47,14 +79,14 @@ public class MainMenu {
 
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             DataSyncUtil syncUtil = new DataSyncUtil(
-                DataInitializer.getApplicantList(),
-                DataInitializer.getProjectList(),
-                DataInitializer.getManagerList(),
-                DataInitializer.getOfficerList(),
-                DataInitializer.getApplicationList(),
-                DataInitializer.getRegistrationList(),
-                DataInitializer.getWithdrawalList(),
-                DataInitializer.getEnquiryList()
+                    applicantList,
+                    projectList,
+                    managerList,
+                    officerList,
+                    applicationList,
+                    registrationList,
+                    withdrawalList,
+                    enquiryList
             );
             syncUtil.saveAll();
             System.out.println(Colour.GREEN + "All data saved before shutdown." + Colour.RESET);
@@ -79,6 +111,7 @@ public class MainMenu {
             System.out.println("                    |  4) Register as Applicant              |");
             System.out.println("                    |  5) Exit                               |");
             System.out.println("                    +----------------------------------------+\n\n");
+
             int choice;
             String nric, password;
             System.out.print(Colour.BLUE + "Enter choice: " + Colour.RESET);
@@ -92,21 +125,21 @@ public class MainMenu {
                 }
                 if (choice == 5) {
                     DataSyncUtil syncUtil = new DataSyncUtil(
-                        applicantList,
-                        projectList,
-                        managerList,
-                        officerList,
-                        applicationList,
-                        registrationList,
-                        withdrawalList,
-                        enquiryList
+                            applicantList,
+                            projectList,
+                            managerList,
+                            officerList,
+                            applicationList,
+                            registrationList,
+                            withdrawalList,
+                            enquiryList
                     );
                     syncUtil.saveAll();
                     ClearScreen.clear();
                     System.out.println(Colour.BLUE + "Bye Bye!" + Colour.RESET);
                     break;
                 }
-                scanner.nextLine();
+                scanner.nextLine(); // consume newline
             } catch (InputMismatchException e) {
                 ClearScreen.clear();
                 System.out.println(Colour.RED + "Please input an integer!" + Colour.RESET);
@@ -131,8 +164,7 @@ public class MainMenu {
             if (user != null) {
                 UserSession.setCurrentUser(user);
                 ClearScreen.clear();
-                // Prompt for filters before showing role-specific menu
-                new FilterMenu().manageFilters();
+                new FilterMenu().manageFilters();  // Optionally ask for filters
                 ClearScreen.clear();
                 if (user instanceof Officer) {
                     new OfficerController((Officer) user, projectList, applicationList, enquiryList, withdrawalList, registrationList).showMenu();
@@ -143,7 +175,7 @@ public class MainMenu {
                 }
             } else {
                 ClearScreen.clear();
-                System.out.println(Colour.RED + "Invalid credentials. Please try again.\n" + Colour.RESET); 
+                System.out.println(Colour.RED + "Invalid credentials. Please try again.\n" + Colour.RESET);
                 BackButton.goBack();
             }
         }

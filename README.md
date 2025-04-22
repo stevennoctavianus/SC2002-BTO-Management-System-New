@@ -199,13 +199,6 @@ Password: password
 
 ---
 
-## ⚖️ License
-
-This project is licensed under the MIT License.  
-Feel free to explore, use, and extend it.
-
----
-
 ## 🎓 About
 
 A role-based Java CLI system for managing Singapore's BTO application and housing process, developed for **NTU SC2002: Object-Oriented Design & Programming**.

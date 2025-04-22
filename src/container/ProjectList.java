@@ -148,6 +148,7 @@ public class ProjectList {
      * @return list of {@link Project}
      */
     public List<Project> getProjectList() {
+        projectList.sort(Comparator.comparing(Project::getProjectName));
         return projectList;
     }
 
